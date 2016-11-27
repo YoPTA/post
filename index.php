@@ -5,7 +5,7 @@
 error_reporting(E_ALL);*/
 error_reporting(E_ERROR | E_PARSE | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR);
 
-// Подключение файлов системы 1
+// Подключение файлов системы
 define('ROOT', dirname(__FILE__));
 require_once(ROOT.'/components/Autoload.php');
 
