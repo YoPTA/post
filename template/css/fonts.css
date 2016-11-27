@@ -1,0 +1,19 @@
+.font_size_zero{
+    font-size: 0;
+}
+
+.font_size_nine{
+    font-size: 9px;
+}
+
+.font_size_twelve, li.font_size_twelve{
+    font-size: 12px;
+}
+
+.font_size_fourteen{
+    font-size: 14px;
+}
+
+h2, .font_size_eighteen {
+    font-size: 18px;
+}

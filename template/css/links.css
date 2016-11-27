@@ -1,0 +1,43 @@
+a {
+    color: rgb(57, 142, 255);
+}
+
+a:hover{
+    color: rgba(57, 142, 255, .7);
+}
+
+div.menu {
+    font-size: 0px;
+}
+
+.header_btn{
+    display: inline-block;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+    background: #273037;
+    padding: 10px 0px;
+}
+
+.header_btn:hover{
+    animation-name: color_intensity;
+    animation-duration: 0.8s;
+    background: #575E63;
+}
+
+.activeted{
+    background: #575E63;
+}
+
+div.welcome{
+    color: #ffffff;
+}
+
+@keyframes color_intensity {
+    0%{
+        background: #273037;
+    }
+    100%{
+        background: #575E63;
+    }
+}

@@ -1,0 +1,42 @@
+#pagination a{
+    color: rgba(80, 80, 80, 1);
+}
+
+ul.pagination{
+    margin-left: -40px;
+}
+
+ul.pagination li.active_pagination a.pagination_btn{
+    color: rgba(255, 255, 255, 1);
+    padding: 4px;
+}
+
+ul.pagination li.active_pagination {
+    padding: 4px;
+}
+
+a.pagination_btn:hover{
+    background: rgba(215, 215, 215, 1);
+    color: rgba(80, 80, 80, 1);
+}
+
+li.active_pagination{
+    pointer-events: none; /* делаем ссылку некликабельной */
+    cursor: default;  /* устанавливаем курсор в виде стрелки */
+    background: rgba(215, 215, 215, 1);
+
+    color: rgba(255, 255, 255, 1);
+    padding: 4px;
+}
+
+li.no_active_pagination{
+    padding: 4px;
+}
+
+#pagination li{
+    display: inline-block;
+    list-style-type: none;
+    padding: 3px;
+    margin-left: 3px;
+}
+

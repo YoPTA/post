@@ -1,0 +1,35 @@
+.full_width{
+    width: 1030px;
+    max-width: 1030px;
+}
+
+.three_quarter{
+    width: 770px;
+    max-width: 770px;
+}
+
+.half{
+    width: 510px;
+    max-width: 510px;
+}
+
+.quarter{
+    width: 250px;
+    max-width: 250px;
+}
+
+.one_eighth{
+    width: 120px;
+    max-width: 120px;
+}
+
+.one_sixteenth{
+    width: 55px;
+    max-width: 55px;
+}
+
+.icon{
+    width: 26px;
+    max-width: 26px;
+    color: #333333;
+}

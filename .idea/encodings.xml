@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/.htaccess" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/components/App.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/components/Date_Converter.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/components/String_Utility.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/components/Validate.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/components/charsToReplace.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config/constants.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config/role_ckeck.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/config/routes.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/AdminController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/DokaController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/ProfileController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/ProxyController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/RouteController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/SiteController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Company.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Document.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Doka.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Package.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Proxy.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Route.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/User.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/User_Role.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/template/css/input.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/template/css/main.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/template/css/pagination.css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/template/js/inputValidate.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/template/js/jquery-1.8.3.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/template/js/jquery.maskedinput.min.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/admin/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/doka/package.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/layouts/header.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/package/objects.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/profile/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/proxy/person/add.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/proxy/person/delete.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/proxy/person/edit.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/proxy/person/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/proxy/person/view.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/proxy/proxy_add.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/route/send.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/route/view.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/site/create.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/site/error.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/site/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/site/login.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/site/selectcompany.php" charset="UTF-8" />
+  </component>
+</project>

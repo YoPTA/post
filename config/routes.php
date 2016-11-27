@@ -1,0 +1,36 @@
+<?php
+
+return [
+
+    'admin/index' => 'admin/index',
+
+    'doka/package' => 'doka/package',
+
+    'profile/index' => 'profile/index',
+
+    'site/create' => 'site/create',
+    'site/error' => 'site/error',
+    'site/login' => 'site/login',
+    'site/logout' => 'site/logout',
+
+
+    'route/view' => 'route/view',
+    'route/send' => 'route/send',
+
+    'proxy/person_index' => 'proxy/personindex',
+    'proxy/person_add' => 'proxy/personadd',
+    'proxy/person_view' => 'proxy/personview',
+    'proxy/person_edit' => 'proxy/personedit',
+    'proxy/person_delete' => 'proxy/persondelete',
+
+    'proxy/proxy_add' => 'proxy/proxyadd',
+
+
+    'package/objects' => 'package/objects',
+
+    'site/select_company' => 'site/selectcompany',
+
+    'site/index' => 'site/index',
+    //'site' => 'site/index',
+    '' => 'site/index',
+];
