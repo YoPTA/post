@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 22 2016 г., 10:54
+-- Время создания: Дек 05 2016 г., 16:59
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `document_type` (
 --
 
 INSERT INTO `document_type` (`id`, `name`, `is_series`, `is_number`, `is_date_issued`, `is_date_expired`, `is_place_name`, `is_place_code`, `mask_series`, `mask_number`, `mask_place_name`, `mask_place_code`) VALUES
+(0, 'Нет', 0, 0, 0, 0, 0, 0, '', '', '', ''),
 (1, 'Паспорт', 1, 1, 1, 0, 1, 1, '', '', '', ''),
 (2, 'Доверенность', 0, 1, 1, 1, 1, 0, '', '', '', '');
 
@@ -181,25 +182,26 @@ INSERT INTO `package_or_package_object` (`id`, `package_id`, `package_object_id`
 
 CREATE TABLE IF NOT EXISTS `proxy` (
   `id` int(11) NOT NULL,
-  `number` int(11) NOT NULL COMMENT 'Номер',
-  `document_type_id` int(11) NOT NULL COMMENT 'Тип документа',
-  `date_issued` date NOT NULL COMMENT 'Дата выдачи',
-  `date_expired` date NOT NULL COMMENT 'Дата истечения',
+  `number` varchar(32) NOT NULL DEFAULT '' COMMENT 'Номер',
+  `document_type_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Тип документа',
+  `date_issued` date NOT NULL DEFAULT '0000-00-00' COMMENT 'Дата выдачи',
+  `date_expired` date NOT NULL DEFAULT '0000-00-00' COMMENT 'Дата истечения',
   `authority_issued` varchar(512) NOT NULL COMMENT 'Орган выдачи',
-  `created_datetime` datetime NOT NULL COMMENT 'Дата и время создания',
-  `created_user_id` int(11) NOT NULL COMMENT 'Пользователь, создавший',
-  `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
-  `changed_user_id` int(11) NOT NULL COMMENT 'Пользователь, изменивший',
-  `flag` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
+  `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
+  `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
+  `flag` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `proxy`
 --
 
 INSERT INTO `proxy` (`id`, `number`, `document_type_id`, `date_issued`, `date_expired`, `authority_issued`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 0, 0, '0000-00-00', '0000-00-00', 'Нет', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 1, 2, '2016-06-01', '2017-06-01', 'Некий орган', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+(0, '0', 0, '0000-00-00', '0000-00-00', 'Нет', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, '1', 2, '2016-06-01', '2017-06-01', 'Некий орган', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
+(2, '', 2, '2016-12-01', '2016-12-30', 'МФЦ', '2016-12-05 16:46:42', 1, '0000-00-00 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -209,20 +211,21 @@ INSERT INTO `proxy` (`id`, `number`, `document_type_id`, `date_issued`, `date_ex
 
 CREATE TABLE IF NOT EXISTS `proxy_or_proxy_person` (
   `id` int(11) NOT NULL,
-  `proxy_id` int(11) NOT NULL,
-  `proxy_person_id` int(11) NOT NULL,
-  `created_datetime` datetime NOT NULL COMMENT 'Дата и время создания',
-  `created_user_id` int(11) NOT NULL COMMENT 'Пользователь, создавший',
-  `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
-  `changed_user_id` int(11) NOT NULL COMMENT 'Пользователь, изменивший'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `proxy_id` int(11) NOT NULL DEFAULT '0',
+  `proxy_person_id` int(11) NOT NULL DEFAULT '0',
+  `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
+  `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
+  `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший'
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `proxy_or_proxy_person`
 --
 
 INSERT INTO `proxy_or_proxy_person` (`id`, `proxy_id`, `proxy_person_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`) VALUES
-(1, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
+(1, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
+(3, 2, 2, '2016-12-05 16:46:42', 1, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -248,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `proxy_person` (
   `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
   `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
   `flag` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `proxy_person`
@@ -257,8 +260,7 @@ CREATE TABLE IF NOT EXISTS `proxy_person` (
 INSERT INTO `proxy_person` (`id`, `lastname`, `firstname`, `middlename`, `document_type_id`, `document_series`, `document_number`, `date_issued`, `date_expired`, `place_name`, `place_code`, `phone_number`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, 'Нет', 'Нет', 'Нет', 1, '0000', '000000', '0000-00-00', '0000-00-00', 'Нет', '000-000', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
 (1, 'Иванов', 'Иван', 'Иванович', 1, '5555', '777777', '2016-06-05', '0000-00-00', 'МВД', '555-665', '02030708', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
-(2, 'Петров', 'Петр', 'Петрович', 1, '1111', '222333', '2014-06-14', '0000-00-00', 'Какое-то место', '231-323', '87009596532', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
-(9, 'Пробное', 'Доверенное', 'Лицо', 1, '0001', '000001', '2016-11-18', '0000-00-00', 'УФМС', '000001', '+78885556432', '2016-11-21 15:49:15', 1, '0000-00-00 00:00:00', 0, 1);
+(2, 'Петров', 'Петр', 'Петрович', 1, '1111', '222333', '2014-06-14', '0000-00-00', 'Какое-то место', '231-323', '87009596532', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -312,7 +314,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
   `changed_user_id` int(11) NOT NULL COMMENT 'Пользователь, изменивший',
   `flag` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user`
@@ -334,20 +336,21 @@ INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `passw
 CREATE TABLE IF NOT EXISTS `user_role` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `is_create` int(1) NOT NULL,
-  `is_admin` int(1) NOT NULL,
+  `is_create` int(1) NOT NULL COMMENT 'Может ли создавать',
+  `is_change_proxy` int(1) NOT NULL COMMENT 'Может ли изменять доверенности или доверенные лица',
+  `is_admin` int(1) NOT NULL COMMENT 'Обладает ли правами администратора',
   `flag` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_admin`, `flag`) VALUES
-(0, 'Нет', 0, 0, 0),
-(1, 'Специалист', 1, 0, 0),
-(2, 'Админ', 1, 1, 0),
-(3, 'Зарегистрированный', 0, 0, 0);
+INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_admin`, `flag`) VALUES
+(0, 'Нет', 0, 0, 0, 0),
+(1, 'Специалист', 1, 0, 0, 0),
+(2, 'Админ', 1, 1, 1, 0),
+(3, 'Зарегистрированный', 0, 0, 0, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -395,8 +398,7 @@ ALTER TABLE `package_or_package_object`
 -- Индексы таблицы `proxy`
 --
 ALTER TABLE `proxy`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `number` (`number`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Индексы таблицы `proxy_or_proxy_person`
@@ -467,17 +469,17 @@ ALTER TABLE `package_or_package_object`
 -- AUTO_INCREMENT для таблицы `proxy`
 --
 ALTER TABLE `proxy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `proxy_or_proxy_person`
 --
 ALTER TABLE `proxy_or_proxy_person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `proxy_person`
 --
 ALTER TABLE `proxy_person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `route`
 --
@@ -487,12 +489,12 @@ ALTER TABLE `route`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT для таблицы `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
