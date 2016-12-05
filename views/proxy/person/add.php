@@ -50,7 +50,7 @@ include ROOT . '/views/layouts/header.php';
         <span class="right_indent"></span>
         <span class="acorrect" id="middlename_correct"></span><br />
         <input type="text" placeholder="Отчество (Необязательно)" id="middlename" name="middlename" class="quarter <?php if (isset($errors['middlename'])) echo 'error'; ?>" value="<?= $proxy_person['middlename'] ?>"
-               onblur="CountMiddlen('middlename', 'quarter')"
+               onblur="InputCountCanEmpty('middlename', 'quarter', 128, 'middlename_correct', 'Отчество не может быть такой длины', '')"
             /><br /><br />
 
         <label for="document_series">Серия паспорта</label>
