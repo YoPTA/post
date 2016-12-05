@@ -10,7 +10,7 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>">
+        <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
             &#8592; Вернуться назад
         </a>
     </div>
@@ -50,16 +50,16 @@ include ROOT . '/views/layouts/header.php';
         <label for="date_expired">Дата истечения</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="date_expired_correct"></span><br />
-        <input type="text" placeholder="Дата выдачи" id="date_expired" name="date_expired" class="tcal quarter" value="<?= $proxy['date_expired'] ?>"
+        <input type="text" placeholder="Дата истечения" id="date_expired" name="date_expired" class="tcal quarter" value="<?= $proxy['date_expired'] ?>"
 
             /><br /><br />
 
         <label for="authority_issued">Орган выдачи</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="authority_issued_correct"></span><br />
-        <textarea placeholder="Место выдачи" class="quarter <?php if (isset($errors['authority_issued'])) echo 'error'; ?>" id="authority_issued" name="authority_issued" rows="5"
+        <textarea placeholder="Орган выдачи" class="quarter <?php if (isset($errors['authority_issued'])) echo 'error'; ?>" id="authority_issued" name="authority_issued" rows="5"
                   onblur="InputCount('authority_issued', 'quarter', 256, 'authority_issued_correct', 'Орган выдачи не может быть такой длины', 'Необходимо заполнить орган выдачи', '')"
-            ><?= $proxy_person['place_name'] ?></textarea><br /><br /><br />
+            ><?= $proxy['authority_issued'] ?></textarea><br /><br /><br />
 
         <input type="submit" name="add" value="Добавить" class="button one_eighth" /><br /><br />
 

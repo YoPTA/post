@@ -95,7 +95,7 @@ include ROOT . '/views/layouts/header.php';
                onblur="InputCount('phone_number', 'quarter', 128, 'phone_number_correct', 'Номер телефона не может быть такой длины', 'Необходимо заполнить номер телефона', '')"
             /><br /><br /><br />
 
-        <input type="submit" name="edit" value="Добавить" class="button one_eighth" /><br /><br />
+        <input type="submit" name="edit" value="Редактировать" class="button one_eighth" /><br /><br />
 
     </form>
 

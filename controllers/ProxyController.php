@@ -338,6 +338,7 @@ class ProxyController
                 $proxy_person['created_datetime'] = date('Y-m-d H:i:s');
                 $proxy_person['created_user_id'] = $user_id;
                 Proxy::addProxyPerson($proxy_person);
+
                 unset($proxy_person);
 
                 header('Location: /proxy/person_index?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
@@ -853,6 +854,7 @@ class ProxyController
     public function actionProxyAdd()
     {
         $user = null;
+        $user_id = null;
         $is_create = false; // Может ли создавать
         $is_change_proxy = false; // Может ли изменять доверенности и доверенные лица
         // Подключаем файл с проверками ролей пользователя
@@ -948,7 +950,72 @@ class ProxyController
 
         $proxy = null;
 
+        if (isset($_POST['number']))
+        {
+            $proxy['number'] = htmlspecialchars(trim($_POST['number']));
+        }
 
+        if (isset($_POST['date_issued']))
+        {
+            $proxy['date_issued'] = htmlspecialchars(trim($_POST['date_issued']));
+        }
+
+        if (isset($_POST['date_expired']))
+        {
+            $proxy['date_expired'] = htmlspecialchars(trim($_POST['date_expired']));
+        }
+
+        if (isset($_POST['authority_issued']))
+        {
+            $proxy['authority_issued'] = htmlspecialchars(trim($_POST['authority_issued']));
+        }
+
+        if (isset($_POST['add']))
+        {
+            // УТОЧНИТЬ ТИП ПОЛЯ В БД
+            if (!Validate::checkStrCanEmpty($proxy['number'], 128))
+            {
+                $errors['number'] = 'Номер доверенности не может быть такой длины';
+            }
+
+            if (!Validate::checkStr($proxy['date_issued'], 10))
+            {
+                $errors['date_issued'] = 'Дата выдачи не может быть такой длины. Формат ДД.ММ.ГГГГ';
+            }
+
+            if (!Validate::checkStr($proxy['date_expired'], 10))
+            {
+                $errors['date_expired'] = 'Дата истечения не может быть такой длины. Формат ДД.ММ.ГГГГ';
+            }
+
+            if (!Validate::checkStr($proxy['authority_issued'], 512))
+            {
+                $errors['authority_issued'] = 'Орган выдачи не может быть такой длины';
+            }
+
+            if ($errors == false)
+            {
+                $proxy['date_issued'] = $date_converter->stringToDate($proxy['date_issued']);
+                $proxy['date_expired'] = $date_converter->stringToDate($proxy['date_expired']);
+                $proxy['document_type_id'] = DOCUMENT_TYPE_PROXY;
+                $proxy['created_datetime'] = date('Y-m-d H:i:s');
+                $proxy['created_user_id'] = $user_id;
+
+
+                $proxy_or_proxy_person = null;
+
+                $proxy_or_proxy_person['proxy_id'] = Proxy::addProxy($proxy);
+                $proxy_or_proxy_person['proxy_person_id'] = $p_pid;
+                $proxy_or_proxy_person['created_datetime'] = $proxy['created_datetime'];
+                $proxy_or_proxy_person['created_user_id'] = $proxy['created_user_id'];
+                Proxy::addProxyOrProxyPerson($proxy_or_proxy_person);
+
+                unset($proxy);
+                unset($proxy_or_proxy_person);
+                header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search.'&p_pid='.$p_pid);
+            }
+        }
 
         if($is_create)
         {

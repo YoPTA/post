@@ -45,7 +45,7 @@ $i = 0;
             <td class="one_sixteenth">№ п/п</td>
             <td>ФИО</td>
             <?php if ($is_change_proxy) : ?>
-            <td>Действие</td>
+            <td class="one_eighth">Действие</td>
             <?php endif; // if ($is_change_proxy) : ?>
         </tr>
         <?php

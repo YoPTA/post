@@ -25,8 +25,8 @@
       <file leaf-file-name="ProxyController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/ProxyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-15.0">
-              <caret line="452" column="18" selection-start-line="452" selection-start-column="12" selection-end-line="452" selection-end-column="18" />
+            <state vertical-scroll-proportion="-22.192308">
+              <caret line="1016" column="13" selection-start-line="1016" selection-start-column="13" selection-end-line="1016" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -35,7 +35,7 @@
       <file leaf-file-name="User_Role.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/User_Role.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="-21.538462">
               <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
               <folding>
                 <marker date="1480915900662" expanded="true" signature="194:262" placeholder="SELECT * FRO..user_role..." />
@@ -44,41 +44,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="add.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="add.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/proxy/proxy/add.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.384615">
-              <caret line="38" column="86" selection-start-line="38" selection-start-column="86" selection-end-line="38" selection-end-column="86" />
+            <state vertical-scroll-proportion="0.60368097">
+              <caret line="54" column="26" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/views/proxy/person/view.php">
+      <file leaf-file-name="edit.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/proxy/person/edit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.153847">
-              <caret line="61" column="10" selection-start-line="61" selection-start-column="10" selection-end-line="61" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.css" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/template/css/main.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.646849">
-              <caret line="299" column="33" selection-start-line="299" selection-start-column="33" selection-end-line="299" selection-end-column="33" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/routes.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+            <state vertical-scroll-proportion="-24.807692">
+              <caret line="97" column="61" selection-start-line="97" selection-start-column="61" selection-end-line="97" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -87,10 +67,44 @@
       <file leaf-file-name="Proxy.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/Proxy.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="293" column="7" selection-start-line="293" selection-start-column="7" selection-end-line="293" selection-end-column="7" />
+            <state vertical-scroll-proportion="-5.8846154">
+              <caret line="301" column="43" selection-start-line="301" selection-start-column="43" selection-end-line="301" selection-end-column="43" />
               <folding>
-                <marker date="1480915900431" expanded="true" signature="2830:2847" placeholder="..." />
+                <marker date="1480944592737" expanded="true" signature="1763:1987" placeholder="SELECT proxy..proxy_person..." />
+                <marker date="1480944592737" expanded="true" signature="2830:2847" placeholder="..." />
+                <marker date="1480944592737" expanded="true" signature="3029:3165" placeholder="SELECT * FRO..proxy_person..." />
+                <marker date="1480944592737" expanded="true" signature="3723:4385" placeholder="SELECT proxy..proxy_person..." />
+                <marker date="1480944592737" expanded="true" signature="4989:5485" placeholder="UPDATE proxy..." />
+                <marker date="1480944592737" expanded="true" signature="7109:7274" placeholder="UPDATE proxy..." />
+                <marker date="1480944592737" expanded="true" signature="7944:8144" placeholder="INSERT INTO ..." />
+                <marker date="1480944592737" expanded="true" signature="7944:8158" placeholder="INSERT INTO ..." />
+                <marker date="1480944592737" expanded="true" signature="7944:8173" placeholder="INSERT INTO ..." />
+                <marker date="1480944592737" expanded="true" signature="7944:8192" placeholder="INSERT INTO ..." />
+                <marker date="1480944592737" expanded="true" signature="7944:8240" placeholder="INSERT INTO ..." />
+                <marker date="1480944592737" expanded="true" signature="9276:9751" placeholder="INSERT INTO ..." />
+                <marker date="1480944592737" expanded="true" signature="11386:11564" placeholder="INSERT INTO ..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Package.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/Package.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-21.538462">
+              <caret line="414" column="0" selection-start-line="414" selection-start-column="0" selection-end-line="414" selection-end-column="0" />
+              <folding>
+                <marker date="1480915900347" expanded="true" signature="1896:4345" placeholder="SELECT compa..package..." />
+                <marker date="1480915900347" expanded="true" signature="6299:6776" placeholder="SELECT packa..package_or_package_object..." />
+                <marker date="1480915900347" expanded="true" signature="8457:8527" placeholder="SELECT COUNT..package..." />
+                <marker date="1480915900347" expanded="true" signature="12134:12350" placeholder="INSERT INTO ..." />
+                <marker date="1480915900347" expanded="true" signature="13660:13752" placeholder="UPDATE packa..." />
+                <marker date="1480915900347" expanded="true" signature="14202:14292" placeholder="UPDATE packa..." />
+                <marker date="1480915900347" expanded="true" signature="15429:15498" placeholder="INSERT INTO ..." />
+                <marker date="1480915900347" expanded="true" signature="15784:15841" placeholder="INSERT INTO ..." />
+                <marker date="1480915900347" expanded="true" signature="16368:16478" placeholder="INSERT INTO ..." />
+                <marker date="1480915900347" expanded="true" signature="16943:17046" placeholder="SELECT packa..package..." />
+                <marker date="1480915900347" expanded="true" signature="17679:22122" placeholder="SELECT packa..package..." />
               </folding>
             </state>
           </provider>
@@ -150,16 +164,16 @@
         <option value="$PROJECT_DIR$/components/Date_Converter.php" />
         <option value="$PROJECT_DIR$/config/routes.php" />
         <option value="$PROJECT_DIR$/views/proxy/person/delete.php" />
-        <option value="$PROJECT_DIR$/models/Proxy.php" />
-        <option value="$PROJECT_DIR$/controllers/ProxyController.php" />
         <option value="$PROJECT_DIR$/template/js/inputValidate.js" />
         <option value="$PROJECT_DIR$/views/proxy/person/add.php" />
-        <option value="$PROJECT_DIR$/views/proxy/person/edit.php" />
-        <option value="$PROJECT_DIR$/views/proxy/proxy/add.php" />
-        <option value="$PROJECT_DIR$/views/proxy/person/view.php" />
         <option value="$PROJECT_DIR$/template/css/main.css" />
-        <option value="$PROJECT_DIR$/views/proxy/person/index.php" />
         <option value="$PROJECT_DIR$/views/site/index.php" />
+        <option value="$PROJECT_DIR$/views/proxy/person/view.php" />
+        <option value="$PROJECT_DIR$/views/proxy/proxy/add.php" />
+        <option value="$PROJECT_DIR$/views/proxy/person/edit.php" />
+        <option value="$PROJECT_DIR$/views/proxy/person/index.php" />
+        <option value="$PROJECT_DIR$/models/Proxy.php" />
+        <option value="$PROJECT_DIR$/controllers/ProxyController.php" />
       </list>
     </option>
   </component>
@@ -412,11 +426,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="template" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -536,7 +546,7 @@
     <frame x="-8" y="32" width="1296" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23381877" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19902913" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -566,10 +576,10 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21359223" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23381877" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32673267" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32336017" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -592,13 +602,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/controllers/AdminController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33374232">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.29202455">
@@ -705,13 +708,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/Package.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2809816">
-          <caret line="335" column="20" selection-start-line="335" selection-start-column="20" selection-end-line="335" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/RouteController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4368098">
@@ -756,13 +752,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70920247">
           <caret line="313" column="51" selection-start-line="313" selection-start-column="51" selection-end-line="313" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/constants.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.87484664">
-          <caret line="46" column="49" selection-start-line="46" selection-start-column="49" selection-end-line="46" selection-end-column="49" />
         </state>
       </provider>
     </entry>
@@ -843,45 +832,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/Proxy.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="293" column="7" selection-start-line="293" selection-start-column="7" selection-end-line="293" selection-end-column="7" />
-          <folding>
-            <marker date="1480915900431" expanded="true" signature="2830:2847" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/role_ckeck.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16687116">
-          <caret line="8" column="65" selection-start-line="8" selection-start-column="65" selection-end-line="8" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/proxy/person/delete.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22944786">
           <caret line="11" column="49" selection-start-line="11" selection-start-column="49" selection-end-line="11" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/User_Role.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
-          <folding>
-            <marker date="1480915900662" expanded="true" signature="194:262" placeholder="SELECT * FRO..user_role..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -890,16 +844,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="68" column="49" selection-start-line="68" selection-start-column="49" selection-end-line="68" selection-end-column="49" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/proxy/person/edit.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5411043">
-          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -911,42 +857,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/ProxyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.0">
-          <caret line="452" column="18" selection-start-line="452" selection-start-column="12" selection-end-line="452" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/proxy/proxy/add.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.384615">
-          <caret line="38" column="86" selection-start-line="38" selection-start-column="86" selection-end-line="38" selection-end-column="86" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/template/css/input.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1319858">
           <caret line="56" column="1" selection-start-line="56" selection-start-column="1" selection-end-line="56" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/proxy/person/view.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.153847">
-          <caret line="61" column="10" selection-start-line="61" selection-start-column="10" selection-end-line="61" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/proxy/person/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18773006">
-          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
           <folding />
         </state>
       </provider>
@@ -963,6 +877,127 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.646849">
           <caret line="299" column="33" selection-start-line="299" selection-start-column="33" selection-end-line="299" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/images/edit.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12515338">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/role_ckeck.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.12515338">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/constants.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9374233">
+          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/proxy/person/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35460123">
+          <caret line="47" column="33" selection-start-line="47" selection-start-column="33" selection-end-line="47" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/proxy/person/edit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-24.807692">
+          <caret line="97" column="61" selection-start-line="97" selection-start-column="61" selection-end-line="97" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Package.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.538462">
+          <caret line="414" column="0" selection-start-line="414" selection-start-column="0" selection-end-line="414" selection-end-column="0" />
+          <folding>
+            <marker date="1480915900347" expanded="true" signature="1896:4345" placeholder="SELECT compa..package..." />
+            <marker date="1480915900347" expanded="true" signature="6299:6776" placeholder="SELECT packa..package_or_package_object..." />
+            <marker date="1480915900347" expanded="true" signature="8457:8527" placeholder="SELECT COUNT..package..." />
+            <marker date="1480915900347" expanded="true" signature="12134:12350" placeholder="INSERT INTO ..." />
+            <marker date="1480915900347" expanded="true" signature="13660:13752" placeholder="UPDATE packa..." />
+            <marker date="1480915900347" expanded="true" signature="14202:14292" placeholder="UPDATE packa..." />
+            <marker date="1480915900347" expanded="true" signature="15429:15498" placeholder="INSERT INTO ..." />
+            <marker date="1480915900347" expanded="true" signature="15784:15841" placeholder="INSERT INTO ..." />
+            <marker date="1480915900347" expanded="true" signature="16368:16478" placeholder="INSERT INTO ..." />
+            <marker date="1480915900347" expanded="true" signature="16943:17046" placeholder="SELECT packa..package..." />
+            <marker date="1480915900347" expanded="true" signature="17679:22122" placeholder="SELECT packa..package..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/User_Role.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.538462">
+          <caret line="64" column="27" selection-start-line="64" selection-start-column="27" selection-end-line="64" selection-end-column="27" />
+          <folding>
+            <marker date="1480915900662" expanded="true" signature="194:262" placeholder="SELECT * FRO..user_role..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Proxy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.8846154">
+          <caret line="301" column="43" selection-start-line="301" selection-start-column="43" selection-end-line="301" selection-end-column="43" />
+          <folding>
+            <marker date="1480944592737" expanded="true" signature="1763:1987" placeholder="SELECT proxy..proxy_person..." />
+            <marker date="1480944592737" expanded="true" signature="2830:2847" placeholder="..." />
+            <marker date="1480944592737" expanded="true" signature="3029:3165" placeholder="SELECT * FRO..proxy_person..." />
+            <marker date="1480944592737" expanded="true" signature="3723:4385" placeholder="SELECT proxy..proxy_person..." />
+            <marker date="1480944592737" expanded="true" signature="4989:5485" placeholder="UPDATE proxy..." />
+            <marker date="1480944592737" expanded="true" signature="7109:7274" placeholder="UPDATE proxy..." />
+            <marker date="1480944592737" expanded="true" signature="7944:8144" placeholder="INSERT INTO ..." />
+            <marker date="1480944592737" expanded="true" signature="7944:8158" placeholder="INSERT INTO ..." />
+            <marker date="1480944592737" expanded="true" signature="7944:8173" placeholder="INSERT INTO ..." />
+            <marker date="1480944592737" expanded="true" signature="7944:8192" placeholder="INSERT INTO ..." />
+            <marker date="1480944592737" expanded="true" signature="7944:8240" placeholder="INSERT INTO ..." />
+            <marker date="1480944592737" expanded="true" signature="9276:9751" placeholder="INSERT INTO ..." />
+            <marker date="1480944592737" expanded="true" signature="11386:11564" placeholder="INSERT INTO ..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/ProxyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-22.192308">
+          <caret line="1016" column="13" selection-start-line="1016" selection-start-column="13" selection-end-line="1016" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/proxy/person/view.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18773006">
+          <caret line="96" column="46" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/views/proxy/proxy/add.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60368097">
+          <caret line="54" column="26" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
           <folding />
         </state>
       </provider>

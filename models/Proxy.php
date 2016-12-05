@@ -234,15 +234,22 @@ class Proxy
      */
     public static function addProxy($proxy)
     {
-        $date_issued = date('Y-m-d H:i:s');
-        $sql = 'INSERT INTO proxy (proxy_person_id, document_type_id, date_issued, date_expired, flag)
-          VALUES (:proxy_person_id, :document_type_id, :date_issued, :date_expired, 1)';
+        $sql = 'INSERT INTO `proxy` (`number`, `document_type_id`, `date_issued`, `date_expired`, `authority_issued`,
+        `created_datetime`, `created_user_id`, `flag`)
+        VALUES (:number, :document_type_id, :date_issued, :date_expired, :authority_issued,
+        :created_datetime, :created_user_id, 1)';
+
         $db = Database::getConnection();
         $result = $db->prepare($sql);
-        $result->bindParam(':proxy_person_id', $proxy['proxy_person_id'], PDO::PARAM_INT);
+
+        $result->bindParam(':number', $proxy['number'], PDO::PARAM_STR);
         $result->bindParam(':document_type_id', $proxy['document_type_id'], PDO::PARAM_INT);
-        $result->bindParam(':date_issued', $date_issued, PDO::PARAM_STR);
+        $result->bindParam(':date_issued', $proxy['date_issued'], PDO::PARAM_STR);
         $result->bindParam(':date_expired', $proxy['date_expired'], PDO::PARAM_STR);
+        $result->bindParam(':authority_issued', $proxy['authority_issued'], PDO::PARAM_STR);
+        $result->bindParam(':created_datetime', $proxy['created_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $proxy['created_user_id'], PDO::PARAM_INT);
+
         if($result->execute())
         {
             return $db->lastInsertId();
@@ -279,13 +286,35 @@ class Proxy
         $result->bindParam(':place_code', $proxy_person['place_code'], PDO::PARAM_STR);
         $result->bindParam(':phone_number', $proxy_person['phone_number'], PDO::PARAM_STR);
         $result->bindParam(':created_datetime', $proxy_person['created_datetime'], PDO::PARAM_STR);
-        $result->bindParam(':created_user_id', $proxy_person['created_user_id'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $proxy_person['created_user_id'], PDO::PARAM_INT);
 
         if($result->execute())
         {
             return $db->lastInsertId();
         }
         return false;
+    }
+
+    /*
+     * Добавить доверенность доаверенному лицу
+     * @var $proxy_or_proxy_person array() - информация о доверенности
+     */
+    public static function addProxyOrProxyPerson($proxy_or_proxy_person)
+    {
+        $sql = 'INSERT INTO proxy_or_proxy_person (proxy_id, proxy_person_id, created_datetime, created_user_id)
+        VALUES (:proxy_id, :proxy_person_id, :created_datetime, :created_user_id)';
+
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':proxy_id', $proxy_or_proxy_person['proxy_id'], PDO::PARAM_INT);
+        $result->bindParam(':proxy_person_id', $proxy_or_proxy_person['proxy_person_id'], PDO::PARAM_INT);
+        $result->bindParam(':created_datetime', $proxy_or_proxy_person['created_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $proxy_or_proxy_person['created_user_id'], PDO::PARAM_INT);
+
+        $result->execute();
+
     }
 
     /*

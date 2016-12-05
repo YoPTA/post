@@ -104,13 +104,13 @@ include ROOT . '/views/layouts/header.php';
             <?php endif; // if ($is_change_proxy): ?>
         </tr>
         <tr class="presentaion">
-            <td class="one_sixteenth" align="center"><input type="radio" /></td>
-            <td class="one_sixteenth" align="center">2</td>
-            <td class="quarter">24</td>
-            <td class="quarter">2016-10-01</td>
-            <td class="quarter">2017-10-01</td>
+            <td align="center"><input type="radio" /></td>
+            <td align="center">2</td>
+            <td>24</td>
+            <td>2016-10-01</td>
+            <td>2017-10-01</td>
             <?php if ($is_change_proxy): ?>
-            <td class="one_eighth" align="center">
+            <td align="center">
                 <div class="bg_button inline">
                     <img src="/template/images/edit.png" />
                 </div>
