@@ -474,6 +474,7 @@ class ProxyController
         $user = null;
         $user_id = null;
         $is_create = false; // Может ли создавать
+        $is_change_proxy = false; // Может ли изменять доверенности или доверенные лица
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $date_converter = new Date_Converter();
@@ -707,7 +708,7 @@ class ProxyController
 
         }
 
-        if($is_create)
+        if($is_change_proxy)
         {
             require_once ROOT . '/views/proxy/person/edit.php';
             return true;
@@ -723,6 +724,7 @@ class ProxyController
         $user = null;
         $user_id = null;
         $is_create = false; // Может ли создавать
+        $is_change_proxy = false; // Может ли изменять доверенные лица и доверенности
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
 
@@ -828,7 +830,7 @@ class ProxyController
                 .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search);
         }
 
-        if($is_create)
+        if($is_change_proxy)
         {
             require_once ROOT . '/views/proxy/person/delete.php';
             return true;
@@ -950,7 +952,7 @@ class ProxyController
 
         if($is_create)
         {
-            require_once ROOT . '/views/proxy/proxy_add.php';
+            require_once ROOT . '/views/proxy/proxy/add.php';
             return true;
         }
         else
@@ -958,4 +960,8 @@ class ProxyController
             header('Location: /site/error');
         }
     }
+
+    /*****************************
+     * Работа с доверенностями КОНЕЦ
+     *****************************/
 }

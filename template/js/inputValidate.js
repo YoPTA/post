@@ -1,3 +1,15 @@
+/*
+ Позволяте проверить длину значения в поле.
+ Поле не может быть пустым.
+
+ var item string - id поля
+ var input_type  string - размер поля (указывается в классе)
+ var lenght_value int - количество символов
+ var id_item_correct string - id, где будет отображено сообщение об ошибке
+ var lenght_exceed_message string - сообщение, что длина превышает допустимую
+ var length_empty_message string - сообщение, что поле пустое
+ var correct_message string - сообщение, если всё правильно
+ */
 function InputCount(item, input_type, lenght_value, id_item_correct, lenght_exceed_message, length_empty_message, correct_message)
 {
     // определяем переменную для показа сообщения об ошибке
@@ -40,6 +52,34 @@ function CountMiddlen(item, input_type) {
     }
     else if (document.getElementById(item).value.length >= 0) {
         document.getElementById(item_correct).innerHTML = '';
+        document.getElementById(item_correct).className = 'correct';
+        InputNormal(item);
+    }
+}
+
+
+/*
+Проверяет длину значения в поле.
+Поле может быть пустым.
+
+var item string - id поля
+var input_type  string - размер поля (указывается в классе)
+var lenght_value int - количество символов
+var id_item_correct string - id, где будет отображено сообщение об ошибке
+var acorrect_message string - сообщение об ошибке
+var correct_message string - сообщение, если всё правильно
+ */
+function InputCountCanEmpty(item, input_type, lenght_value, id_item_correct, acorrect_message, correct_message) {
+    // определяем переменную для показа сообщения об ошибке
+    var item_correct = id_item_correct;
+
+    if (document.getElementById(item).value.length > lenght_value) {
+        document.getElementById(item_correct).innerHTML = acorrect_message;
+        document.getElementById(item_correct).className = 'acorrect';
+        InputError(item, input_type);
+    }
+    else if (document.getElementById(item).value.length >= 0) {
+        document.getElementById(item_correct).innerHTML = correct_message;
         document.getElementById(item_correct).className = 'correct';
         InputNormal(item);
     }
