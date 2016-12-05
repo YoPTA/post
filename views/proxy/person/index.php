@@ -40,7 +40,7 @@ include ROOT . '/views/layouts/header.php';
 $i = 0;
 ?>
 
-    <table class="view full_width" cellspacing="0" cellpadding="0">
+    <table class="view full_width">
         <tr class="head" align="center">
             <td class="one_sixteenth">№ п/п</td>
             <td>ФИО</td>
@@ -63,12 +63,12 @@ $i = 0;
             <?php if ($is_change_proxy) : ?>
             <td class="one_eighth" align="center">
                 <div class="bg_button inline">
-                    <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>">
+                    <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Редактировать доверенное лицо">
                         <img src="/template/images/edit.png" />
                     </a>
                 </div>
                 <div class="bg_button inline">
-                    <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>">
+                    <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Удалить доверенное лицо">
                         <img src="/template/images/delete.png" />
                     </a>
                 </div>

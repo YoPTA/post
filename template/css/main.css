@@ -54,6 +54,7 @@ div.head{
 
 div.inline{
     display: inline-block;
+    vertical-align: text-top;
 }
 
 form label{
@@ -98,6 +99,7 @@ table.content{
 
 
 table.view {
+    border-spacing: 0;
     color: #333333;
     font-size: 12px;
 }
@@ -310,7 +312,7 @@ tr.presentaion:nth-child(even) {
 }
 
 #header{
-    height: 120px;
+    height: 34px;
     font-size: 12px;
     background: #101921;
     color: #ffffff;
@@ -324,7 +326,7 @@ tr.presentaion:nth-child(even) {
 }
 
 #footer{
-    height: 40px;
+    height: 34px;
     font-size: 12px;
     background: #1D2B37;
     color: #808080;

@@ -36,7 +36,7 @@ include ROOT . '/views/layouts/header.php';
 
 
 
-    <table class="view full_width" cellspacing="0" cellpadding="0">
+    <table class="view full_width">
         <tr class="head" align="center">
             <td class="one_sixteenth">№ п/п</td>
             <td class="one_eighth">Трек-номер</td>

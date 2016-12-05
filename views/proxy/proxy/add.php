@@ -36,7 +36,7 @@ include ROOT . '/views/layouts/header.php';
         <span class="right_indent"></span>
         <span class="acorrect" id="number_correct"></span><br />
         <input type="text" placeholder="Номер доверенности" id="number" name="number" class="quarter <?php if (isset($errors['number'])) echo 'error'; ?>" value="<?= $proxy['number'] ?>"
-               onblur="InputCount('number', 'quarter', 128, 'number_correct', 'Номер доверенности не может быть такой длины', 'Необходимо заполнить номер доверенности', '')"
+               onblur="InputCountCanEmpty('number', 'quarter', 128, 'number_correct', 'Номер доверенности не может быть такой длины', '')"
             /><br /><br />
 
 

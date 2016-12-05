@@ -14,45 +14,54 @@ include ROOT . '/views/layouts/header.php';
         </a>
     </div>
     <br /><br />
-
-    <table class="view half">
-        <tr class="presentaion">
-            <td class="accent">Доверенное лицо</td>
-            <td class="quarter">
-                <?= $proxy_person['lastname'].' '.$proxy_person['firstname'].' ' .$proxy_person['middlename'] ?>
-            </td>
-        </tr>
-        <tr class="presentaion">
-            <td class="accent">Серия и номер паспорта</td>
-            <td>
-                <?= $proxy_person['document_series'].' '.$proxy_person['document_number'] ?>
-            </td>
-        </tr>
-        <tr class="presentaion">
-            <td class="accent">Дата выдачи</td>
-            <td><?= $date_converter->dateToString($proxy_person['date_issued']) ?></td>
-        </tr>
-        <tr class="presentaion">
-            <td class="accent">Место выдачи</td>
-            <td><?= $proxy_person['place_name'] ?></td>
-        </tr>
-        <tr class="presentaion">
-            <td class="accent">Код выдачи</td>
-            <td><?= $proxy_person['place_code'] ?></td>
-        </tr>
-        <tr class="presentaion">
-            <td class="accent">Номер телефона</td>
-            <td><?= $proxy_person['phone_number'] ?></td>
-        </tr>
-    </table>
-    <br />
-    <div>
-        <a href=""><input type="button" class="button one_eighth" value="Редактировать" /></a>
+    <div class="inline">
+        <table class="view half">
+            <tr class="presentaion">
+                <td class="accent">Доверенное лицо</td>
+                <td class="quarter">
+                    <?= $proxy_person['lastname'].' '.$proxy_person['firstname'].' ' .$proxy_person['middlename'] ?>
+                </td>
+            </tr>
+            <tr class="presentaion">
+                <td class="accent">Серия и номер паспорта</td>
+                <td>
+                    <?= $proxy_person['document_series'].' '.$proxy_person['document_number'] ?>
+                </td>
+            </tr>
+            <tr class="presentaion">
+                <td class="accent">Дата выдачи</td>
+                <td><?= $date_converter->dateToString($proxy_person['date_issued']) ?></td>
+            </tr>
+            <tr class="presentaion">
+                <td class="accent">Место выдачи</td>
+                <td><?= $proxy_person['place_name'] ?></td>
+            </tr>
+            <tr class="presentaion">
+                <td class="accent">Код выдачи</td>
+                <td><?= $proxy_person['place_code'] ?></td>
+            </tr>
+            <tr class="presentaion">
+                <td class="accent">Номер телефона</td>
+                <td><?= $proxy_person['phone_number'] ?></td>
+            </tr>
+        </table>
+    </div>
+    <span class="right_indent"></span>
+    <div class="inline">
+        <div class="bg_button inline">
+            <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Редактировать доверенное лицо">
+                <img src="/template/images/edit.png" />
+            </a>
+        </div>
         <span class="right_indent"></span>
-        <a href=""><input type="button" class="button one_eighth" value="Удалить" /></a>
+        <div class="bg_button inline">
+            <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Удалить доверенное лицо">
+                <img src="/template/images/delete.png" />
+            </a>
+        </div>
     </div>
 
-    <br />
+    <br /><br /><br />
     <form method="GET">
         <div class="inline fl">
             <input type="hidden" name="track" value="<?= $track ?>">
