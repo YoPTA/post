@@ -96,7 +96,8 @@ include ROOT . '/views/layouts/header.php';
         <tr class="head" align="center">
             <td class="one_sixteenth">...</td>
             <td class="one_sixteenth">№ п/п</td>
-            <td class="quarter">Номер доверенности</td>
+            <td class="one_eighth">Номер доверенности</td>
+            <td class="quarter">Орган выдачи</td>
             <td class="quarter">Дата выдачи</td>
             <td class="quarter">Дата истечения</td>
             <?php if ($is_change_proxy): ?>
@@ -113,6 +114,7 @@ include ROOT . '/views/layouts/header.php';
             <td align="center"><input type="radio" name="select_proxy" value="<?= $p_list['id'] ?>"/></td>
             <td align="center"><?= $i ?></td>
             <td><?= $p_list['number'] ?></td>
+            <td><?= $p_list['authority_issued'] ?></td>
             <td><?= $date_converter->dateToString($p_list['date_issued']) ?></td>
             <td><?= $date_converter->dateToString($p_list['date_expired']) ?></td>
             <?php if ($is_change_proxy): ?>
@@ -131,6 +133,19 @@ include ROOT . '/views/layouts/header.php';
             <?php endif; //if ($is_change_proxy): ?>
         </tr>
         <?php
+        if ($is_admin):
+        ?>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="2" class="under_row">
+                <div>
+                    Добавлена: <?= $p_list['created_datetime'] ?><br />
+                    Изменена: <?= $p_list['changed_datetime'] ?>
+                </div>
+            </td>
+        </tr>
+        <?php
+                endif; // if ($is_admin):
             endforeach; // foreach ($proxy_list as $p_list):
         endif; // if (is_array($proxy_list)):
         ?>

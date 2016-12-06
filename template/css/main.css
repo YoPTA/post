@@ -121,6 +121,12 @@ td.text_middle{
     vertical-align: top;
 }
 
+td.under_row{
+    border: 1px solid #ececec; /* Граница вокруг ячеек */
+    font-size: 10px;
+    background-color: #ececec;
+}
+
 tr.head, div.head{
     background-color: #E0E0E0;
 
@@ -145,6 +151,10 @@ tr.presentaion:nth-child(odd) {
 
 tr.presentaion:nth-child(even) {
     background-color: #EEEEEE;
+}
+
+tr.under_row{
+
 }
 
 .bg_envelope_inside{
