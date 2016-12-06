@@ -24,6 +24,8 @@ return [
     'proxy/person_delete' => 'proxy/persondelete',
 
     'proxy/proxy_add' => 'proxy/proxyadd',
+    'proxy/proxy_edit' => 'proxy/proxyedit',
+    'proxy/proxy_delete' => 'proxy/proxydelete',
 
 
     'package/objects' => 'package/objects',

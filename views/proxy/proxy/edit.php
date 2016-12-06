@@ -10,7 +10,7 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
+        <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>">
             &#8592; Вернуться к доверенностям
         </a>
     </div>
@@ -61,7 +61,7 @@ include ROOT . '/views/layouts/header.php';
                   onblur="InputCount('authority_issued', 'quarter', 256, 'authority_issued_correct', 'Орган выдачи не может быть такой длины', 'Необходимо заполнить орган выдачи', '')"
             ><?= $proxy['authority_issued'] ?></textarea><br /><br /><br />
 
-        <input type="submit" name="add" value="Добавить" class="button one_eighth" /><br /><br />
+        <input type="submit" name="edit" value="Редактировать" class="button one_eighth" /><br /><br />
 
     </form>
 

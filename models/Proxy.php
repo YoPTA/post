@@ -221,10 +221,133 @@ class Proxy
 
     /*
      * Получить доверенность
+     * @var $id int - id доверенности
+     * return array()
      */
-    public static function getProxy()
+    public static function getProxy($id)
     {
+        $sql = 'SELECT
+          *
+        FROM
+          proxy
+        WHERE
+          proxy.flag > 0 AND
+          proxy.id = :id';
 
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Обращаемся к записи
+        $proxy = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($proxy) {
+            return $proxy;
+        }
+        return false;
+    }
+
+    /*
+     * Обновляет доверенность
+     * @var $id int - id доверенности
+     * @var $proxy array() - информация о доверенности
+     */
+    public static function updateProxy($id, $proxy)
+    {
+        $sql = 'UPDATE proxy
+          SET number = :number, document_type_id = :document_type_id, date_issued = :date_issued, date_expired = :date_expired,
+          authority_issued = :authority_issued, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+          WHERE id = :id AND flag = 1';
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':number', $proxy['number'], PDO::PARAM_STR);
+        $result->bindParam(':document_type_id', $proxy['document_type_id'], PDO::PARAM_INT);
+        $result->bindParam(':date_issued', $proxy['date_issued'], PDO::PARAM_STR);
+        $result->bindParam(':date_expired', $proxy['date_expired'], PDO::PARAM_STR);
+        $result->bindParam(':authority_issued', $proxy['authority_issued'], PDO::PARAM_STR);
+        $result->bindParam(':changed_datetime', $proxy['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $proxy['changed_user_id'], PDO::PARAM_INT);
+
+        return $result->execute();
+    }
+
+    /*
+     * Удаляет доверенность
+     * @var $id int - id доверенность
+     * @var $proxy array() - информация о доверенности
+     */
+    public static function deleteProxy($id, $proxy)
+    {
+        $sql = 'UPDATE proxy
+          SET changed_datetime = :changed_datetime, changed_user_id = :changed_user_id, flag = -1
+          WHERE id = :id AND flag = 1';
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':changed_datetime', $proxy['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $proxy['changed_user_id'], PDO::PARAM_INT);
+
+        return $result->execute();
+    }
+
+    /*
+     * Получить доверенности
+     * @var $proxy_person_id int - ID доверенного лица
+     * @var $search_date_issued string - искомая дата выдачи
+     * return array()
+     */
+    public static function getProxyList($proxy_person_id, $search_date_issued)
+    {
+        $where = '';
+
+        if ($search_date_issued != null)
+        {
+            $where .= ' AND proxy.date_issued = ?';
+        }
+
+        $sql = 'SELECT
+          proxy.id,
+          proxy.number,
+          proxy.document_type_id,
+          proxy.date_issued,
+          proxy.date_expired,
+          proxy.authority_issued,
+          proxy.created_datetime,
+          proxy.created_user_id,
+          proxy.changed_datetime,
+          proxy.changed_user_id,
+          proxy.flag
+        FROM
+          proxy_or_proxy_person
+          INNER JOIN proxy ON (proxy_or_proxy_person.proxy_id = proxy.id)
+        WHERE
+          proxy_or_proxy_person.proxy_person_id = ? AND
+          proxy.flag > 0 '.$where .' ORDER BY proxy.date_issued DESC ';
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        if ($search_date_issued == null)
+        {
+            $result->execute([$proxy_person_id]);
+        }
+        if ($search_date_issued != null)
+        {
+            $result->execute([$proxy_person_id, $search_date_issued]);
+        }
+
+        // Получение и возврат результатов
+        $proxy_list = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $proxy_list[$i] = $row;
+            $i++;
+        }
+        return $proxy_list;
     }
 
     /*

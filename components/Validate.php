@@ -3,6 +3,42 @@
 class Validate
 {
     /*
+     * Провенрка даты
+     * @var $date string - дата
+     * @var $format string - формат даты
+     * return string
+     */
+    /*public function checkDate($date, $format = 'Y-m-d H:i:s')
+    {
+        $d = DateTime::createFromFormat($format, $date);
+        return $d && $d->format($format) == $date;
+    }*/
+
+    /*
+     * Проверяет является ли значение датой
+     * @var $value string - дата
+     * @var $format string - формат даты
+     * return boolean
+     */
+    public function checkDate($value, $format = 'Y-m-d')
+    {
+        if (strlen($value) == 10 && $format == 'Y-m-d')
+        {
+            $segments = explode('-', $value);
+            if (count($segments) == 3)
+            {
+                if (($segments[2] > 0 && $segments[2] < 32) &&
+                    ($segments[1] > 0 && $segments[1] < 13) &&
+                    ($segments[0] > 999 && $segments[0] < 10000))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /*
      * Проверка пароля
      * @var $password string - пароль
      * return boolean

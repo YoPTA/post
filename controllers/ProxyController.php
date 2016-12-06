@@ -366,6 +366,7 @@ class ProxyController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $date_converter = new Date_Converter();
+        $validate = new Validate();
 
         $errors = false;
 
@@ -379,6 +380,7 @@ class ProxyController
         $rid = null; // Id маршрута
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
+        $search_date_issued = null; // Искомая дата выдачи
 
 
         if (isset($_GET['track']))
@@ -454,10 +456,22 @@ class ProxyController
             $p_pid = htmlspecialchars($_GET['p_pid']);
         }
 
+        if (isset($_GET['search_date_issued']))
+        {
+            $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
+        }
+        $search_date_issued_sql_format = $date_converter->stringToDate($search_date_issued);
+
         $proxy_person = Proxy::getProxyPersonInfo($p_pid);
 
-        $total_proxy = 0;
+        $var_is_date = $validate->checkDate($search_date_issued_sql_format, 'Y-m-d');
 
+        if (!$var_is_date)
+            $search_date_issued_sql_format = null;
+
+        $proxy_list = Proxy::getProxyList($p_pid, $search_date_issued_sql_format);
+
+        $total_proxy = count($proxy_list);
 
         if($is_create)
         {
@@ -873,7 +887,7 @@ class ProxyController
         $rid = null; // Id маршрута
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
-        $search_date_issued = null;
+        $search_date_issued = null; // Искомая дата выдачи
 
 
         if (isset($_GET['track']))
@@ -1014,13 +1028,340 @@ class ProxyController
                 unset($proxy);
                 unset($proxy_or_proxy_person);
                 header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search.'&p_pid='.$p_pid);
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
+                    .'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
             }
         }
 
         if($is_create)
         {
             require_once ROOT . '/views/proxy/proxy/add.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
+    public function actionProxyEdit()
+    {
+        $user = null;
+        $user_id = null;
+        $is_create = false; // Может ли создавать
+        $is_change_proxy = false; // Может ли изменять доверенности и доверенные лица
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+        $date_converter = new Date_Converter();
+
+        $errors = false;
+
+        $track = null;
+        $site_page = 1;
+        $page = 1;
+        $date_create = null;
+        $package_type = 0;
+        $office = OFFICE_NOW;
+        $pid = null; // Id посылки
+        $rid = null; // Id маршрута
+        $search = null; // Искомое значение
+        $p_pid = null; // Доверенное лицо
+        $p_id = null; // Доверенность
+        $search_date_issued = null; // Искомая дата выдачи
+
+
+        if (isset($_GET['track']))
+        {
+            $track = htmlspecialchars($_GET['track']);
+        }
+
+        if (isset($_GET['site_page']))
+        {
+            $site_page = htmlspecialchars($_GET['site_page']);
+        }
+        if ($site_page < 1)
+        {
+            $site_page = 1;
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['date_create']))
+        {
+            $date_create = htmlspecialchars($_GET['date_create']);
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $package_type = htmlspecialchars($_GET['package_type']);
+        }
+
+        if ($package_type < 0)
+        {
+            $package_type = 0;
+        }
+
+        if (isset($_GET['office']))
+        {
+            $office = htmlspecialchars($_GET['office']);
+        }
+
+        if ($office < 0)
+        {
+            $office = 0;
+        }
+
+        if ($office == OFFICE_ALL)
+        {
+            $package_type = PACKAGE_ALL;
+        }
+
+        if (isset($_GET['pid']))
+        {
+            $pid = htmlspecialchars($_GET['pid']);
+        }
+
+        if (isset($_GET['rid']))
+        {
+            $rid = htmlspecialchars($_GET['rid']);
+        }
+
+        if (isset($_GET['search']))
+        {
+            $search = htmlspecialchars($_GET['search']);
+        }
+
+        if (isset($_GET['p_pid']))
+        {
+            $p_pid = htmlspecialchars($_GET['p_pid']);
+        }
+
+        if (isset($_GET['search_date_issued']))
+        {
+            $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
+        }
+
+        if (isset($_GET['p_id']))
+        {
+            $p_id = htmlspecialchars($_GET['p_id']);
+        }
+
+        $proxy = Proxy::getProxy($p_id);
+
+        $proxy['date_issued'] = $date_converter->dateToString($proxy['date_issued']);
+        $proxy['date_expired'] = $date_converter->dateToString($proxy['date_expired']);
+
+        if (isset($_POST['number']))
+        {
+            $proxy['number'] = htmlspecialchars(trim($_POST['number']));
+        }
+
+        if (isset($_POST['date_issued']))
+        {
+            $proxy['date_issued'] = htmlspecialchars(trim($_POST['date_issued']));
+        }
+
+        if (isset($_POST['date_expired']))
+        {
+            $proxy['date_expired'] = htmlspecialchars(trim($_POST['date_expired']));
+        }
+
+        if (isset($_POST['authority_issued']))
+        {
+            $proxy['authority_issued'] = htmlspecialchars(trim($_POST['authority_issued']));
+        }
+
+        if (isset($_POST['edit']))
+        {
+            // УТОЧНИТЬ ТИП ПОЛЯ В БД
+            if (!Validate::checkStrCanEmpty($proxy['number'], 128))
+            {
+                $errors['number'] = 'Номер доверенности не может быть такой длины';
+            }
+
+            if (!Validate::checkStr($proxy['date_issued'], 10))
+            {
+                $errors['date_issued'] = 'Дата выдачи не может быть такой длины. Формат ДД.ММ.ГГГГ';
+            }
+
+            if (!Validate::checkStr($proxy['date_expired'], 10))
+            {
+                $errors['date_expired'] = 'Дата истечения не может быть такой длины. Формат ДД.ММ.ГГГГ';
+            }
+
+            if (!Validate::checkStr($proxy['authority_issued'], 512))
+            {
+                $errors['authority_issued'] = 'Орган выдачи не может быть такой длины';
+            }
+
+            if ($errors == false)
+            {
+                $proxy['date_issued'] = $date_converter->stringToDate($proxy['date_issued']);
+                $proxy['date_expired'] = $date_converter->stringToDate($proxy['date_expired']);
+                $proxy['document_type_id'] = DOCUMENT_TYPE_PROXY;
+                $proxy['changed_datetime'] = date('Y-m-d H:i:s');
+                $proxy['changed_user_id'] = $user_id;
+
+                Proxy::updateProxy($p_id, $proxy);
+
+                unset($proxy);
+
+                header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
+                    .'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
+            }
+        }
+
+        if($is_change_proxy)
+        {
+            require_once ROOT . '/views/proxy/proxy/edit.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
+    public function actionProxyDelete()
+    {
+        $user = null;
+        $user_id = null;
+        $is_create = false; // Может ли создавать
+        $is_change_proxy = false; // Может ли изменять доверенности и доверенные лица
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+        $date_converter = new Date_Converter();
+
+        $errors = false;
+
+        $track = null;
+        $site_page = 1;
+        $page = 1;
+        $date_create = null;
+        $package_type = 0;
+        $office = OFFICE_NOW;
+        $pid = null; // Id посылки
+        $rid = null; // Id маршрута
+        $search = null; // Искомое значение
+        $p_pid = null; // Доверенное лицо
+        $p_id = null; // Доверенность
+        $search_date_issued = null; // Искомая дата выдачи
+
+
+        if (isset($_GET['track']))
+        {
+            $track = htmlspecialchars($_GET['track']);
+        }
+
+        if (isset($_GET['site_page']))
+        {
+            $site_page = htmlspecialchars($_GET['site_page']);
+        }
+        if ($site_page < 1)
+        {
+            $site_page = 1;
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['date_create']))
+        {
+            $date_create = htmlspecialchars($_GET['date_create']);
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $package_type = htmlspecialchars($_GET['package_type']);
+        }
+
+        if ($package_type < 0)
+        {
+            $package_type = 0;
+        }
+
+        if (isset($_GET['office']))
+        {
+            $office = htmlspecialchars($_GET['office']);
+        }
+
+        if ($office < 0)
+        {
+            $office = 0;
+        }
+
+        if ($office == OFFICE_ALL)
+        {
+            $package_type = PACKAGE_ALL;
+        }
+
+        if (isset($_GET['pid']))
+        {
+            $pid = htmlspecialchars($_GET['pid']);
+        }
+
+        if (isset($_GET['rid']))
+        {
+            $rid = htmlspecialchars($_GET['rid']);
+        }
+
+        if (isset($_GET['search']))
+        {
+            $search = htmlspecialchars($_GET['search']);
+        }
+
+        if (isset($_GET['p_pid']))
+        {
+            $p_pid = htmlspecialchars($_GET['p_pid']);
+        }
+
+        if (isset($_GET['search_date_issued']))
+        {
+            $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
+        }
+
+        if (isset($_GET['p_id']))
+        {
+            $p_id = htmlspecialchars($_GET['p_id']);
+        }
+
+        $proxy = Proxy::getProxy($p_id);
+
+        if (isset($_POST['yes']))
+        {
+            $proxy['changed_datetime'] = date('Y-m-d H:i:s');
+            $proxy['changed_user_id'] = $user_id;
+            Proxy::deleteProxy($p_id, $proxy);
+
+            header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
+                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
+                .'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
+        }
+
+        if (isset($_POST['no']))
+        {
+            header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
+                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
+                .'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
+        }
+
+        if($is_change_proxy)
+        {
+            require_once ROOT . '/views/proxy/proxy/delete.php';
             return true;
         }
         else

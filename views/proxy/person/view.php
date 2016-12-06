@@ -75,7 +75,7 @@ include ROOT . '/views/layouts/header.php';
             <input type="hidden" name="p_pid" value="<?= $p_pid ?>" />
 
 
-            <input type="text" placeholder="Дата выдачи" name="search_date" class="tcal quarter" value="<?= $search_date ?>" />
+            <input type="text" placeholder="Дата выдачи" name="search_date_issued" class="tcal quarter" value="<?= $search_date_issued ?>" />
             <span class="right_indent"></span>
             <input type="submit" value="Найти" class="button one_eighth" /><span class="right_indent"></span>
         </div>
@@ -103,23 +103,37 @@ include ROOT . '/views/layouts/header.php';
             <td class="one_eighth">Действие</td>
             <?php endif; // if ($is_change_proxy): ?>
         </tr>
+        <?php
+        if (is_array($proxy_list)):
+            foreach ($proxy_list as $p_list):
+                $i++;
+        ?>
+
         <tr class="presentaion">
-            <td align="center"><input type="radio" /></td>
-            <td align="center">2</td>
-            <td>24</td>
-            <td>2016-10-01</td>
-            <td>2017-10-01</td>
+            <td align="center"><input type="radio" name="select_proxy" value="<?= $p_list['id'] ?>"/></td>
+            <td align="center"><?= $i ?></td>
+            <td><?= $p_list['number'] ?></td>
+            <td><?= $date_converter->dateToString($p_list['date_issued']) ?></td>
+            <td><?= $date_converter->dateToString($p_list['date_expired']) ?></td>
             <?php if ($is_change_proxy): ?>
             <td align="center">
                 <div class="bg_button inline">
-                    <img src="/template/images/edit.png" />
+                    <a href="/proxy/proxy_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
+                        <img src="/template/images/edit.png" />
+                    </a>
                 </div>
                 <div class="bg_button inline">
-                    <img src="/template/images/delete.png" />
+                    <a href="/proxy/proxy_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
+                        <img src="/template/images/delete.png" />
+                    </a>
                 </div>
             </td>
             <?php endif; //if ($is_change_proxy): ?>
         </tr>
+        <?php
+            endforeach; // foreach ($proxy_list as $p_list):
+        endif; // if (is_array($proxy_list)):
+        ?>
 
     </table>
     <br /><br />
