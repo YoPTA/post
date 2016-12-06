@@ -873,6 +873,7 @@ class ProxyController
         $rid = null; // Id маршрута
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
+        $search_date_issued = null;
 
 
         if (isset($_GET['track']))
