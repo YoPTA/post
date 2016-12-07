@@ -381,6 +381,7 @@ class ProxyController
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $search_date_issued = null; // Искомая дата выдачи
+        $p_id = null; // Доверенность
 
 
         if (isset($_GET['track']))
@@ -472,6 +473,25 @@ class ProxyController
         $proxy_list = Proxy::getProxyList($p_pid, $search_date_issued_sql_format);
 
         $total_proxy = count($proxy_list);
+
+        if (isset($_POST['continue']))
+        {
+
+            Proxy::outProxy();
+            Proxy::outProxyPerson();
+
+            if (isset($_POST['selected_proxy']))
+            {
+                $p_id =  htmlspecialchars($_POST['selected_proxy']);
+            }
+            Proxy::memorizeProxy($p_id);
+            Proxy::memorizeProxyPerson($p_pid);
+            header('Location: /route/send?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create.
+                '&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid);
+
+        }
+
+        unset($_POST);
 
         if($is_create)
         {

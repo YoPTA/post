@@ -3,18 +3,6 @@
 class Validate
 {
     /*
-     * Провенрка даты
-     * @var $date string - дата
-     * @var $format string - формат даты
-     * return string
-     */
-    /*public function checkDate($date, $format = 'Y-m-d H:i:s')
-    {
-        $d = DateTime::createFromFormat($format, $date);
-        return $d && $d->format($format) == $date;
-    }*/
-
-    /*
      * Проверяет является ли значение датой
      * @var $value string - дата
      * @var $format string - формат даты

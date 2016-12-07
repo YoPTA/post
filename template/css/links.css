@@ -10,6 +10,15 @@ div.menu {
     font-size: 0px;
 }
 
+div.welcome{
+    vertical-align: middle;
+    color: #ffffff;
+}
+
+div.welcome h3{
+    margin: 7px;
+}
+
 .header_btn{
     display: inline-block;
     color: #ffffff;
@@ -29,9 +38,7 @@ div.menu {
     background: #575E63;
 }
 
-div.welcome{
-    color: #ffffff;
-}
+
 
 @keyframes color_intensity {
     0%{

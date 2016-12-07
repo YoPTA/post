@@ -119,7 +119,7 @@ include ROOT . '/views/layouts/header.php';
         ?>
 
         <tr class="presentaion">
-            <td align="center"><input type="radio" name="select_proxy" value="<?= $p_list['id'] ?>"/></td>
+            <td align="center"><input type="radio" name="selected_proxy" value="<?= $p_list['id'] ?>"/></td>
             <td align="center"><?= $i ?></td>
             <td><?= $p_list['number'] ?></td>
             <td><?= $p_list['authority_issued'] ?></td>
@@ -167,7 +167,7 @@ include ROOT . '/views/layouts/header.php';
 
 
 <script>
-    $("input[name='select_proxy']").click(function () {
+    $("input[name='selected_proxy']").click(function () {
 
         var button_continue = 'continue';
         document.getElementById(button_continue).style.display = 'block';
