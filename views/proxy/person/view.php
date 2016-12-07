@@ -91,7 +91,15 @@ include ROOT . '/views/layouts/header.php';
     <?php
     $i = 0;
     ?>
-
+    <form method="POST">
+    <div class="full_width">
+        <button class="continue" name="continue" id="continue" title="Продолжить">
+            <div class="bg_button">
+            <img src="/template/images/arrow_forward.png" alt="ВПЕРЕД" style="vertical-align: middle" />
+            </div>
+        </button>
+    </div>
+    <br />
     <table class="view full_width" cellspacing="0" cellpadding="0">
         <tr class="head" align="center">
             <td class="one_sixteenth">...</td>
@@ -151,10 +159,20 @@ include ROOT . '/views/layouts/header.php';
         ?>
 
     </table>
+    </form>
     <br /><br />
     <div class="head font_size_twelve full_width" align="center">Показано: <?= $i ?> из <?= $total_proxy ?></div>
     <br /><br />
     <div id="pagination" class="pagination full_width font_size_twelve"><?= ''//$pagination->get(); ?></div>
 
+
+<script>
+    $("input[name='select_proxy']").click(function () {
+
+        var button_continue = 'continue';
+        document.getElementById(button_continue).style.display = 'block';
+
+    })
+</script>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

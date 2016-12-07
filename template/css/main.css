@@ -11,6 +11,12 @@ br{
     font-size: 14px;
 }
 
+button.continue{
+    padding: 0;
+    border: 0;
+    display: none;
+}
+
 div.bg_button {
     border: 1px solid rgba(153, 153, 153, .9);
     cursor: pointer;
