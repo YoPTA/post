@@ -67,9 +67,9 @@ class SiteController
             $package_type = PACKAGE_ALL;
         }
 
-        $packages = Package::getPackages($track, $page, $date_create, $package_type, $user['company_address_id'], $office);
+        $packages = Package::getPackages($track, $page, $date_converter->stringToDate($date_create), $package_type, $user['company_address_id'], $office);
 
-        $total_packages = Package::getTotalPackages($track, $date_create, $package_type, $user['company_address_id'], $office);
+        $total_packages = Package::getTotalPackages($track, $date_converter->stringToDate($date_create), $package_type, $user['company_address_id'], $office);
 
 
         $index_number = ($page - 1) * Package::SHOW_BY_DEFAULT;

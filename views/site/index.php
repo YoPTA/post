@@ -7,19 +7,11 @@ include ROOT . '/views/layouts/header.php';
 
 ?>
 <script src="/template/js/jquery.maskedinput.min.js" type="text/javascript"></script>
-<script type="text/javascript">
-    $(function() {
-        $.mask.definitions['~'] = "[+-]";
-
-        $("#date_create").mask("9999-99-99");
-    });
-</script>
-
     <h2 align="center"><?= $pagetitle ?></h2>
     <form method="GET">
         <input type="search" name="track" placeholder="Введите трек-номер" class="quarter" value="<?= $track ?>" /><span class="right_indent"></span>
         <input type="hidden" name="page" value="<?= $page ?>"  />
-        <input type="search" id="date_create" name="date_create" value="<?= $date_create ?>" class="one_eighth" placeholder="ГГГГ-ММ-ДД" /><span class="right_indent"></span>
+        <input type="text" id="date_create" name="date_create" value="<?= $date_create ?>" class="tcal quarter" placeholder="Дата выдачи" /><span class="right_indent"></span>
         <select class="one_eighth" name="package_type">
             <option value="<?= PACKAGE_ALL ?>" <?php if ($package_type == PACKAGE_ALL) echo 'selected'; ?> >Все</option>
             <option value="<?= PACKAGE_INPUT ?>" <?php if ($package_type == PACKAGE_INPUT) echo 'selected'; ?> >Входящие</option>
