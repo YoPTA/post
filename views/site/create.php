@@ -144,9 +144,9 @@ include ROOT . '/views/layouts/header.php';
     <?php if($to_company_id != null && $from_company_id != null): ?>
 
     <div class="more full_width font_size_twelve" align="center">
-        <button align="center" class="one_eighth button view_content" id="more_btn"  title="Посмотреть содержимое посылки">
-            <img src="/template/images/view_content.png" alt=""/> Содержимое посылки
-        </button>
+        <div align="center" class="bg_button inline view_content" id="more_btn"  title="Посмотреть содержимое посылки">
+            <img src="/template/images/view_content.png" alt="Посмотреть содержимое посылки"/>
+        </div>
         <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
             <?php
             if($package_list != null && $package_objects != null): ?>

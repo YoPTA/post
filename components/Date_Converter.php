@@ -15,6 +15,11 @@ class Date_Converter
         $segments = explode('-', $date_to_convert);
         if (count($segments) == 3)
         {
+            $day = explode(' ', $segments[2]);
+            if (count($day) == 2)
+            {
+                $segments[2] = $day[0];
+            }
             return $segments[2].'.'.$segments[1].'.'.$segments[0];
         }
         return '00.00.0000';

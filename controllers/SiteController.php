@@ -9,6 +9,8 @@ class SiteController
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
 
+        $date_converter = new Date_Converter();
+
         $errors = false;
 
         $track = null;

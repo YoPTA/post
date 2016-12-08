@@ -20,7 +20,7 @@ include ROOT . '/views/layouts/header.php';
         <span><b>Трек-номер:</b> <?= $p_number; ?></span>
         <div class="more half font_size_twelve" align="left">
             <div align="center" class="bg_button inline view_content" id="more_btn"  title="Посмотреть содержимое посылки">
-                <img src="/template/images/view_content.png" alt=""/>
+                <img src="/template/images/view_content.png" alt="Посмотреть содержимое посылки"/>
             </div>
             <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
                 <?php

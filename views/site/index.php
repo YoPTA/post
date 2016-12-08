@@ -71,7 +71,7 @@ include ROOT . '/views/layouts/header.php';
             <td>
                 <div title="<?= $string_utility->getAddressToView(1, $package, 'to_'); ?>"><?= $package['to_company_name'] ?></div>
             </td>
-            <td align="center"><?= $package['package_creation_datetime'] ?></td>
+            <td align="center"><?= $date_converter->dateToString($package['package_creation_datetime']) ?></td>
             <td><?= $package['user_lastname'].' '.$package['user_firstname'].' '.$package['user_middlename'] ?></td>
         </tr>
         <?php endforeach; //foreach($packages as $package): ?>
