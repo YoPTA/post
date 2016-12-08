@@ -16,31 +16,31 @@ include ROOT . '/views/layouts/header.php';
     <br /><br />
     <div class="inline">
         <table class="view half">
-            <tr class="presentaion">
+            <tr class="presentation">
                 <td class="accent">Доверенное лицо</td>
                 <td class="quarter">
                     <?= $proxy_person['lastname'].' '.$proxy_person['firstname'].' ' .$proxy_person['middlename'] ?>
                 </td>
             </tr>
-            <tr class="presentaion">
+            <tr class="presentation">
                 <td class="accent">Серия и номер паспорта</td>
                 <td>
                     <?= $proxy_person['document_series'].' '.$proxy_person['document_number'] ?>
                 </td>
             </tr>
-            <tr class="presentaion">
+            <tr class="presentation">
                 <td class="accent">Дата выдачи</td>
                 <td><?= $date_converter->dateToString($proxy_person['date_issued']) ?></td>
             </tr>
-            <tr class="presentaion">
+            <tr class="presentation">
                 <td class="accent">Место выдачи</td>
                 <td><?= $proxy_person['place_name'] ?></td>
             </tr>
-            <tr class="presentaion">
+            <tr class="presentation">
                 <td class="accent">Код выдачи</td>
                 <td><?= $proxy_person['place_code'] ?></td>
             </tr>
-            <tr class="presentaion">
+            <tr class="presentation">
                 <td class="accent">Номер телефона</td>
                 <td><?= $proxy_person['phone_number'] ?></td>
             </tr>
@@ -118,7 +118,7 @@ include ROOT . '/views/layouts/header.php';
                 $i++;
         ?>
 
-        <tr class="presentaion">
+        <tr class="presentation">
             <td align="center"><input type="radio" name="selected_proxy" value="<?= $p_list['id'] ?>"/></td>
             <td align="center"><?= $i ?></td>
             <td><?= $p_list['number'] ?></td>

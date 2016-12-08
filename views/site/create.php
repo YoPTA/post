@@ -22,10 +22,10 @@ include ROOT . '/views/layouts/header.php';
     <form method="POST" name="create_form" onload="selectChanged();">
     <div class="full_width">
         <div class="inline half fl right_indent" align="left">
-            <input type="button" class="button one_eighth right_indent bg_light_green" name="doka_package" value="Добавить посылку" onclick="document.location.href = '/doka/package';" />
+            <input type="button" class="button one_eighth right_indent" name="doka_package" value="Создать" onclick="document.location.href = '/doka/package';" />
         </div>
         <div class="half inline fr" align="right">
-            <input type="submit" class="button one_eighth bg_light_red" name="clear" value="Отчистить" />
+            <input type="submit" class="button one_eighth" name="clear" value="Отчистить" />
         </div>
     </div><br /><br /><br />
 

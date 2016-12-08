@@ -50,12 +50,26 @@ include ROOT . '/views/layouts/header.php';
     </div>
     <span class="right_indent"></span>
     <div class="inline fr half">
-    <?php if ($proxy == null || $proxy_person == null): ?>
-        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
-            <input type="button" class="button quarter" value="Выбрать доверенное лицо" />
-        </a>
+    <?php if ($proxy != null && $proxy_person != null): ?>
+        <table class="view half">
+            <tr class="presentation">
+                <td class="accent one_eighth">Доверенное лицо</td>
+				<td><?= $proxy_person['lastname'] . ' ' . $proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?></td>
+            </tr>
+			<tr class="presentation">
+				<td class="accent">Доверенность</td>
+				<td>
+					<p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
+					<p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
+					<p>Дата истечения: <?= $proxy['date_expired'] ?></p>
+				</td>
+			</tr>
+        </table>
+        <br /><br />
     <?php endif; // if ($proxy == null || $proxy_person == null): ?>
-
+    <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
+        <input type="button" class="button quarter" value="Выбрать доверенное лицо" />
+    </a>
     </div>
 </div>
 

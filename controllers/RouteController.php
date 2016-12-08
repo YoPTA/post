@@ -175,10 +175,22 @@ class RouteController
             }
         }
 
-        $proxy = Proxy::checkProxy(); // Доверенность
-        $proxy_person = Proxy::checkProxyPerson(); // Доверреное лицо
+		$proxy = null;
+		$proxy_person = null;
+		
+        $proxy_id = Proxy::checkProxy(); // Доверенность
+        $proxy_person_id = Proxy::checkProxyPerson(); // Доверреное лицо
+		
+		if ($proxy_id != null)
+		{
+			$proxy = Proxy::getProxy($proxy_id);
+		}
+		if ($proxy_person_id != null)
+		{
+			$proxy_person = Proxy::getProxyPerson($proxy_person_id);
+		}
 
-
+		
         require_once ROOT . '/views/route/send.php';
         return true;
     }

@@ -52,7 +52,7 @@ include ROOT . '/views/layouts/header.php';
             $i++;
             $index_number++;
                 ?>
-        <tr class="presentaion">
+        <tr class="presentation">
 
             <td align="center"><?= $index_number; ?></td>
             <td title="<?= $package['package_note'] ?>">

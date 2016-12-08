@@ -151,11 +151,11 @@ tr.bgGray_two{
     background-color: #EEEEEE;
 }
 
-tr.presentaion:nth-child(odd) {
+tr.presentation:nth-child(odd) {
     background-color: #F4F4F4;
 }
 
-tr.presentaion:nth-child(even) {
+tr.presentation:nth-child(even) {
     background-color: #EEEEEE;
 }
 

@@ -53,7 +53,7 @@ $i = 0;
             foreach ($proxy_persons as $p_person):
                 $i++;
         ?>
-        <tr class="presentaion">
+        <tr class="presentation">
             <td align="center"><?= $i; ?></td>
             <td>
                 <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>">
