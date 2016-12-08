@@ -14,14 +14,14 @@ include ROOT . '/views/layouts/header.php';
 </div>
 <br /><br />
 
-<div class="font_size_fourteen">
+<div class="font_size_fourteen full_width">
     <div class="inline fl ">
         <span><b>Посылка:</b> <?= $p_note; ?></span><br /><br />
         <span><b>Трек-номер:</b> <?= $p_number; ?></span>
         <div class="more half font_size_twelve" align="left">
-            <button align="center" class="one_eighth button view_content" id="more_btn"  title="Посмотреть содержимое посылки">
-                <img src="/template/images/view_content.png" alt=""/> Содержимое посылки
-            </button>
+            <div align="center" class="bg_button inline view_content" id="more_btn"  title="Посмотреть содержимое посылки">
+                <img src="/template/images/view_content.png" alt=""/>
+            </div>
             <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
                 <?php
                 if($package_objects != null && is_array($package_objects)): ?>
@@ -55,6 +55,7 @@ include ROOT . '/views/layouts/header.php';
         <div class="inline bg_button" id="clear" title="Отчистить">
             <img src="/template/images/besom.png" />
         </div>
+        <br /><br />
         <table class="view half">
             <tr class="presentation">
                 <td class="accent one_eighth">Доверенное лицо</td>
@@ -72,11 +73,28 @@ include ROOT . '/views/layouts/header.php';
         <br /><br />
     <?php endif; // if ($proxy == null || $proxy_person == null): ?>
     </div>
-    <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
-        <input type="button" class="button quarter" value="Выбрать доверенное лицо" />
-    </a>
+        <div class="bg_button inline">
+            <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
+
+                    <img src="/template/images/proxy_person.png" />
+            </a>
+        </div>
     </div>
+    <br />
+
 </div>
+
+<?php if ($proxy != null && $proxy_person != null): ?>
+    <div class="full_width" align="center" style="margin-top: 280px;">
+        <form method="POST">
+            <button class="button one_eighth" name="send">
+                <img src="/template/images/paper-plane.png">
+                Отправить
+            </button>
+        </form>
+
+    </div>
+<?php endif; // if ($proxy == null || $proxy_person == null): ?>
     <!-- Асинхронные запросы -->
     <script>
         $(document).ready(function(){
