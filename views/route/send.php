@@ -50,50 +50,53 @@ include ROOT . '/views/layouts/header.php';
     </div>
     <span class="right_indent"></span>
     <div class="inline fr half">
-    <div id="dinamic_content">
-    <?php if ($proxy != null && $proxy_person != null): ?>
-        <div class="inline bg_button" id="clear" title="Отчистить">
-            <img src="/template/images/besom.png" />
-        </div>
-        <br /><br />
-        <table class="view half">
-            <tr class="presentation">
-                <td class="accent one_eighth">Доверенное лицо</td>
-				<td><?= $proxy_person['lastname'] . ' ' . $proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?></td>
-            </tr>
-			<tr class="presentation">
-				<td class="accent">Доверенность</td>
-				<td>
-					<p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
-					<p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
-					<p>Дата истечения: <?= $proxy['date_expired'] ?></p>
-				</td>
-			</tr>
-        </table>
-        <br /><br />
-    <?php endif; // if ($proxy == null || $proxy_person == null): ?>
-    </div>
-        <div class="bg_button inline">
+        <div class="bg_button inline" title="Выбрать доверенное лицо">
             <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
 
-                    <img src="/template/images/proxy_person.png" />
+                <img src="/template/images/proxy_person.png" alt="Выбрать доверенное лицо" />
             </a>
         </div>
+        <span class="right_indent"></span>
+        <div id="dinamic_content">
+            <br />
+            <div class="inline bg_button" id="clear" title="Отчистить">
+                <img src="/template/images/besom.png" />
+            </div>
+            <?php if ($proxy != null && $proxy_person != null): ?>
+                <br /><br />
+                <table class="view half">
+                    <tr class="presentation">
+                        <td class="accent one_eighth">Доверенное лицо</td>
+                        <td><?= $proxy_person['lastname'] . ' ' . $proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?></td>
+                    </tr>
+                    <tr class="presentation">
+                        <td class="accent">Доверенность</td>
+                        <td>
+                            <p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
+                            <p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
+                            <p>Дата истечения: <?= $proxy['date_expired'] ?></p>
+                        </td>
+                    </tr>
+                </table>
+                <br /><br />
+                <div align="center">
+                    <form method="POST">
+                        <button class="button one_eighth" name="send">
+                            <img src="/template/images/paper-plane.png">
+                            Отправить
+                        </button>
+                    </form>
+                </div>
+            <?php endif; // if ($proxy == null || $proxy_person == null): ?>
+        </div>
+
     </div>
     <br />
 
 </div>
 
 <?php if ($proxy != null && $proxy_person != null): ?>
-    <div class="full_width" align="center" style="margin-top: 280px;">
-        <form method="POST">
-            <button class="button one_eighth" name="send">
-                <img src="/template/images/paper-plane.png">
-                Отправить
-            </button>
-        </form>
 
-    </div>
 <?php endif; // if ($proxy == null || $proxy_person == null): ?>
     <!-- Асинхронные запросы -->
     <script>

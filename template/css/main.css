@@ -22,6 +22,7 @@ div.bg_button {
     cursor: pointer;
     background: rgb(221, 221, 221);
     width: auto;
+    margin: 0;
 }
 
 div.border{

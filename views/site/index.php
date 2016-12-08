@@ -61,9 +61,11 @@ include ROOT . '/views/layouts/header.php';
                 </a>
             </td>
             <td>
-                <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
-                    <img src="/template/images/view_content.png">
-                </a>
+                <div class="bg_button inline">
+                    <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
+                        <img src="/template/images/view_content.png">
+                    </a>
+                </div>
             </td>
             <td>
                 <div title="<?= $string_utility->getAddressToView(1, $package, 'from_'); ?>"><?= $package['from_company_name'] ?></div>
