@@ -16,6 +16,7 @@ return [
 
     'route/view' => 'route/view',
     'route/send' => 'route/send',
+    'route/clear_proxy' => 'route/clearproxy',
 
     'proxy/person_index' => 'proxy/personindex',
     'proxy/person_add' => 'proxy/personadd',

@@ -7,7 +7,7 @@ include ROOT . '/views/layouts/header.php';
 
 ?>
 
-    <h2 align="center"><?= $pagetitle ?></h2>
+<h2 align="center" xmlns="http://www.w3.org/1999/html"><?= $pagetitle ?></h2>
     <?php if (isset($errors) && is_array($errors)): ?>
         <div class="border error font_size_twelve">
             <ul>
@@ -22,10 +22,16 @@ include ROOT . '/views/layouts/header.php';
     <form method="POST" name="create_form" onload="selectChanged();">
     <div class="full_width">
         <div class="inline half fl right_indent" align="left">
-            <input type="button" class="button one_eighth right_indent" name="doka_package" value="Создать" onclick="document.location.href = '/doka/package';" />
+            <button type="button" class="button one_eighth" name="doka_package" value="Создать" onclick="document.location.href = '/doka/package';">
+                <img src="/template/images/create.png"  />
+                Создать
+            </button>
         </div>
         <div class="half inline fr" align="right">
-            <input type="submit" class="button one_eighth" name="clear" value="Отчистить" />
+            <button  class="button one_eighth" name="clear" >
+                <img src="/template/images/besom.png" />
+                Отчистить
+            </button>
         </div>
     </div><br /><br /><br />
 
@@ -138,9 +144,9 @@ include ROOT . '/views/layouts/header.php';
     <?php if($to_company_id != null && $from_company_id != null): ?>
 
     <div class="more full_width font_size_twelve" align="center">
-        <div align="center" class="one_eighth button view_content" id="more_btn">
-            Содержимое посылки
-        </div>
+        <button align="center" class="one_eighth button view_content" id="more_btn"  title="Посмотреть содержимое посылки">
+            <img src="/template/images/view_content.png" alt=""/> Содержимое посылки
+        </button>
         <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
             <?php
             if($package_list != null && $package_objects != null): ?>

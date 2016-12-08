@@ -19,9 +19,9 @@ include ROOT . '/views/layouts/header.php';
         <span><b>Посылка:</b> <?= $p_note; ?></span><br /><br />
         <span><b>Трек-номер:</b> <?= $p_number; ?></span>
         <div class="more half font_size_twelve" align="left">
-            <div align="center" class="one_eighth button view_content" id="more_btn">
-                Содержимое посылки
-            </div>
+            <button align="center" class="one_eighth button view_content" id="more_btn"  title="Посмотреть содержимое посылки">
+                <img src="/template/images/view_content.png" alt=""/> Содержимое посылки
+            </button>
             <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
                 <?php
                 if($package_objects != null && is_array($package_objects)): ?>
@@ -50,7 +50,11 @@ include ROOT . '/views/layouts/header.php';
     </div>
     <span class="right_indent"></span>
     <div class="inline fr half">
+    <div id="dinamic_content">
     <?php if ($proxy != null && $proxy_person != null): ?>
+        <div class="inline bg_button" id="clear" title="Отчистить">
+            <img src="/template/images/besom.png" />
+        </div>
         <table class="view half">
             <tr class="presentation">
                 <td class="accent one_eighth">Доверенное лицо</td>
@@ -67,11 +71,22 @@ include ROOT . '/views/layouts/header.php';
         </table>
         <br /><br />
     <?php endif; // if ($proxy == null || $proxy_person == null): ?>
+    </div>
     <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
         <input type="button" class="button quarter" value="Выбрать доверенное лицо" />
     </a>
     </div>
 </div>
-
+    <!-- Асинхронные запросы -->
+    <script>
+        $(document).ready(function(){
+            $("#clear").click(function () {
+                $.post("/route/clear_proxy", {}, function (data) {
+                    $("#dinamic_content").html(data);
+                });
+                return false;
+            });
+        });
+    </script>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

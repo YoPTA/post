@@ -194,4 +194,12 @@ class RouteController
         require_once ROOT . '/views/route/send.php';
         return true;
     }
+
+    public function actionClearProxy()
+    {
+        Proxy::outProxy();
+        Proxy::outProxyPerson();
+
+        return true;
+    }
 }
