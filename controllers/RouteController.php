@@ -81,9 +81,11 @@ class RouteController
     public function actionSend()
     {
         $user = null;
+        $user_id = null;
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
+        $date_utility = new Date_Utility();
 
         $errors = false;
 
@@ -96,6 +98,10 @@ class RouteController
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
+
+
+        $send_values = null; // Данные об отправлении
+        $route = null; // Информация о маршруте
 
         $search = null;
 
@@ -189,6 +195,61 @@ class RouteController
 		{
 			$proxy_person = Proxy::getProxyPerson($proxy_person_id);
 		}
+
+        if (isset($_POST['send']))
+        {
+            $route = Route::getRouteInfo($rid);
+
+            if ($route['package_id'] != $pid)
+            {
+                // Если посылка не соответствует маршруту
+                $errors['package_id'] = 'Да ты хакер... :-)';
+            }
+
+            if ((int)$route['is_send'] != 0)
+            {
+                // Если посылку уже отправляли, либо, если ее нельзя отправить
+                $errors['is_send'] = 'Отправление невозможно';
+            }
+
+            if ($route['datetime_send'] != DEFAULT_DATETIME)
+            {
+                // Если дата отправления уже стоит, значит посылку уже отправляли, либо взлом
+                $errors['datetime_send'] = 'Ошибка с датой отправления';
+            }
+
+            if ($route['datetime_receive'] == DEFAULT_DATETIME)
+            {
+                // Если посылка еще не была получена
+                $errors['datetime_receive'] = 'Попытка отправить посылку, которая еще не получалась';
+            }
+
+            if ($proxy_id == null || $proxy_id == 0)
+            {
+                // Если не выбрана доверенность
+                $errors['proxy_id'] = 'Не выбрана доверенность';
+            }
+
+            if ($proxy_person_id == null || $proxy_person_id == 0)
+            {
+                // Если не выбрано доверенное лицо
+                $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
+            }
+
+            // Если ошибок не оказалось
+            if ($errors == false)
+            {
+                $send_values['send_proxy_id'] = $proxy_id;
+                $send_values['send_proxy_person_id'] = $proxy_person_id;
+                $send_values['send_user_id'] = $user_id;
+                $send_values['datetime_send'] = date('Y-m-d H:i:s');
+                Route::send($rid, $send_values);
+                Proxy::outProxy();
+                Proxy::outProxyPerson();
+                header('Location: /site/index');
+            }
+        }
+
 
 		
         require_once ROOT . '/views/route/send.php';

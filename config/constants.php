@@ -45,3 +45,6 @@ define('OFFICE_NOW', 1); // Текущий
 // Типы документов
 define('DOCUMENT_TYPE_PASSPORT', 1); // Паспорт
 define('DOCUMENT_TYPE_PROXY', 2); // Доверенность
+
+// Дата и время по умолчанию
+define('DEFAULT_DATETIME', '0000-00-00 00:00:00');

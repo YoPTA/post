@@ -14,6 +14,20 @@ include ROOT . '/views/layouts/header.php';
 </div>
 <br /><br />
 
+<?php if (isset($errors) && is_array($errors)): ?>
+    <div class="error font_size_twelve">
+        <div class="er"></div>
+        <h2 align="center">Ошибка ввода</h2>
+
+        <ul>
+            <?php foreach ($errors as $error): ?>
+                <li class="type_none"> - <?php echo $error; ?></li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    <br /><br />
+<?php endif; ?>
+
 <div class="font_size_fourteen full_width">
     <div class="inline fl ">
         <span><b>Посылка:</b> <?= $p_note; ?></span><br /><br />
@@ -59,10 +73,11 @@ include ROOT . '/views/layouts/header.php';
         <span class="right_indent"></span>
         <div id="dinamic_content">
             <br />
+            <?php if ($proxy != null && $proxy_person != null): ?>
             <div class="inline bg_button" id="clear" title="Отчистить">
                 <img src="/template/images/besom.png" />
             </div>
-            <?php if ($proxy != null && $proxy_person != null): ?>
+
                 <br /><br />
                 <table class="view half">
                     <tr class="presentation">

@@ -19,15 +19,14 @@ class Date_Utility
         $this->system_format_date = 'd.m.Y';
         $this->system_format_time = 'H:i:s';
         $this->system_format_datetime = $this->system_format_date.' '.$this->system_format_time;
+
     }
 
-    function PlainGetDateTime($value = null, $format_out = null, $format_in = null)
+    public function getDateTime($value = null, $format_out = null, $format_in = null)
     {
-        global $SYSTEM_FORMAT_DATETIME;
-
         if (isset($value))
         {
-            $format_in = (isset($format_in)) ? $format_in : $SYSTEM_FORMAT_DATETIME;
+            $format_in = (isset($format_in)) ? $format_in : $this->system_format_datetime;
 
             $datetime = DateTime::createFromFormat($format_in, $value);
 
@@ -43,7 +42,7 @@ class Date_Utility
         }else{
             $datetime = new DateTime();
         }
-        return $datetime->format(((isset($format_out)) ? $format_out : $SYSTEM_FORMAT_DATETIME));
+        return $datetime->format(((isset($format_out)) ? $format_out : system_format_datetime));
     }
 
     function PlainGetDate($value = null, $format_out = null, $format_in = null)

@@ -112,7 +112,7 @@ class Route
      * @var $receive_values array() - данные о получении
      * return boolean
      */
-    public static function receiveUpdate($id, $receive_values)
+    public static function receive($id, $receive_values)
     {
         $datetime_receive = date('Y-m-d H:i:s');
         $sql = 'UPDATE route
@@ -144,7 +144,7 @@ class Route
      * @var $send_values array() - данные о отправлении
      * return boolean
      */
-    public static function sendUpdate($id, $send_values)
+    public static function send($id, $send_values)
     {
         $datetime_send = date('Y-m-d H:i:s');
         $sql = 'UPDATE route
@@ -305,5 +305,34 @@ class Route
         return $route;
     }
 
+
+    /*
+     * Получить всю информацию о маршруте
+     * @var $id int - id маршрута
+     * return array()
+     */
+    public static function getRouteInfo($id)
+    {
+        $sql = 'SELECT
+            *
+          FROM
+            route
+          WHERE
+            route.id = :id';
+        $db = Database::getConnection();
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Обращаемся к записи
+        $route = $result->fetch(PDO::FETCH_ASSOC);
+
+        if($route)
+        {
+            return $route;
+        }
+        return false;
+    }
 
 }

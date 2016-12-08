@@ -37,7 +37,7 @@ include ROOT . '/views/layouts/header.php';
                         <img src="/template/images/paper-plane.png" />
                     </a>
                     </div>
-                <?php endif; // if ($pr['is_receive'] == 0): ?>
+                <?php endif; // if ($package_route[$i]['is_send'] == 0): ?>
             </td>
             <td class="one_sixteenth <?php
             if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
