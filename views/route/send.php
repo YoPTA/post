@@ -65,7 +65,7 @@ include ROOT . '/views/layouts/header.php';
     <span class="right_indent"></span>
     <div class="inline fr half">
         <div class="bg_button inline" title="Выбрать доверенное лицо">
-            <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
+            <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_SEND ?>">
 
                 <img src="/template/images/proxy_person.png" alt="Выбрать доверенное лицо" />
             </a>

@@ -16,6 +16,7 @@ return [
 
     'route/view' => 'route/view',
     'route/send' => 'route/send',
+    'route/receive' => 'route/receive',
     'route/clear_proxy' => 'route/clearproxy',
 
     'proxy/person_index' => 'proxy/personindex',
@@ -31,7 +32,7 @@ return [
 
     'package/objects' => 'package/objects',
 
-    'site/select_company' => 'site/selectcompany',
+    //'site/select_company' => 'site/selectcompany',
 
     'site/index' => 'site/index',
     //'site' => 'site/index',

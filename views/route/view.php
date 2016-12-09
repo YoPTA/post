@@ -30,15 +30,16 @@ include ROOT . '/views/layouts/header.php';
         <?php if ($route_serial_number == 1): ?>
         <tr>
             <td class="one_sixteenth" align="center">
-                <?php if ($package_route[$i]['is_send'] == 0): ?>
+                <?php if ($package_route[$i]['is_send'] == 0 && $is_send): ?>
                     <div class="bg_button inline">
                     <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
                        title="Отправить">
                         <img src="/template/images/paper-plane.png" />
                     </a>
                     </div>
-                <?php endif; // if ($package_route[$i]['is_send'] == 0): ?>
+                <?php endif; // if ($package_route[$i]['is_send'] == 0 && $is_send): ?>
             </td>
+
             <td class="one_sixteenth <?php
             if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
             ?>" align="center"><img src="/template/images/home.png" /></td>
@@ -56,14 +57,14 @@ include ROOT . '/views/layouts/header.php';
         <tr>
             <td class="one_sixteenth" align="center">
             <?php if ($package_route[$i - 1]['is_send'] == 1): ?>
-                <?php if ($package_route[$i]['is_receive'] == 0): ?>
+                <?php if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
                 <div class="bg_button inline">
-                    <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
+                    <a href="/route/receive?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
                        title="Подтвердить получение">
                         <img src="/template/images/mail-receive.png" />
                     </a>
                 </div>
-                <?php endif; // if ($package_route[$i]['is_receive'] == 0): ?>
+                <?php endif; // if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
             <?php endif; // if ($package_route[$i - 1]['is_send'] == 1): ?>
             </td>
             <td class="one_sixteenth <?php
@@ -75,21 +76,23 @@ include ROOT . '/views/layouts/header.php';
         <tr>
             <td class="one_sixteenth" align="center">
                 <?php if ($package_route[$i - 1]['is_send'] == 1): ?>
-                    <?php if ($package_route[$i]['is_receive'] == 0): ?>
+                    <?php if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
                      <div class="bg_button inline">
-                        <a title="Подтвердить получение">
+                         <a href="/route/receive?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
+                            title="Подтвердить получение">
                             <img src="/template/images/mail-receive.png" />
                         </a>
                      </div>
-                    <?php endif; // if ($package_route[$i]['is_receive'] == 0): ?>
+                    <?php endif; // if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
 
-                    <?php if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0): ?>
+                    <?php if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0 && $is_send): ?>
                     <div class="bg_button inline">
-                        <a title="Подтвердить получение">
+                        <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
+                           title="Отправить">
                             <img src="/template/images/paper-plane.png" />
                         </a>
                     </div>
-                    <?php endif; // if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0): ?>
+                    <?php endif; // if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0 && $is_receive): ?>
                 <?php endif; // if ($package_route[$i - 1]['is_send'] == 1): ?>
 
             </td>

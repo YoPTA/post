@@ -25,6 +25,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $proxy_persons = null; // Доверенные лица
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
 
@@ -93,6 +94,23 @@ class ProxyController
             $rid = htmlspecialchars($_GET['rid']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
+        $page_name = 'site';
+        if ($user_ref == USER_REFERENCE_SEND)
+        {
+            $page_name = 'send';
+        }
+
+        if ($user_ref == USER_REFERENCE_RECEIVE)
+        {
+            $page_name = 'receive';
+        }
+
+
         if (isset($_GET['search']))
         {
             $search = htmlspecialchars($_GET['search']);
@@ -139,6 +157,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $proxy_person = null; // Информация о доверенном лице
         $search = null; // Искомое значение
 
@@ -204,6 +223,11 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['search']))
@@ -342,7 +366,8 @@ class ProxyController
                 unset($proxy_person);
 
                 header('Location: /proxy/person_index?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search);
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                    .'&search='.$search);
             }
 
         }
@@ -378,6 +403,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $search_date_issued = null; // Искомая дата выдачи
@@ -447,6 +473,11 @@ class ProxyController
             $rid = htmlspecialchars($_GET['rid']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         if (isset($_GET['search']))
         {
             $search = htmlspecialchars($_GET['search']);
@@ -486,7 +517,17 @@ class ProxyController
             }
             Proxy::memorizeProxy($p_id);
             Proxy::memorizeProxyPerson($p_pid);
-            header('Location: /route/send?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create.
+            $page_name = null;
+            if ($user_ref == USER_REFERENCE_SEND)
+            {
+                $page_name = 'send';
+            }
+            if ($user_ref == USER_REFERENCE_RECEIVE)
+            {
+                $page_name = 'receive';
+            }
+
+            header('Location: /route/'.$page_name.'?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create.
                 '&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid);
 
         }
@@ -528,6 +569,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $proxy_person = null; // Информация о доверенном лице
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
@@ -593,6 +635,11 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['search']))
@@ -738,7 +785,8 @@ class ProxyController
                 unset($proxy_person);
 
                 header('Location: /proxy/person_index?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search);
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                    .'&search='.$search);
             }
 
         }
@@ -771,6 +819,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $proxy_person = null; // Информация о доверенном лице
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
@@ -838,6 +887,11 @@ class ProxyController
             $rid = htmlspecialchars($_GET['rid']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         if (isset($_GET['search']))
         {
             $search = htmlspecialchars($_GET['search']);
@@ -857,12 +911,14 @@ class ProxyController
             Proxy::deleteProxyPerson($p_pid, $proxy_person);
 
             header('Location: /proxy/person_index?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search);
+                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                .'&search='.$search);
         }
         if (isset($_POST['no']))
         {
             header('Location: /proxy/person_index?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search);
+                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                .'&search='.$search);
         }
 
         if($is_change_proxy)
@@ -905,6 +961,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $search_date_issued = null; // Искомая дата выдачи
@@ -971,6 +1028,11 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['search']))
@@ -1048,8 +1110,8 @@ class ProxyController
                 unset($proxy);
                 unset($proxy_or_proxy_person);
                 header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
-                    .'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                    .'&search='.$search.'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
             }
         }
 
@@ -1084,6 +1146,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $p_id = null; // Доверенность
@@ -1151,6 +1214,11 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['search']))
@@ -1234,8 +1302,8 @@ class ProxyController
                 unset($proxy);
 
                 header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
-                    .'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
+                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                    .'&search='.$search.'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
             }
         }
 
@@ -1270,6 +1338,7 @@ class ProxyController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $user_ref = null; // Откуда "пришел" пользователь
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $p_id = null; // Доверенность
@@ -1339,6 +1408,11 @@ class ProxyController
             $rid = htmlspecialchars($_GET['rid']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         if (isset($_GET['search']))
         {
             $search = htmlspecialchars($_GET['search']);
@@ -1368,15 +1442,15 @@ class ProxyController
             Proxy::deleteProxy($p_id, $proxy);
 
             header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
-                .'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
+                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                .'&search='.$search.'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
         }
 
         if (isset($_POST['no']))
         {
             header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&search='.$search
-                .'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
+                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
+                .'&search='.$search.'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
         }
 
         if($is_change_proxy)

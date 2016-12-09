@@ -44,6 +44,7 @@
     <file url="file://$PROJECT_DIR$/views/proxy/proxy/add.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/proxy/proxy/delete.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/proxy/proxy/edit.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/route/receive.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/route/send.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/route/view.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/create.php" charset="UTF-8" />
