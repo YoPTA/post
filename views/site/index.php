@@ -12,11 +12,6 @@ include ROOT . '/views/layouts/header.php';
         <input type="search" name="track" placeholder="Введите трек-номер" class="quarter" value="<?= $track ?>" /><span class="right_indent"></span>
         <input type="hidden" name="page" value="<?= $page ?>"  />
         <input type="text" id="date_create" name="date_create" value="<?= $date_create ?>" class="tcal quarter" placeholder="Дата выдачи" /><span class="right_indent"></span>
-        <select class="one_eighth" name="package_type">
-            <option value="<?= PACKAGE_ALL ?>" <?php if ($package_type == PACKAGE_ALL) echo 'selected'; ?> >Все</option>
-            <option value="<?= PACKAGE_INPUT ?>" <?php if ($package_type == PACKAGE_INPUT) echo 'selected'; ?> >Входящие</option>
-            <option value="<?= PACKAGE_OUTPUT ?>" <?php if ($package_type == PACKAGE_OUTPUT) echo 'selected'; ?> >Исходящие</option>
-        </select><span class="right_indent"></span>
         <select class="one_eighth" name="office">
             <option value="<?= OFFICE_NOW ?>" <?php if ($office == OFFICE_NOW) echo 'selected'; ?> >Текущий офис</option>
             <option value="<?= OFFICE_ALL ?>" <?php if ($office == OFFICE_ALL) echo 'selected'; ?> >Все офисы</option>

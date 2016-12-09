@@ -42,11 +42,6 @@ class SiteController
             $date_create = htmlspecialchars($_GET['date_create']);
         }
 
-        if (isset($_GET['package_type']))
-        {
-            $package_type = htmlspecialchars($_GET['package_type']);
-        }
-
         if ($package_type < 0)
         {
             $package_type = 0;
