@@ -293,7 +293,7 @@ class RouteController
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
 
 
-        $send_values = null; // Данные об отправлении
+        $receive_values = null; // Данные об отправлении
         $route = null; // Информация о маршруте
 
         $search = null;
@@ -390,6 +390,56 @@ class RouteController
             $proxy_person = Proxy::getProxyPerson($proxy_person_id);
         }
 
+
+        if (isset($_POST['receive']))
+        {
+            $route = Route::getRouteInfo($rid);
+
+            if ($route['package_id'] != $pid)
+            {
+                // Если посылка не соответствует маршруту
+                $errors['package_id'] = 'Да ты хакер... :-)';
+            }
+
+            if ((int)$route['is_receive'] != 0)
+            {
+                // Если посылку уже подтвердили, либо, если ее нельзя подтвердить
+                $errors['is_receive'] = 'Подтверждение невозможно';
+            }
+
+            if ($route['datetime_receive'] != DEFAULT_DATETIME)
+            {
+                // Если дата подтверждения уже стоит, значит посылку уже подтверждали, либо взлом
+                $errors['datetime_receive'] = 'Ошибка с датой подтверждения';
+            }
+
+            if ($proxy_id == null || $proxy_id == 0)
+            {
+                // Если не выбрана доверенность
+                $errors['proxy_id'] = 'Не выбрана доверенность';
+            }
+
+            if ($proxy_person_id == null || $proxy_person_id == 0)
+            {
+                // Если не выбрано доверенное лицо
+                $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
+            }
+
+            // Если ошибок не оказалось
+            if ($errors == false)
+            {
+                $receive_values['receive_proxy_id'] = $proxy_id;
+                $receive_values['receive_proxy_person_id'] = $proxy_person_id;
+                $receive_values['receive_user_id'] = $user_id;
+                $receive_values['datetime_receive'] = date('Y-m-d H:i:s');
+                Route::receive($rid, $receive_values);
+                Proxy::outProxy();
+                Proxy::outProxyPerson();
+                header('Location: /site/index');
+            }
+
+
+        }
 
 
         if ($is_receive)
