@@ -6,6 +6,8 @@ class RouteController
     public function actionView()
     {
         $user = null;
+
+
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
@@ -255,6 +257,16 @@ class RouteController
         require_once ROOT . '/views/route/send.php';
         return true;
     }
+
+    public function actionReceive()
+    {
+
+
+        require_once ROOT . '/views/route/send.php';
+        return true;
+    }
+
+
 
     public function actionClearProxy()
     {

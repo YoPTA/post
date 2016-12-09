@@ -2,12 +2,20 @@
 
 class User_Role
 {
+
+    private static $roles;
+
+    public function __construct($id)
+    {
+        self::$roles = self::getRole($id);
+    }
+
     /*
      * Получаем информацию о роли
      * @var $id int - id
      * return array() OR boolean
      */
-    public static function getRole($id)
+    private static function getRole($id)
     {
         $sql = 'SELECT
           *
@@ -28,13 +36,12 @@ class User_Role
 
     /*
      * Проверяем является ли пользователь администратором
-     * @var $role_id int - id роли
+     * Работает со статическим приватным полем $roles.
      * return boolean
      */
-    public static function checkAdmin($role_id)
+    public static function checkAdmin()
     {
-        $role = User_Role::getRole($role_id);
-        if($role['is_admin'] == 1)
+        if(self::$roles['is_admin'] == 1)
         {
             return true;
         }
@@ -43,13 +50,12 @@ class User_Role
 
     /*
      * Проверяем может ли пользователь создавать посылки
-     * @var $role_id int - id роли
+     * Работает со статическим приватным полем $roles.
      * return boolean
      */
-    public static function checkCreate($role_id)
+    public static function checkCreate()
     {
-        $role = User_Role::getRole($role_id);
-        if($role['is_create'] == 1)
+        if(self::$roles['is_create'] == 1)
         {
             return true;
         }
@@ -59,13 +65,40 @@ class User_Role
     /*
      * Проверяем является может ли пользователь изменять доверенности и
      * доверенные лица.
-     * @var $role_id int - id роли
+     * Работает со статическим приватным полем $roles.
      * return boolean
      */
-    public static function checkChangeProxy($role_id)
+    public static function checkChangeProxy()
     {
-        $role = User_Role::getRole($role_id);
-        if($role['is_change_proxy'] == 1)
+        if(self::$roles['is_change_proxy'] == 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Проверяем может ли пользователь отправлять посылки
+     * Работает со статическим приватным полем $roles.
+     * return boolean
+     */
+    public static function checkSend()
+    {
+        if(self::$roles['is_send'] == 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Проверяем может ли пользователь получать посылки
+     * Работает со статическим приватным полем $roles.
+     * return boolean
+     */
+    public static function checkReceive()
+    {
+        if(self::$roles['is_receive'] == 1)
         {
             return true;
         }

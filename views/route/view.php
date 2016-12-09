@@ -58,7 +58,8 @@ include ROOT . '/views/layouts/header.php';
             <?php if ($package_route[$i - 1]['is_send'] == 1): ?>
                 <?php if ($package_route[$i]['is_receive'] == 0): ?>
                 <div class="bg_button inline">
-                    <a title="Подтвердить получение">
+                    <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
+                       title="Подтвердить получение">
                         <img src="/template/images/mail-receive.png" />
                     </a>
                 </div>
