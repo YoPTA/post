@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 05 2016 г., 16:59
+-- Время создания: Дек 12 2016 г., 08:17
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `package` (
 --
 
 INSERT INTO `package` (`id`, `number`, `note`, `from_company_address_id`, `to_company_address_id`, `user_id`, `creation_datetime`, `receipt_datetime`, `flag`) VALUES
-(1, '000001', 'ПН.БГ-ВС-ФМ-7805-16', 25, 26, 1, '2016-11-17 10:31:59', '0000-00-00 00:00:00', 1);
+(1, '000001', 'ПН.БГ-ВС-ФМ-7805-16', 25, 26, 1, '2016-12-09 15:16:10', '0000-00-00 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `proxy` (
   `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
   `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
   `flag` int(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `proxy`
@@ -201,7 +201,8 @@ CREATE TABLE IF NOT EXISTS `proxy` (
 INSERT INTO `proxy` (`id`, `number`, `document_type_id`, `date_issued`, `date_expired`, `authority_issued`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, '0', 0, '0000-00-00', '0000-00-00', 'Нет', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
 (1, '1', 2, '2016-06-01', '2017-06-01', 'Некий орган', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
-(2, '', 2, '2016-12-01', '2016-12-30', 'МФЦ', '2016-12-05 16:46:42', 1, '0000-00-00 00:00:00', 0, 1);
+(2, '', 2, '2016-12-01', '2016-12-22', 'МФЦ', '2016-12-05 16:46:42', 1, '2016-12-06 15:38:37', 1, 1),
+(3, '', 2, '2016-12-08', '2016-12-22', 'Выдал кто-то', '2016-12-06 16:04:12', 1, '2016-12-06 16:47:56', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +226,8 @@ CREATE TABLE IF NOT EXISTS `proxy_or_proxy_person` (
 
 INSERT INTO `proxy_or_proxy_person` (`id`, `proxy_id`, `proxy_person_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`) VALUES
 (1, 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0),
-(3, 2, 2, '2016-12-05 16:46:42', 1, '0000-00-00 00:00:00', 0);
+(2, 2, 2, '2016-12-05 16:46:42', 1, '0000-00-00 00:00:00', 0),
+(3, 3, 2, '2016-12-06 16:04:12', 1, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -260,7 +262,7 @@ CREATE TABLE IF NOT EXISTS `proxy_person` (
 INSERT INTO `proxy_person` (`id`, `lastname`, `firstname`, `middlename`, `document_type_id`, `document_series`, `document_number`, `date_issued`, `date_expired`, `place_name`, `place_code`, `phone_number`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, 'Нет', 'Нет', 'Нет', 1, '0000', '000000', '0000-00-00', '0000-00-00', 'Нет', '000-000', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
 (1, 'Иванов', 'Иван', 'Иванович', 1, '5555', '777777', '2016-06-05', '0000-00-00', 'МВД', '555-665', '02030708', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
-(2, 'Петров', 'Петр', 'Петрович', 1, '1111', '222333', '2014-06-14', '0000-00-00', 'Какое-то место', '231-323', '87009596532', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+(2, 'Петров', 'Петр', 'Петрович', 1, '1111', '222333', '2014-06-14', '0000-00-00', 'Какое-то место', '231323', '87009596532', '0000-00-00 00:00:00', 0, '2016-12-09 15:18:37', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -283,16 +285,15 @@ CREATE TABLE IF NOT EXISTS `route` (
   `datetime_receive` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время получения',
   `datetime_send` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время отправления',
   `relation_package_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Отношение к посылке'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `route`
 --
 
 INSERT INTO `route` (`id`, `package_id`, `company_address_id`, `is_receive`, `is_send`, `receive_proxy_id`, `receive_proxy_person_id`, `receive_user_id`, `send_user_id`, `send_proxy_id`, `send_proxy_person_id`, `datetime_receive`, `datetime_send`, `relation_package_id`) VALUES
-(1, 1, 25, 1, 0, 0, 0, 1, 0, 0, 0, '2016-11-17 10:31:59', '0000-00-00 00:00:00', 0),
-(2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0),
-(3, 1, 26, 0, 0, 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
+(1, 1, 25, 1, 0, 0, 0, 1, 0, 0, 0, '2016-12-09 15:16:11', '0000-00-00 00:00:00', 0),
+(2, 1, 26, 0, 0, 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -338,6 +339,8 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   `name` varchar(100) NOT NULL,
   `is_create` int(1) NOT NULL COMMENT 'Может ли создавать',
   `is_change_proxy` int(1) NOT NULL COMMENT 'Может ли изменять доверенности или доверенные лица',
+  `is_receive` int(1) NOT NULL COMMENT 'Может ли получать посылки',
+  `is_send` int(1) NOT NULL COMMENT 'Может ли отправлять посылки',
   `is_admin` int(1) NOT NULL COMMENT 'Обладает ли правами администратора',
   `flag` int(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -346,11 +349,11 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 -- Дамп данных таблицы `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_admin`, `flag`) VALUES
-(0, 'Нет', 0, 0, 0, 0),
-(1, 'Специалист', 1, 0, 0, 0),
-(2, 'Админ', 1, 1, 1, 0),
-(3, 'Зарегистрированный', 0, 0, 0, 0);
+INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_receive`, `is_send`, `is_admin`, `flag`) VALUES
+(0, 'Нет', 0, 0, 0, 0, 0, 0),
+(1, 'Специалист', 1, 0, 0, 0, 0, 0),
+(2, 'Админ', 1, 1, 1, 1, 1, 0),
+(3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -469,7 +472,7 @@ ALTER TABLE `package_or_package_object`
 -- AUTO_INCREMENT для таблицы `proxy`
 --
 ALTER TABLE `proxy`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT для таблицы `proxy_or_proxy_person`
 --
@@ -484,7 +487,7 @@ ALTER TABLE `proxy_person`
 -- AUTO_INCREMENT для таблицы `route`
 --
 ALTER TABLE `route`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
