@@ -49,9 +49,13 @@ include ROOT . '/views/layouts/header.php';
             </td>
             <td>
                 <div class="bg_button inline">
-                    <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
+                    <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
                         <img src="/template/images/view_content.png">
                     </a>
+                </div>
+                <div class="bg_button inline" title="Посмотреть сопроводительный лист"
+                    onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', 'width=1100,height=800,top=50,left=50')">
+                        <img src="/template/images/barcode.png">
                 </div>
             </td>
             <td>

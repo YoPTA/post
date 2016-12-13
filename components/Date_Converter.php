@@ -26,6 +26,26 @@ class Date_Converter
     }
 
     /*
+     * Преобразует дату и время в строку (гггг-мм-дд чч:мм:сс в дд.мм.гггг чч:мм:сс)
+     * @var $datetime_to_convert datetime - дата и время
+     * return string
+     */
+    public function datetimeToString($datetime_to_convert)
+    {
+        $segments = explode('-', $datetime_to_convert);
+        if (count($segments) == 3)
+        {
+            $time = explode(' ', $segments[2]);
+            if (count($time) == 2)
+            {
+                $segments[2] = $time[0];
+            }
+            return $segments[2].'.'.$segments[1].'.'.$segments[0].' '.$time[1];
+        }
+        return '00.00.0000 00:00:00';
+    }
+
+    /*
      * Преобразует строку в дату (дд.мм.гггг в гггг-мм-дд)
      * @var $string_to_convert string - дата
      * return string OR boolean

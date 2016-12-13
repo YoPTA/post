@@ -132,12 +132,13 @@ class SiteController
     {
         $is_create = false;
         $user = null;
+        $user_id = null;
 
         $string_utility = new String_Utility();
 
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
-        $user_id = User::checkLogged();
+
         $errors = null;
         if(isset($_POST['clear']))
         {
@@ -336,5 +337,123 @@ class SiteController
         session_destroy ();
         // Перенаправляем пользователя на главную страницу
         header("Location: /");
+    }
+
+    public function actionBarcode39()
+    {
+        $is_create = false;
+        $user = null;
+        $user_id = null;
+
+        $string_utility = new String_Utility();
+        $date_converter = new Date_Converter();
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $errors = false;
+
+        $track = null;
+        $site_page = 1;
+        $page = 1;
+        $date_create = null;
+        $package_type = 0;
+        $office = OFFICE_NOW;
+        $pid = null; // Id посылки
+
+        if (isset($_GET['track']))
+        {
+            $track = htmlspecialchars($_GET['track']);
+        }
+
+        if (isset($_GET['site_page']))
+        {
+            $site_page = htmlspecialchars($_GET['site_page']);
+        }
+        if ($site_page < 1)
+        {
+            $site_page = 1;
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['date_create']))
+        {
+            $date_create = htmlspecialchars($_GET['date_create']);
+        }
+
+        if (isset($_GET['office']))
+        {
+            $office = htmlspecialchars($_GET['office']);
+        }
+
+        if ($office < 0)
+        {
+            $office = 0;
+        }
+
+        if ($office == OFFICE_ALL)
+        {
+            $package_type = PACKAGE_ALL;
+        }
+
+        if (isset($_GET['pid']))
+        {
+            $pid = htmlspecialchars($_GET['pid']);
+        }
+
+
+        $package_info = Package::getPackageInfo($pid);
+        $barcode = null;
+
+        if ($package_info['p_number'] != null)
+        {
+            $file_path = '/temp/user/';
+            $barcode_filename = $file_path.$user_id.'barcode';
+            $barcode_filetype = 'PNG';
+            $barcode_file = $barcode_filename.'.'.$barcode_filetype;
+
+            if (is_file($barcode_file))
+            {
+                unlink($barcode_file);
+            }
+
+            $barcode= new Barcode();
+
+            if ($barcode)
+            {
+                $barcode->setFont('Tahoma', true);
+                $barcode->setSymblogy('code39');
+                $barcode->setHeight(50);
+                $barcode->setScale(11);
+                $barcode->setFontScale(0);
+                $barcode->setHexColor('#000000', '#FFFFFF');
+
+                $barcode->genBarCode($package_info['p_number'], $barcode_filetype, $barcode_filename);
+
+            }
+        }
+        else
+        {
+            $errors['p_number']= 'Не удалось определить трек-номер';
+        }
+
+
+        if ($is_create)
+        {
+            require_once ROOT . '/views/site/barcode_39.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
     }
 }

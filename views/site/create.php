@@ -10,6 +10,8 @@ include ROOT . '/views/layouts/header.php';
 <h2 align="center" xmlns="http://www.w3.org/1999/html"><?= $pagetitle ?></h2>
     <?php if (isset($errors) && is_array($errors)): ?>
         <div class="border error font_size_twelve">
+            <div class="er"></div>
+            <h2 align="center">Ошибка</h2>
             <ul>
                 <?php foreach ($errors as $error): ?>
                     <li class="type_none"> - <?php echo $error; ?></li>

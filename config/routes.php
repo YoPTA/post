@@ -12,7 +12,7 @@ return [
     'site/error' => 'site/error',
     'site/login' => 'site/login',
     'site/logout' => 'site/logout',
-
+    'site/barcode_39' => 'site/barcode39',
 
     'route/view' => 'route/view',
     'route/send' => 'route/send',

@@ -547,12 +547,39 @@ class Package
     }
 
     /*
-     * Получаем инфомрацию о посылке
-     * @var $package_id int - id посылки
-     * @var $package_number string - номер посылки
+     * Получаем все поля из таблицы package
+     * @var $id int - ID посылки
      * return array() OR boolean
      */
-    public static function getPackageInfo($package_id, $package_number)
+    public static function getPackage($id)
+    {
+        $sql = 'SELECT
+          *
+        FROM
+          package
+        WHERE
+          package.id = :id ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Обращаемся к записи
+        $package = $result->fetch(PDO::FETCH_ASSOC);
+
+        if($package)
+        {
+            return $package;
+        }
+        return false;
+    }
+
+    /*
+     * Получаем инфомрацию о посылке
+     * @var $package_id int - id посылки
+     * return array() OR boolean
+     */
+    public static function getPackageInfo($package_id)
     {
         $sql = 'SELECT
           package.id AS p_id,
@@ -636,11 +663,10 @@ class Package
           INNER JOIN company_address company_address2 ON (user.company_address_id = company_address2.id)
           INNER JOIN company company2 ON (company_address2.company_id = company2.id)
         WHERE
-          package.id = :id OR package.number = :number';
+          package.id = :id';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':id', $package_id, PDO::PARAM_INT);
-        $result->bindParam(':number', $package_number, PDO::PARAM_STR);
         $result->execute();
 
         // Обращаемся к записи
