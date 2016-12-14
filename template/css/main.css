@@ -69,6 +69,10 @@ form label{
     color: #b1b1b1;
 }
 
+hr.type {
+    border: 1px solid #333333;
+}
+
 img {
     padding: 0;
     margin: 0;

@@ -38,8 +38,8 @@ $pagetitle = 'Сопроводительный лист';
         ?>
         <div class="inline fl half">
 
-            <img src="<?= $barcode_file ?>" />
-            <p>Ведомость: <b><?= $package_info['p_note'] ?></b></p>
+            <img src="/temp/users/<?= $user_id ?>/<?= USER_BARCODE ?>.png" alt="Не удалось загрузить штрих-код" />
+            <p>Посылка: <b><?= $package_info['p_note'] ?></b></p>
             <p>Трек-номер: <b><?= $package_info['p_number'] ?></b></p>
 
         </div>
@@ -110,6 +110,21 @@ $pagetitle = 'Сопроводительный лист';
                 ?>
             </p>
         </div>
+
+        <?php if (is_array($package_objects) && $package_objects != null): ?>
+        <div class="full_width inline">
+            <hr class="type" />
+            <h3>Объекты посылки</h3>
+            <?php
+            $i = 0;
+            foreach ($package_objects as $p_object):
+                $i++;
+            ?>
+                <p><?= $i.'. ' . $p_object['name']; ?></p>
+
+            <?php endforeach; //foreach ($package_objects as $p_object); ?>
+        </div>
+        <?php endif; //if (is_array($package_objects) && $package_objects != null): ?>
 
         <?php
         endif; //if (is_array($package_info) && $package_info != null):

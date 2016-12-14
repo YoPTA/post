@@ -27,7 +27,7 @@ include ROOT . '/views/layouts/header.php';
         <tr class="head" align="center">
             <td class="one_sixteenth">№ п/п</td>
             <td class="one_eighth">Трек-номер</td>
-            <td class="one_sixteenth">...</td>
+            <td class="one_eighth">...</td>
             <td class="quarter">Откуда</td>
             <td class="quarter">Куда</td>
             <td class="one_eighth">Дата создания</td>
@@ -47,12 +47,13 @@ include ROOT . '/views/layouts/header.php';
                     <?= $package['package_number'] ?>
                 </a>
             </td>
-            <td>
+            <td align="center">
                 <div class="bg_button inline">
                     <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
                         <img src="/template/images/view_content.png">
                     </a>
                 </div>
+                <span class="right_indent"></span>
                 <div class="bg_button inline" title="Посмотреть сопроводительный лист"
                     onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', 'width=1100,height=800,top=50,left=50')">
                         <img src="/template/images/barcode.png">

@@ -13,6 +13,7 @@ return [
     'site/login' => 'site/login',
     'site/logout' => 'site/logout',
     'site/barcode_39' => 'site/barcode39',
+    'site/test' => 'site/test',
 
     'route/view' => 'route/view',
     'route/send' => 'route/send',

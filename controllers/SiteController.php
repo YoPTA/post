@@ -300,7 +300,11 @@ class SiteController
 
         $errors = false;
 
+        $dir_path = '/temp/users';
+        $clean_utility = new Clean_Utility();
 
+        $abs_root = $_SERVER['DOCUMENT_ROOT'];
+        $temp_user_dir = null;
         if(isset($_POST['login']))
         {
             $login_name = htmlspecialchars($_POST['login_name']);
@@ -321,6 +325,13 @@ class SiteController
             else
             {
                 User::auth($u_id);
+                $temp_user_dir = $abs_root.$dir_path.'/'.$u_id;
+                // Удаляем директорию, если она есть
+                $clean_utility->removeDirectory($temp_user_dir);
+                if (!mkdir($abs_root.$dir_path.'/'.$u_id, 0777, true))
+                {
+                    $errors['not_dir'] = 'Не удалось создать временную директорию пользователя';
+                }
                 header('Location: /site/index');
             }
         }
@@ -345,11 +356,14 @@ class SiteController
         $user = null;
         $user_id = null;
 
-        $string_utility = new String_Utility();
-        $date_converter = new Date_Converter();
 
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
+
+        $abs_file_path = $_SERVER['DOCUMENT_ROOT'].'/temp/users/'.$user_id.'/';
+
+        $string_utility = new String_Utility();
+        $date_converter = new Date_Converter();
 
         $errors = false;
 
@@ -415,8 +429,9 @@ class SiteController
 
         if ($package_info['p_number'] != null)
         {
-            $file_path = '/temp/user/';
-            $barcode_filename = $file_path.$user_id.'barcode';
+            $file_path = $abs_file_path;
+            //echo $file_path;
+            $barcode_filename = $file_path.USER_BARCODE;
             $barcode_filetype = 'PNG';
             $barcode_file = $barcode_filename.'.'.$barcode_filetype;
 
@@ -431,8 +446,8 @@ class SiteController
             {
                 $barcode->setFont('Tahoma', true);
                 $barcode->setSymblogy('code39');
-                $barcode->setHeight(50);
-                $barcode->setScale(11);
+                $barcode->setHeight(35);
+                $barcode->setScale(2);
                 $barcode->setFontScale(0);
                 $barcode->setHexColor('#000000', '#FFFFFF');
 
@@ -445,6 +460,7 @@ class SiteController
             $errors['p_number']= 'Не удалось определить трек-номер';
         }
 
+        $package_objects = Package::getPackageObjects($pid);
 
         if ($is_create)
         {
@@ -455,5 +471,25 @@ class SiteController
         {
             header('Location: /site/error');
         }
+    }
+
+    public function actionTest()
+    {
+        $user = null;
+        $user_id = null;
+
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $abs_file_path = $_SERVER['DOCUMENT_ROOT'].'/temp/users/'.$user_id;
+        $file_path = $abs_file_path;
+        $barcode_filename = $file_path.'barcode';
+        $png = 'png';
+        $barcode_filetype = 'PNG';
+        $barcode_file = $barcode_filename.'.'.$png;
+
+        require_once ROOT . '/views/site/test.php';
+        return true;
     }
 }
