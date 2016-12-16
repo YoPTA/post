@@ -322,6 +322,11 @@ tr.under_row{
     box-shadow:         .9px .9px 2px 1px rgba(16, 25, 33, .3);
 }
 
+.scroll{
+    overflow-x:hidden;
+    overflow-y:scroll;
+}
+
 #menu ul.parent{
     margin: 0;
     padding: 0;

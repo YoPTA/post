@@ -1,2 +1,2 @@
 <?php
-echo '<img src="'.$barcode_file.'" />';
+echo '<input type="text" multiple="multiple" row="2" />';
