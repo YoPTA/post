@@ -50,8 +50,10 @@ $pagetitle = 'Сопроводительный лист';
             <p>Дата создания: <b><?= $date_converter->datetimeToString($package_info['p_creation_datetime']) ?></b></p>
             <p>Cоздал: <b><?= $package_info['u_lastname'].' '.$package_info['u_firstname'] .' '.$package_info['u_middlename'] ?></b></p>
 
-        </div><span class="right_indent"></span>
+        </div>
+        <span class="right_indent"></span>
         <div class="full_width inline">
+        <div class="">
             <p>Отправитель:
                 <b>
                 <?php
@@ -81,7 +83,7 @@ $pagetitle = 'Сопроводительный лист';
             </p>
         </div>
         <br /><br />
-        <div class="full_width inline">
+        <div class="">
             <p>Получатель:
                 <b>
                     <?php
@@ -112,7 +114,7 @@ $pagetitle = 'Сопроводительный лист';
         </div>
 
         <?php if (is_array($package_objects) && $package_objects != null): ?>
-        <div class="full_width inline">
+        <div class="">
             <hr class="type" />
             <h3>Объекты посылки</h3>
             <?php
@@ -129,6 +131,7 @@ $pagetitle = 'Сопроводительный лист';
         <?php
         endif; //if (is_array($package_info) && $package_info != null):
         ?>
+    </div>
     </div>
 
 </body>

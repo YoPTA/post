@@ -8,6 +8,14 @@ include ROOT . '/views/layouts/header.php';
 ?>
 
 <h2 align="center"><?= $pagetitle ?></h2>
+
+<div class="font_size_twelve" align="center">
+    <a href="/site/index?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $pid ?>">
+        &#8592; Вернуться назад
+    </a>
+</div>
+<br /><br />
+
 <div class="font_size_twenty">
 
 <?php

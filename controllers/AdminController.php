@@ -2,7 +2,7 @@
 
 class AdminController
 {
-    public function actionIndex($id = null)
+    public function actionIndex()
     {
         $is_admin = false;
 

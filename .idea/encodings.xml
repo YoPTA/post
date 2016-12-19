@@ -3,7 +3,6 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/.htaccess" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/App.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/components/Barcode39.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/Date_Converter.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/String_Utility.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/Validate.php" charset="UTF-8" />
