@@ -46,12 +46,7 @@
                             <a href="/admin/index">
                                 <div id="page_admin" class="one_eighth right_indent header_btn">
                                     <span style="font-size: 10px;">&#9812;</span>&#160;Админка
-                                    <span class="fr" style="margin-right: 10px; margin-left: -20px; font-size: 12px;">&#9660;</span>
                                 </div>
-                                <ul class="children">
-                                    <li><a href=""><div class="one_eighth header_btn">Ссыль 1</div></a></li>
-                                    <li><a href=""><div class="one_eighth header_btn">Ссыль 2</div></a></li>
-                                </ul>
                             </a>
                         </li>
                         <?php endif; ?>

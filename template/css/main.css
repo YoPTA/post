@@ -327,7 +327,17 @@ tr.under_row{
     overflow-y:scroll;
 }
 
+#admin_menu_panel > a{
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
 #menu ul.parent{
+    margin: 0;
+    padding: 0;
+}
+
+#admin_view {
     margin: 0;
     padding: 0;
 }

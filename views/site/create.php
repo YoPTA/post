@@ -24,10 +24,12 @@ include ROOT . '/views/layouts/header.php';
     <form method="POST" name="create_form" onload="selectChanged();">
     <div class="full_width">
         <div class="inline half fl right_indent" align="left">
-            <button type="button" class="button one_eighth" name="doka_package" value="Создать" onclick="document.location.href = '/doka/package';">
-                <img src="/template/images/create.png"  />
-                Создать
-            </button>
+            <a href="/doka/package">
+                <button type="button" class="button one_eighth" name="doka_package" value="Создать">
+                    <img src="/template/images/create.png"  />
+                    Создать
+                </button>
+            </a>
         </div>
         <div class="half inline fr" align="right">
             <button  class="button one_eighth" name="clear" >

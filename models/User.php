@@ -72,7 +72,7 @@ class User
     {
         $sql = 'SELECT
           lastname, firstname, middlename, role_id,
-          company_address_id
+          group_id, company_address_id
           FROM user
           WHERE id = :id';
         $db = Database::getConnection();

@@ -3,6 +3,9 @@
 return [
 
     'admin/index' => 'admin/index',
+    'admin/user_index' => 'adminuser/index',
+
+
 
     'doka/package' => 'doka/package',
 

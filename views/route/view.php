@@ -1,5 +1,5 @@
 <?php
-$pagetitle = 'Посылка';
+$pagetitle = 'Маршрут';
 $page_id = 'page_index';
 
 //Подключаем шапку

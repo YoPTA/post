@@ -12,6 +12,9 @@ require_once(ROOT.'/components/Autoload.php');
 // Подключение констант
 require_once(ROOT.'/config/constants.php');
 
+// Подключение констант с правами администратора
+require_once (ROOT.'/config/constants_admin_access_rights.php');
+
 // Вызов Router
 $router = new App();
 $router->run();

@@ -1,6 +1,6 @@
 <?php
 
-class AdminController
+class AdminUserController
 {
     public function actionIndex()
     {
@@ -12,9 +12,10 @@ class AdminController
 
 
 
-        if($is_admin)
+
+        if($is_admin && $admin_rights['can_change_user'])
         {
-            require_once ROOT . '/views/admin/index.php';
+            require_once ROOT . '/views/admin/user/index.php';
             return true;
         }
         else
