@@ -56,10 +56,68 @@ include ROOT . '/views/layouts/header.php';
         </div>
         <div class="half inline">
             <h2 class="font_size_fourteen">Отправитель</h2>
-            <div class="half"><?= $from_company['full_name'] ?></div>
+            <div class="half">
+                <?php
+                if($from_company['address_zip'] != null)
+                    echo $from_company['address_zip'].', ';
+                if($from_company['address_country'] != null)
+                    echo $from_company['address_country'].', ';
+                if($from_company['address_region'] != null)
+                    echo $from_company['address_region'];
+                if($from_company['address_area'] != null)
+                    echo ', '.$from_company['address_area'];
+                if($from_company['address_city'] != null)
+                    echo ', '.$from_company['address_city'];
+                if($from_company['address_town'] != null)
+                    echo ', '.$from_company['address_town'];
+                if($from_company['address_street'] != null)
+                    echo ', ' . $from_company['address_street'];
+                if($from_company['address_home'] != null)
+                    echo ', ' . $from_company['address_home'];
+                if($from_company['address_case'] != null)
+                    echo ', ' . $from_company['address_case'];
+                if($from_company['address_build'] != null)
+                    echo ', '.$from_company['address_build'];
+                if($from_company['address_apartment'] != null)
+                    echo ', '.$from_company['address_apartment'];
+                ?>
+
+                <br /><br />
+
+                <?= $from_company['full_name'] ?>
+            </div>
             <hr>
             <h2 class="font_size_fourteen">Получатель</h2>
-            <div class="half"><?= $to_company['full_name'] ?></div>
+            <div class="half">
+                <?php
+                if($to_company['address_zip'] != null)
+                    echo $to_company['address_zip'].', ';
+                if($to_company['address_country'] != null)
+                    echo $to_company['address_country'].', ';
+                if($to_company['address_region'] != null)
+                    echo $to_company['address_region'];
+                if($to_company['address_area'] != null)
+                    echo ', '.$to_company['address_area'];
+                if($to_company['address_city'] != null)
+                    echo ', '.$to_company['address_city'];
+                if($to_company['address_town'] != null)
+                    echo ', '.$to_company['address_town'];
+                if($to_company['address_street'] != null)
+                    echo ', ' . $to_company['address_street'];
+                if($to_company['address_home'] != null)
+                    echo ', ' . $to_company['address_home'];
+                if($to_company['address_case'] != null)
+                    echo ', ' . $to_company['address_case'];
+                if($to_company['address_build'] != null)
+                    echo ', '.$to_company['address_build'];
+                if($to_company['address_apartment'] != null)
+                    echo ', '.$to_company['address_apartment'];
+                ?>
+
+                <br /><br />
+
+                <?= $to_company['full_name'] ?>
+            </div>
         </div>
     </div>
         <br />

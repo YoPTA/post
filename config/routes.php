@@ -39,6 +39,6 @@ return [
     //'site/select_company' => 'site/selectcompany',
 
     'site/index' => 'site/index',
-    //'site' => 'site/index',
+    'site' => 'site/index',
     '' => 'site/index',
 ];

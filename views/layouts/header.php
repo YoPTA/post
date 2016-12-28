@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= DEFAULT_ENCODING_UPPERCASE ?>" />
+    <link rel="icon" href="/favicon.ico">
     <link href="/template/css/input.css" rel="stylesheet">
     <link href="/template/css/dimensions.css" rel="stylesheet">
     <link href="/template/css/links.css" rel="stylesheet">

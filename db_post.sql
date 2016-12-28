@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Дек 19 2016 г., 08:17
+-- Время создания: Дек 26 2016 г., 12:01
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -62,7 +62,8 @@ CREATE TABLE IF NOT EXISTS `company_address` (
   `address_case` varchar(16) NOT NULL COMMENT 'Корпус',
   `address_build` varchar(16) NOT NULL COMMENT 'Строение',
   `address_apartment` varchar(16) NOT NULL COMMENT 'Квартира',
-  `is_transit` int(1) NOT NULL DEFAULT '0',
+  `is_mfc` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли организация офисом мфц',
+  `is_transit` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли компания транзитной точкой',
   `flag` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -70,9 +71,9 @@ CREATE TABLE IF NOT EXISTS `company_address` (
 -- Дамп данных таблицы `company_address`
 --
 
-INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_transit`, `flag`) VALUES
-(0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0),
-(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0);
+INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `flag`) VALUES
+(0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, 0),
+(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -103,6 +104,31 @@ INSERT INTO `document_type` (`id`, `name`, `is_series`, `is_number`, `is_date_is
 (0, 'Нет', 0, 0, 0, 0, 0, 0, '', '', '', ''),
 (1, 'Паспорт', 1, 1, 1, 0, 1, 1, '', '', '', ''),
 (2, 'Доверенность', 0, 1, 1, 1, 1, 0, '', '', '', '');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `menu_panel`
+--
+
+CREATE TABLE IF NOT EXISTS `menu_panel` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL COMMENT 'Наименование кнопки',
+  `title` varchar(128) NOT NULL COMMENT 'Заглавие кнопки',
+  `description` varchar(256) NOT NULL COMMENT 'Описание кнопки',
+  `url_address` varchar(128) NOT NULL COMMENT 'УРЛ адрес',
+  `parent_menu_panel_id` int(11) NOT NULL COMMENT 'Родитель кнопки (Ссылка на эту же таблицу)',
+  `menu_index` int(11) NOT NULL COMMENT 'Порядковый номер в панели меню',
+  `member` int(11) NOT NULL COMMENT 'Член группы',
+  `flag` int(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `menu_panel`
+--
+
+INSERT INTO `menu_panel` (`id`, `name`, `title`, `description`, `url_address`, `parent_menu_panel_id`, `menu_index`, `member`, `flag`) VALUES
+(1, 'Пользователи', 'Пользователи', 'Страница предназначена для работы с пользователями системы', '/admin/user_index?search=&page=1', 0, 1, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -260,6 +286,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(256) NOT NULL,
   `company_address_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL COMMENT 'ID группы',
   `created_datetime` datetime NOT NULL COMMENT 'Дата и время создания',
   `created_user_id` int(11) NOT NULL COMMENT 'Пользователь, создавший',
   `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
@@ -271,9 +298,30 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Нет', 'Нет', 'Нет', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 'Романов', 'Сергей', 'Сергеевич', 'romanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 'Нет', 'Нет', 'Нет', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 'Романов', 'Сергей', 'Сергеевич', 'romanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `user_group`
+--
+
+CREATE TABLE IF NOT EXISTS `user_group` (
+  `id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `description` varchar(512) NOT NULL,
+  `member` int(11) NOT NULL COMMENT 'член групп',
+  `flag` int(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `user_group`
+--
+
+INSERT INTO `user_group` (`id`, `name`, `description`, `member`, `flag`) VALUES
+(1, 'Пробный', 'CAN_CREATE, CAN_DELETE_ALL, CANE_EDIT_ALL', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -323,6 +371,12 @@ ALTER TABLE `company_address`
 -- Индексы таблицы `document_type`
 --
 ALTER TABLE `document_type`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `menu_panel`
+--
+ALTER TABLE `menu_panel`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -376,6 +430,12 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `login` (`login`);
 
 --
+-- Индексы таблицы `user_group`
+--
+ALTER TABLE `user_group`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `user_role`
 --
 ALTER TABLE `user_role`
@@ -400,6 +460,11 @@ ALTER TABLE `company_address`
 --
 ALTER TABLE `document_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT для таблицы `menu_panel`
+--
+ALTER TABLE `menu_panel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `package`
 --
@@ -439,6 +504,11 @@ ALTER TABLE `route`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT для таблицы `user_group`
+--
+ALTER TABLE `user_group`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `user_role`

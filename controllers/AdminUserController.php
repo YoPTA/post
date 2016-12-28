@@ -1,6 +1,6 @@
 <?php
 
-class AdminUserController
+class AdminuserController
 {
     public function actionIndex()
     {
