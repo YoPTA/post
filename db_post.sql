@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Дек 26 2016 г., 12:01
+-- Время создания: Дек 29 2016 г., 08:12
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `company_address` (
   `is_mfc` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли организация офисом мфц',
   `is_transit` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли компания транзитной точкой',
   `flag` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `company_address`
@@ -73,7 +73,8 @@ CREATE TABLE IF NOT EXISTS `company_address` (
 
 INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `flag`) VALUES
 (0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, 0),
-(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, 0);
+(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, 0),
+(2, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -213,7 +214,14 @@ CREATE TABLE IF NOT EXISTS `proxy_or_proxy_person` (
   `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
   `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
   `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `proxy_or_proxy_person`
+--
+
+INSERT INTO `proxy_or_proxy_person` (`id`, `proxy_id`, `proxy_person_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`) VALUES
+(0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -292,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
   `changed_user_id` int(11) NOT NULL COMMENT 'Пользователь, изменивший',
   `flag` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user`
@@ -300,7 +308,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, 'Нет', 'Нет', 'Нет', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 'Романов', 'Сергей', 'Сергеевич', 'romanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+(1, 'Романов', 'Сергей', 'Сергеевич', 'romanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
+(2, 'Лобанов', 'Семен', 'Семенович', 'lobanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -454,7 +463,7 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT для таблицы `company_address`
 --
 ALTER TABLE `company_address`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `document_type`
 --
@@ -489,7 +498,7 @@ ALTER TABLE `proxy`
 -- AUTO_INCREMENT для таблицы `proxy_or_proxy_person`
 --
 ALTER TABLE `proxy_or_proxy_person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `proxy_person`
 --
@@ -504,7 +513,7 @@ ALTER TABLE `route`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `user_group`
 --

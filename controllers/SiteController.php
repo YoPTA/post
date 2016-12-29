@@ -328,6 +328,7 @@ class SiteController
                 $temp_user_dir = $abs_root.$dir_path.'/'.$u_id;
                 // Удаляем директорию, если она есть
                 $clean_utility->removeDirectory($temp_user_dir);
+
                 if (!mkdir($abs_root.$dir_path.'/'.$u_id, 0777, true))
                 {
                     $errors['not_dir'] = 'Не удалось создать временную директорию пользователя';
@@ -360,7 +361,7 @@ class SiteController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
 
-        $abs_file_path = $_SERVER['DOCUMENT_ROOT'].'/temp/users/'.$user_id.'/';
+        $abs_file_path = ROOT.'/temp/users/'.$user_id.'/';
 
         $string_utility = new String_Utility();
         $date_converter = new Date_Converter();
@@ -432,7 +433,7 @@ class SiteController
             $file_path = $abs_file_path;
             //echo $file_path;
             $barcode_filename = $file_path.USER_BARCODE;
-            $barcode_filetype = 'PNG';
+            $barcode_filetype = 'png';
             $barcode_file = $barcode_filename.'.'.$barcode_filetype;
 
             if (is_file($barcode_file))
