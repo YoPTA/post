@@ -146,37 +146,7 @@ include ROOT . '/views/layouts/header.php';
         <br /><br /><br />
     </div>
     <?php if($to_company_id != null && $from_company_id != null): ?>
-
-    <div class="more full_width font_size_twelve" align="center">
-        <div align="center" class="bg_button inline view_content" id="more_btn"  title="Посмотреть содержимое посылки">
-            <img src="/template/images/view_content.png" alt="Посмотреть содержимое посылки"/>
-        </div>
-        <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
-            <?php
-            if($package_list != null && $package_objects != null): ?>
-                <ol class="undreline">
-                    <?php foreach($package_objects as $p_obj): ?>
-                        <li  class="font_size_twelve"><?= $p_obj ?></li>
-                    <?php endforeach; //foreach($package_objects as $p_obj): ?>
-                </ol>
-            <?php else: echo 'Конверт пуст';?>
-            <?php endif;//if($package != null && $package_objects != null): ?>
-        </div>
-    </div>
-
-    <script>
-        $(document).click( function(event){
-            if( $(event.target).closest(".moreText").length )
-                return;
-            $(".moreText").slideUp("normal");
-            event.stopPropagation();
-        });
-        $('#more_btn').click( function() {
-            $(this).siblings(".moreText").slideToggle("normal");
-            return false;
-        });
-    </script>
-
+    <br />
     <h2 align="center">Способ доставки</h2>
 
     <div class="full_width font_size_twelve border border_black" style="vertical-align: top;" align="left">
@@ -230,9 +200,11 @@ include ROOT . '/views/layouts/header.php';
     <?php  endif; //if (is_array($transit_points) && count($transit_points) > 0): ?>
 
     </div>
-
-    <br /><br />
-    <div align="center"><input type="submit" name="create" value="Создать посылку" class="button one_eighth" /></div>
+    <h2>Желаете создать посылку?</h2>
+    <div align="">
+        <input type="submit" name="create" value="Да" class="button one_sixteenth" /><span class="right_indent"></span>
+        <input type="submit" name="clear" value="Нет" class="button one_sixteenth" />
+    </div>
     <?php endif; // if($errors == null): ?>
 
 

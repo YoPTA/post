@@ -37,7 +37,9 @@ class Company
         FROM
           company_address
         WHERE
-          `company_address`.`company_id` = :company_id';
+          company_address.company_id = :company_id AND
+          company_address.is_transit = 0 AND
+          company_address.flag >= 0';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':company_id', $company_id, PDO::PARAM_INT);
