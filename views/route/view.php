@@ -19,6 +19,7 @@ include ROOT . '/views/layouts/header.php';
 $route_count = count($package_route);
 $row_index = 0;
 $point_index = -1;
+$td_id = 0;
 ?>
     <table class="full_width" cellspacing="0" cellpadding="0">
         <?php
@@ -86,12 +87,11 @@ $point_index = -1;
             }
 
 
-
             if ($point_index == ($route_count-1))
             {
                 $is_notfinish = 0;
             }
-
+            $td_id++;
         ?>
         <tr>
             <td class="one_sixteenth" align="right">
@@ -99,7 +99,7 @@ $point_index = -1;
                     <img src="/template/images/pointer.png" />
                 <?php endif; //if ($is_point_main): ?>
             </td>
-            <td class="one_sixteenth" align="center">
+            <td class="one_sixteenth" align="center" id="td_<?= $td_id ?>">
                 <?php if ($i == 0): ?>
                     <img src="/template/images/home.png" />
                 <?php else: //if ($i == 0): ?>
@@ -116,6 +116,7 @@ $point_index = -1;
         </tr>
         <?php
         if ($i != ($route_count-1)):
+            $td_id++;
         ?>
 
         <tr>
@@ -124,7 +125,7 @@ $point_index = -1;
                     <img src="/template/images/pointer.png" />
                 <?php endif; //if ($is_point_separator): ?>
             </td>
-            <td align="center">
+            <td align="center" id="td_<?= $td_id ?>">
                 <div style="border:0; border-left: 2px solid #333333; height: 40px; width: 0;"></div>
             </td>
             <td></td>
