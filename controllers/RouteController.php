@@ -23,6 +23,23 @@ class RouteController
         $office = OFFICE_NOW;
         $pid = null; // Id посылки
 
+        /*
+         * $is_s и $is_r показывают текущее состояние маршрута.
+         *  -----------------------------------
+         * | $is_s = 1 | $is_s = 0 | $is_s = 0 |
+         * | $is_r = 0 | $is_r = 1 | $is_r = 0 |
+         *  -----------------------------------
+         * | Отправить |  Получить |   Ничего  |
+         *  -----------------------------------
+         */
+        $is_s = 0;
+        $is_r = 0;
+
+
+        $route_id = 0;
+
+
+
         if (!isset($_GET['track']))
         {
             header('Location: /site/index?track=&page=1&date_create=&package_type='.$package_type.'&office='.$office);

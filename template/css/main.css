@@ -304,6 +304,10 @@ tr.under_row{
     padding-bottom: 10px;
 }
 
+.negative_left_indent{
+    margin-left: -3px;
+}
+
 .height_default{
     height: 80px;
 }

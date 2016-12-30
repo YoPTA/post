@@ -26,12 +26,12 @@ include ROOT . '/views/layouts/header.php';
     <table class="view full_width">
         <tr class="head" align="center">
             <td class="one_sixteenth">№ п/п</td>
-            <td class="one_eighth">Трек-номер</td>
-            <td class="one_eighth">...</td>
+            <td class="one_sixteenth">Трек-<br />номер</td>
             <td class="quarter">Откуда</td>
             <td class="quarter">Куда</td>
-            <td class="one_eighth">Дата создания</td>
+            <td class="one_sixteenth">Дата создания</td>
             <td class="one_eighth">ФИО</td>
+            <td class="one_eighth">Действие</td>
         </tr>
         <?php
         $i = 0;
@@ -43,22 +43,9 @@ include ROOT . '/views/layouts/header.php';
 
             <td align="center"><?= $index_number; ?></td>
             <td title="<?= $package['package_note'] ?>">
-                <a href="/route/view?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть маршрут">
-                    <?= $package['package_number'] ?>
-                </a>
+                <?= $package['package_number'] ?>
             </td>
-            <td align="center">
-                <div class="bg_button inline">
-                    <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
-                        <img src="/template/images/view_content.png">
-                    </a>
-                </div>
-                <span class="right_indent"></span>
-                <div class="bg_button inline" title="Посмотреть сопроводительный лист"
-                    onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', 'width=1100,height=800,top=50,left=50')">
-                        <img src="/template/images/barcode.png">
-                </div>
-            </td>
+
             <td>
                 <div title="<?= $string_utility->getAddressToView(1, $package, 'from_'); ?>"><?= $package['from_company_name'] ?></div>
             </td>
@@ -67,6 +54,25 @@ include ROOT . '/views/layouts/header.php';
             </td>
             <td align="center"><?= $date_converter->dateToString($package['package_creation_datetime']) ?></td>
             <td><?= $package['user_lastname'].' '.$package['user_firstname'].' '.$package['user_middlename'] ?></td>
+
+            <td align="center">
+                <div class="bg_button inline" title="Посмотреть объекты посылки"
+                    onclick="window.open('/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', <?= DEFAULT_WINDOW ?>)">
+                        <img src="/template/images/view_content.png">
+                </div>
+                <span class="negative_left_indent right_indent"></span>
+                <div class="bg_button inline" title="Посмотреть сопроводительный лист"
+                     onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', <?= DEFAULT_WINDOW ?>)">
+                    <img src="/template/images/barcode.png">
+                </div>
+                <span class="negative_left_indent right_indent"></span>
+                <div class="bg_button inline negative_left_indent" title="Посмотреть маршрут">
+                     <a href="/route/view?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>">
+                        <img src="/template/images/location.png">
+                     </a>
+                </div>
+            </td>
+
         </tr>
         <?php endforeach; //foreach($packages as $package): ?>
 

@@ -15,106 +15,143 @@ include ROOT . '/views/layouts/header.php';
 <br /><br />
 <div class="font_size_fourteen full_width">
 
+<?php
+$route_count = count($package_route);
+$row_index = 0;
+$point_index = -1;
+?>
     <table class="full_width" cellspacing="0" cellpadding="0">
-    <?php
-    if (is_array($package_route) && count($package_route) > 1):
-        // Получаем общее кол-во точек
-        $route_count = count($package_route);
+        <?php
+        $is_notfinish = 0;
+        $this_row = 0;
 
-        $route_serial_number = 0; // Порядковый номер маршрута
+        for ($i = $route_count - 1; $i >= 0; $i--)
+        {
+            if ($package_route[$i]['is_receive'] != 0 || $package_route[$i]['is_send'] != 0)
+            {
+                $point_index = $i;
+                break;
+            }
+        }
 
-        for ($i = 0; $i < count($package_route); $i++):
-            $route_serial_number++;
-    ?>
 
-        <?php if ($route_serial_number == 1): ?>
+
+        for ($i = 0; $i < $route_count; $i++):
+            $is_point_main = false;
+            $is_point_separator = false;
+            if ($i == $point_index)
+            {
+                if ($package_route[$i]['is_send'] == 0)
+                {
+                    $is_point_main = true;
+                    $is_notfinish = 1;
+                }
+                else
+                {
+                    $is_point_separator = true;
+                    $is_notfinish = 2;
+                }
+            }
+
+            if ($point_index == 0)
+            {
+                if ($is_point_separator)
+                {
+                    $row_index++;
+                }
+            }
+
+            if ($point_index == 1)
+            {
+                if ($is_point_main)
+                {
+                    $row_index = $point_index+1;
+                }
+                if ($is_point_separator)
+                {
+                    $row_index = $point_index+2;
+                }
+            }
+
+            if ($point_index > 1)
+            {
+                if ($is_point_main)
+                {
+                    $row_index = ($point_index * 2);
+                }
+                if ($is_point_separator)
+                {
+                    $row_index = ($point_index * 2) + 1;
+                }
+            }
+
+
+
+            if ($point_index == ($route_count-1))
+            {
+                $is_notfinish = 0;
+            }
+
+        ?>
         <tr>
-            <td class="one_sixteenth" align="center">
-                <?php if ($package_route[$i]['is_send'] == 0 && $is_send): ?>
-                    <div class="bg_button inline">
-                    <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
-                       title="Отправить">
-                        <img src="/template/images/paper-plane.png" />
-                    </a>
-                    </div>
-                <?php endif; // if ($package_route[$i]['is_send'] == 0 && $is_send): ?>
+            <td class="one_sixteenth" align="right">
+                <?php if ($is_point_main): ?>
+                    <img src="/template/images/pointer.png" />
+                <?php endif; //if ($is_point_main): ?>
             </td>
-
-            <td class="one_sixteenth <?php
-            if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
-            ?>" align="center"><img src="/template/images/home.png" /></td>
-            <td ><?= $string_utility->getAddressToView(1, $package_route[$i]) ?></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td class="one_sixteenth <?php
-            if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
-            ?>
-            " align="center"><div style="border:0; border-left: 2px solid #333333; height: 40px; width: 0;"></div></td>
-            <td></td>
-        </tr>
-        <?php elseif ($route_serial_number == $route_count): //if ($route_serial_number == 1): ?>
-        <tr>
             <td class="one_sixteenth" align="center">
-            <?php if ($package_route[$i - 1]['is_send'] == 1): ?>
-                <?php if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
-                <div class="bg_button inline">
-                    <a href="/route/receive?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
-                       title="Подтвердить получение">
-                        <img src="/template/images/mail-receive.png" />
-                    </a>
-                </div>
-                <?php endif; // if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
-            <?php endif; // if ($package_route[$i - 1]['is_send'] == 1): ?>
+                <?php if ($i == 0): ?>
+                    <img src="/template/images/home.png" />
+                <?php else: //if ($i == 0): ?>
+                    <?php if ($i == ($route_count - 1)): ?>
+                        <img src="/template/images/finish.png" />
+                    <?php else: //if ($i == ($r_count - 1)): ?>
+                        <img src="/template/images/mapmarker.png" />
+                    <?php endif; //if ($i == ($r_count - 1)): ?>
+                <?php endif; //if ($i == 0): ?>
             </td>
-            <td class="one_sixteenth <?php
-            if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
-            ?>" align="center"><img src="/template/images/finish.png" /></td>
-            <td ><?= $string_utility->getAddressToView(1, $package_route[$i]) ?></td>
-        </tr>
-        <?php else: //if ($route_serial_number == 1): ?>
-        <tr>
-            <td class="one_sixteenth" align="center">
-                <?php if ($package_route[$i - 1]['is_send'] == 1): ?>
-                    <?php if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
-                     <div class="bg_button inline">
-                         <a href="/route/receive?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
-                            title="Подтвердить получение">
-                            <img src="/template/images/mail-receive.png" />
-                        </a>
-                     </div>
-                    <?php endif; // if ($package_route[$i]['is_receive'] == 0 && $is_receive): ?>
-
-                    <?php if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0 && $is_send): ?>
-                    <div class="bg_button inline">
-                        <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route[$i]['id'] ?>"
-                           title="Отправить">
-                            <img src="/template/images/paper-plane.png" />
-                        </a>
-                    </div>
-                    <?php endif; // if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0 && $is_receive): ?>
-                <?php endif; // if ($package_route[$i - 1]['is_send'] == 1): ?>
+            <td>
 
             </td>
-            <td class="one_sixteenth <?php
-            if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
-            ?> " align="center"><img src="/template/images/mapmarker.png" /></td>
-            <td ><?=$string_utility->getAddressToView(1, $package_route[$i]) ?></td>
         </tr>
-        <tr>
-            <td></td>
-            <td class="one_sixteenth
-            <?php
-            if ($package_route[$i]['is_receive']) echo ' bg_light_green ';
-            ?>
-            " align="center"><div style="border:0; border-left: 2px solid #333333; height: 40px; width: 0;"></div></td>
-            <td></td>
-        </tr>
-        <?php endif; //if ($route_serial_number == 1): ?>
+        <?php
+        if ($i != ($route_count-1)):
+        ?>
 
-        <?php endfor; //for ($i = 0; $i < count($package_route); $i++): ?>
-    <?php endif; //if (is_array($package_route) && count($package_route) > 1): ?>
+        <tr>
+            <td align="right">
+                <?php if ($is_point_separator): ?>
+                    <img src="/template/images/pointer.png" />
+                <?php endif; //if ($is_point_separator): ?>
+            </td>
+            <td align="center">
+                <div style="border:0; border-left: 2px solid #333333; height: 40px; width: 0;"></div>
+            </td>
+            <td></td>
+        </tr>
+
+        <?php endif; //if ($i != ($r_count-1)): ?>
+
+        <?php
+        endfor; //for ($i = 0; $i < count($r_count); $i++):
+        ?>
+
+
     </table>
+    <?php
+    echo 'row index: '.$row_index.'<br />';
+    ?>
+    <br /><br />
+    <hr />
+
+    <?php if ($is_notfinish != 0): ?>
+        <h2>Желаете <?php echo ($is_notfinish == 2) ? "подтвердить получение" : "отправить" ?>?</h2>
+        <?php
+
+        ?>
+
+    <?php endif;//if ($is_notfinish != 0): ?>
+
 </div>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

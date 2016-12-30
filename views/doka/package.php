@@ -42,14 +42,10 @@ include ROOT . '/views/layouts/header.php';
                 $i = 0;
                 foreach($p_object as $p_obj):
                     $i++;
-                    if($i%2==0):
-                        ?>
-                        <tr class="bgGray_one">
-                    <?php else: ?>
-                        <tr class="bgGray_two">
-                    <?php endif; //if($i%2==0): ?>
-                    <td><?= $i; ?></td>
-                    <td><?= $p_obj; ?></td>
+                ?>
+                    <tr class="presentation">
+                        <td><?= $i; ?></td>
+                        <td><?= $p_obj; ?></td>
                     </tr>
                 <?php endforeach;//foreach($p_object as $p_obj): ?>
             </table>
