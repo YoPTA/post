@@ -280,11 +280,15 @@ class Route
           company_address.address_case AS ca_case,
           company_address.address_build AS ca_build,
           company_address.address_apartment AS ca_apartment,
-          company_address.is_transit
+          company_address.is_transit,
+          company.name AS c_name,
+          company.full_name AS c_full_name,
+          company.key_field AS c_key_field
         FROM
           route
           INNER JOIN package ON (route.package_id = package.id)
           INNER JOIN company_address ON (route.company_address_id = company_address.id)
+          INNER JOIN company ON (company_address.company_id = company.id)
         WHERE
           route.package_id = :package_id
         ORDER BY route.id';

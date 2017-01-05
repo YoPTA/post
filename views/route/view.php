@@ -91,7 +91,7 @@ $td_id = 0;
             {
                 $is_notfinish = 0;
             }
-            $td_id++;
+
         ?>
         <tr>
             <td class="one_sixteenth" align="right">
@@ -99,7 +99,7 @@ $td_id = 0;
                     <img src="/template/images/pointer.png" />
                 <?php endif; //if ($is_point_main): ?>
             </td>
-            <td class="one_sixteenth" align="center" id="td_<?= $td_id ?>">
+            <td align="center" id="<?= $td_id ?>"  class="one_sixteenth">
                 <?php if ($i == 0): ?>
                     <img src="/template/images/home.png" />
                 <?php else: //if ($i == 0): ?>
@@ -111,12 +111,20 @@ $td_id = 0;
                 <?php endif; //if ($i == 0): ?>
             </td>
             <td>
-
+                <?php
+                if ($package_route[$i]['is_transit'] == 1) echo '<b>[ТРАНЗИТ]</b>';
+                ?>
+                <?= $package_route[$i]['c_name'] ?>
+                <span class="color_grey font_size_twelve">
+                <?php
+                echo $string_utility->getAddressToView(2, $package_route[$i]);
+                ?>
+                </span>
             </td>
         </tr>
         <?php
         if ($i != ($route_count-1)):
-            $td_id++;
+
         ?>
 
         <tr>
@@ -125,23 +133,23 @@ $td_id = 0;
                     <img src="/template/images/pointer.png" />
                 <?php endif; //if ($is_point_separator): ?>
             </td>
-            <td align="center" id="td_<?= $td_id ?>">
+            <td align="center" id="<?= $td_id ?>" class="one_sixteenth">
                 <div style="border:0; border-left: 2px solid #333333; height: 40px; width: 0;"></div>
             </td>
             <td></td>
         </tr>
 
-        <?php endif; //if ($i != ($r_count-1)): ?>
+        <?php
+            $td_id++;
+        endif; //if ($i != ($r_count-1)): ?>
 
         <?php
+            $td_id++;
         endfor; //for ($i = 0; $i < count($r_count); $i++):
         ?>
 
 
     </table>
-    <?php
-    echo 'row index: '.$row_index.'<br />';
-    ?>
     <br /><br />
     <hr />
 

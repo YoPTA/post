@@ -53,6 +53,8 @@ include ROOT . '/views/layouts/header.php';
         <div class="half inline">
             <h2 class="font_size_fourteen">Отправитель</h2>
             <div class="half">
+                <?= $from_company['full_name'] ?>
+                <span class="color_grey font_size_twelve">
                 <?php
                 if($from_company['address_zip'] != null)
                     echo $from_company['address_zip'].', ';
@@ -76,16 +78,13 @@ include ROOT . '/views/layouts/header.php';
                     echo ', '.$from_company['address_build'];
                 if($from_company['address_apartment'] != null)
                     echo ', '.$from_company['address_apartment'];
-                ?>
-
-                <br /><br />
-
-                <?= $from_company['full_name'] ?>
+                ?></span>
             </div>
             <hr>
             <h2 class="font_size_fourteen">Получатель</h2>
             <div class="half">
-                <?php
+                <?= $to_company['full_name'] ?>
+                <span class="color_grey font_size_twelve"><?php
                 if($to_company['address_zip'] != null)
                     echo $to_company['address_zip'].', ';
                 if($to_company['address_country'] != null)
@@ -108,11 +107,7 @@ include ROOT . '/views/layouts/header.php';
                     echo ', '.$to_company['address_build'];
                 if($to_company['address_apartment'] != null)
                     echo ', '.$to_company['address_apartment'];
-                ?>
-
-                <br /><br />
-
-                <?= $to_company['full_name'] ?>
+                ?></span>
             </div>
         </div>
     </div>
