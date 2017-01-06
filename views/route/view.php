@@ -25,17 +25,24 @@ $td_id = 0;
         <?php
         $is_notfinish = 0;
         $this_row = 0;
+        $package_route_id = 0;
 
         for ($i = $route_count - 1; $i >= 0; $i--)
         {
             if ($package_route[$i]['is_receive'] != 0 || $package_route[$i]['is_send'] != 0)
             {
                 $point_index = $i;
+                if ($package_route[$i]['is_send'] == 1)
+                {
+                    $package_route_id = $package_route[$i+1]['id'];
+                }
+                else
+                {
+                    $package_route_id = $package_route[$i]['id'];
+                }
                 break;
             }
         }
-
-
 
         for ($i = 0; $i < $route_count; $i++):
             $is_point_main = false;
@@ -54,7 +61,7 @@ $td_id = 0;
                 }
             }
 
-            if ($point_index == 0)
+            /*if ($point_index == 0)
             {
                 if ($is_point_separator)
                 {
@@ -84,7 +91,7 @@ $td_id = 0;
                 {
                     $row_index = ($point_index * 2) + 1;
                 }
-            }
+            }*/
 
 
             if ($point_index == ($route_count-1))
@@ -112,7 +119,7 @@ $td_id = 0;
             </td>
             <td>
                 <?php
-                if ($package_route[$i]['is_transit'] == 1) echo '<b>[ТРАНЗИТ]</b>';
+                if ($package_route[$i]['is_transit'] == 1) echo '<b class="font_size_twelve">[ТРАНЗИТ]</b>';
                 ?>
                 <?= $package_route[$i]['c_name'] ?>
                 <span class="color_grey font_size_twelve">
@@ -150,14 +157,22 @@ $td_id = 0;
 
 
     </table>
+
     <br /><br />
-    <hr />
 
     <?php if ($is_notfinish != 0): ?>
+        <hr />
         <h2>Желаете <?php echo ($is_notfinish == 2) ? "подтвердить получение" : "отправить" ?>?</h2>
-        <?php
-
-        ?>
+        <div>
+            <?php if ($is_notfinish == 2): ?>
+                <a href="/route/receive?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route_id ?>">
+            <?php else: //if ($is_notfinish == 2): ?>
+                <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route_id ?>">
+            <?php endif; //if ($is_notfinish == 2): ?>
+            <button class="button one_sixteenth">Да</button></a>
+            <span class="right_indent"></span>
+            <a href="/site/index?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>"><button class="button one_sixteenth">Нет</button></a>
+        </div>
 
     <?php endif;//if ($is_notfinish != 0): ?>
 
