@@ -30,9 +30,7 @@ include ROOT . '/views/layouts/header.php';
         </div>
         <div class="inline fr">
             <a href="/proxy/person_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>">
-                <button class="button one_eighth" >
-                    Добавить
-                </button>
+                <input type="button" class="button one_eighth" value="Добавить" />
             </a>
         </div>
 
