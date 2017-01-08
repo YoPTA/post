@@ -55,7 +55,22 @@ class Validate
     }
 
     /*
-     * Првоерка текстового поля
+     * Проверка строки на то, чтобы значение было не меньше значения
+     * @var $str string - строка, которую необходимо проверить
+     * @var $value integer - ограничение символов
+     * return boolean
+     */
+    public static function checkStrEqualLength($str, $value)
+    {
+        if (strlen($str) == $value)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Првоерка строки на не превышение допустимого количества символов
      * @var $str string - строка, которую необходимо проверить
      * @var $value integer - ограничение символов
      * return boolean
