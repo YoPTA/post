@@ -130,6 +130,10 @@ table.view td.accent {
     font: bold 14px Arial, Helvetica, Tahoma, Verdana, Sans-Serif;
 }
 
+td.bg_none{
+    background: rgba(255, 255, 255, 1);
+}
+
 td.text_middle{
     vertical-align: top;
 }

@@ -29,100 +29,94 @@ include ROOT . '/views/layouts/header.php';
 <?php endif; ?>
 
     <div class="font_size_fourteen full_width">
-        <div class="inline fl ">
-            <span><b>Посылка:</b> <?= $p_note; ?></span><br /><br />
-            <span><b>Трек-номер:</b> <?= $p_number; ?></span>
-            <div class="more half font_size_twelve" align="left">
-                <div align="center" class="bg_button inline view_content" id="more_btn"  title="Посмотреть содержимое посылки">
-                    <img src="/template/images/view_content.png" alt="Посмотреть содержимое посылки"/>
-                </div>
-                <div class="moreText font_size_twelve shadowed bg_envelope_inside" align="left">
-                    <?php
-                    if($package_objects != null && is_array($package_objects)): ?>
-                        <ol class="undreline">
-                            <?php foreach($package_objects as $p_obj): ?>
-                                <li  class="font_size_twelve"><?= $p_obj['name'] ?></li>
-                            <?php endforeach; //foreach($package_objects as $p_obj): ?>
-                        </ol>
-                    <?php else: echo 'Конверт пуст';?>
-                    <?php endif;//if($package != null && $package_objects != null): ?>
-                </div>
-            </div>
+        <table class="view">
+            <tr class="presentation">
+                <td class="accent one_eighth">Посылка:</td>
+                <td class="quarter"><?= $p_note; ?></td>
+            </tr>
+            <tr class="presentation">
+                <td class="accent one_eighth">Трек-номер:</td>
+                <td class="quarter"><?= $p_number; ?></td>
+            </tr>
+        </table>
+        <table class="view">
+            <tr class="presentation">
+                <td class="accent one_eighth">Доверенное лицо:</td>
+                <td class="quarter dinamic_content">
+                    <div id="proxy_person"><?= $proxy_person['lastname'] . ' ' . $proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?></div>
+                </td>
+                <td class="bg_none one_eighth ">
+                    <div class="inline bg_button" title="Выбрать доверенное лицо" style="padding: 0">
+                        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_SEND ?>">
+                            <img src="/template/images/proxy_person.png" alt="Выбрать доверенное лицо" />
+                        </a>
+                    </div><span class="right_indent negative_left_indent"></span>
 
-            <script>
-                $(document).click( function(event){
-                    if( $(event.target).closest(".moreText").length )
-                        return;
-                    $(".moreText").slideUp("normal");
-                    event.stopPropagation();
-                });
-                $('#more_btn').click( function() {
-                    $(this).siblings(".moreText").slideToggle("normal");
-                    return false;
-                });
-            </script>
-        </div>
-        <span class="right_indent"></span>
-        <div class="inline fr half">
-            <div class="bg_button inline" title="Выбрать доверенное лицо">
-                <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_RECEIVE ?>">
+                    <?php if ($proxy != null && $proxy_person != null): ?>
+                        <div class="inline bg_button dinamic_content" id="clear" title="Отчистить">
+                            <img src="/template/images/besom.png" />
+                        </div>
+                    <?php endif; // if ($proxy == null || $proxy_person == null): ?>
 
-                    <img src="/template/images/proxy_person.png" alt="Выбрать доверенное лицо" />
-                </a>
-            </div>
-            <span class="right_indent"></span>
-            <div id="dinamic_content">
-                <br />
-                <?php if ($proxy != null && $proxy_person != null): ?>
-                    <div class="inline bg_button" id="clear" title="Отчистить">
-                        <img src="/template/images/besom.png" />
-                    </div>
+                </td>
+            </tr>
+            <tr class="presentation">
+                <td class="accent">Доверенность</td>
+                <td class="dinamic_content">
+                    <?php if ($proxy != null && $proxy_person != null): ?>
+                        <div  id="proxy">
+                            <p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
+                            <p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
+                            <p>Дата истечения: <?= $proxy['date_expired'] ?></p>
+                        </div>
+                    <?php endif; // if ($proxy == null || $proxy_person == null): ?>
+                </td>
+                <td class="bg_none"></td>
+            </tr>
+        </table>
+        <br /><br />
 
-                    <br /><br />
-                    <table class="view half">
-                        <tr class="presentation">
-                            <td class="accent one_eighth">Доверенное лицо</td>
-                            <td><?= $proxy_person['lastname'] . ' ' . $proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?></td>
-                        </tr>
-                        <tr class="presentation">
-                            <td class="accent">Доверенность</td>
-                            <td>
-                                <p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
-                                <p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
-                                <p>Дата истечения: <?= $proxy['date_expired'] ?></p>
-                            </td>
-                        </tr>
-                    </table>
-                    <br /><br />
-                    <div align="center">
-                        <form method="POST">
-                            <button class="button one_eighth" name="receive">
-                                <img src="/template/images/mail-receive.png">
-                                Принять
-                            </button>
-                        </form>
-                    </div>
-                <?php endif; // if ($proxy == null || $proxy_person == null): ?>
-            </div>
 
-        </div>
+        <form method="POST">
+            <label style="color: #1D2B37">
+                <input type="checkbox" name="without_proxy" value="1" id="without_proxy"
+                    <?php if ($without_proxy == 1) echo 'checked';  ?>
+                       style="vertical-align: middle"/>
+                Без доверенного лица
+            </label>
+
+            <br /><br />
+            <button class="button one_eighth" name="receive">
+                <img src="/template/images/mail-receive.png">
+                Принять
+            </button>
+        </form>
         <br />
 
     </div>
 
-<?php if ($proxy != null && $proxy_person != null): ?>
-
-<?php endif; // if ($proxy == null || $proxy_person == null): ?>
-    <!-- Асинхронные запросы -->
     <script>
         $(document).ready(function(){
             $("#clear").click(function () {
                 $.post("/route/clear_proxy", {}, function (data) {
-                    $("#dinamic_content").html(data);
+                    $(".dinamic_content").html(data);
                 });
                 return false;
             });
         });
+
+        document.getElementById('without_proxy').onclick = function() {
+            var proxy = document.getElementById('proxy');
+            var proxy_person = document.getElementById('proxy_person');
+
+            if ( this.checked ) {
+                proxy.className = 'color_grey';
+                proxy_person.className = 'color_grey';
+            } else {
+                proxy.className = '';
+                proxy_person.className = '';
+            }
+        };
     </script>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

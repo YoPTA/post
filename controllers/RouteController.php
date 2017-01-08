@@ -203,6 +203,8 @@ class RouteController
 			$proxy_person = Proxy::getProxyPerson($proxy_person_id);
 		}
 
+        $without_proxy = 0; // Без доверенного лица
+
         if (isset($_POST['send']))
         {
             $route = Route::getRouteInfo($rid);
@@ -231,16 +233,25 @@ class RouteController
                 $errors['datetime_receive'] = 'Попытка отправить посылку, которая еще не получалась';
             }
 
-            if ($proxy_id == null || $proxy_id == 0)
+            if (isset($_POST['without_proxy']))
             {
-                // Если не выбрана доверенность
-                $errors['proxy_id'] = 'Не выбрана доверенность';
+                $proxy_id = 0;
+                $proxy_person_id = 0;
+                $without_proxy = $_POST['without_proxy'];
             }
-
-            if ($proxy_person_id == null || $proxy_person_id == 0)
+            else
             {
-                // Если не выбрано доверенное лицо
-                $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
+                if ($proxy_id == null || $proxy_id == 0)
+                {
+                    // Если не выбрана доверенность
+                    $errors['proxy_id'] = 'Не выбрана доверенность';
+                }
+
+                if ($proxy_person_id == null || $proxy_person_id == 0)
+                {
+                    // Если не выбрано доверенное лицо
+                    $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
+                }
             }
 
             // Если ошибок не оказалось
@@ -390,6 +401,7 @@ class RouteController
             $proxy_person = Proxy::getProxyPerson($proxy_person_id);
         }
 
+        $without_proxy = 0; // Без доверенного лица
 
         if (isset($_POST['receive']))
         {
@@ -413,16 +425,25 @@ class RouteController
                 $errors['datetime_receive'] = 'Ошибка с датой подтверждения';
             }
 
-            if ($proxy_id == null || $proxy_id == 0)
+            if (isset($_POST['without_proxy']))
             {
-                // Если не выбрана доверенность
-                $errors['proxy_id'] = 'Не выбрана доверенность';
+                $proxy_id = 0;
+                $proxy_person_id = 0;
+                $without_proxy = $_POST['without_proxy'];
             }
-
-            if ($proxy_person_id == null || $proxy_person_id == 0)
+            else
             {
-                // Если не выбрано доверенное лицо
-                $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
+                if ($proxy_id == null || $proxy_id == 0)
+                {
+                    // Если не выбрана доверенность
+                    $errors['proxy_id'] = 'Не выбрана доверенность';
+                }
+
+                if ($proxy_person_id == null || $proxy_person_id == 0)
+                {
+                    // Если не выбрано доверенное лицо
+                    $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
+                }
             }
 
             // Если ошибок не оказалось
@@ -437,8 +458,6 @@ class RouteController
                 Proxy::outProxyPerson();
                 header('Location: /site/index');
             }
-
-
         }
 
 
