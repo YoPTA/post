@@ -246,7 +246,9 @@ class Company
           company_address.address_home AS ca_home,
           company_address.address_case AS ca_case,
           company_address.address_build AS ca_build,
-          company_address.address_apartment AS ca_apartment
+          company_address.address_apartment AS ca_apartment,
+          company_address.is_transit,
+          company_address.is_mfc
         FROM
           company_address
           INNER JOIN company ON (company_address.company_id = company.id)

@@ -57,12 +57,12 @@ include ROOT . '/views/layouts/header.php';
 
             <td align="center">
                 <div class="bg_button inline" title="Посмотреть объекты посылки"
-                    onclick="window.open('/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', <?= DEFAULT_WINDOW ?>)">
+                    onclick="window.open('/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', '<?= DEFAULT_WINDOW ?>')">
                         <img src="/template/images/view_content.png">
                 </div>
 
                 <div class="bg_button inline" title="Посмотреть сопроводительный лист"
-                     onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', <?= DEFAULT_WINDOW ?>)">
+                     onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', '<?= DEFAULT_WINDOW ?>')">
                     <img src="/template/images/barcode.png">
                 </div>
 

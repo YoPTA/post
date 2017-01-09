@@ -92,7 +92,10 @@ class RouteController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
+        $date_converter = new Date_Converter();
+
         $date_utility = new Date_Utility();
+
 
         $errors = false;
 
@@ -289,6 +292,8 @@ class RouteController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
+        $date_converter = new Date_Converter();
+
         $date_utility = new Date_Utility();
 
         $errors = false;

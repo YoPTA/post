@@ -1,6 +1,7 @@
 <?php
 // Проверяем авторизовался ли пользователь
 $user_id = User::checkLogged();
+User::checkSessionTime();
 // Получаем информацию о пользователе
 $user = User::getUser($user_id);
 // Получаем информацию о роли пользователя

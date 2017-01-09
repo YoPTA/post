@@ -152,14 +152,14 @@ include ROOT . '/views/layouts/header.php';
     <div class="full_width font_size_twelve border border_black" style="vertical-align: top;" align="left">
     <label>
         <input type="radio" name="delivery_type" value="0" <?php if($delivery_type == 0 || $delivery_type == null) echo 'checked'; ?> />
-        <span title='<?= $c_from['c_full_name'] . ' ('.$c_from['c_key_field'].')'  ?>'><?= $c_from['c_name'] ?></span>
+        <span class="text_simple" title='<?= $c_from['c_full_name'] . ' ('.$c_from['c_key_field'].')'  ?>'><?= $c_from['c_name'] ?></span>
         <span class="color_grey font_size_nine">
         <?php
         echo $string_utility->getAddressToView(2, $c_from);
         ?>
         </span>
-        <b class="font_size_eighteen"> &#8674; </b>
-        <span title='<?= $c_to['c_full_name'] . ' ('.$c_to['c_key_field'].')'  ?>'><?= $c_to['c_name'] ?></span>
+        <b class="font_size_eighteen text_simple"> &#8674; </b>
+        <span class="text_simple" title='<?= $c_to['c_full_name'] . ' ('.$c_to['c_key_field'].')'  ?>'><?= $c_to['c_name'] ?></span>
         <span class="color_grey font_size_nine">
         <?php
         echo $string_utility->getAddressToView(2, $c_to);
@@ -171,23 +171,23 @@ include ROOT . '/views/layouts/header.php';
         <?php foreach ($transit_points as $t_point): ?>
             <label>
                 <input type="radio" name="delivery_type" value="<?= $t_point['ca_id'] ?>" <?php if($delivery_type == $t_point['id']) echo 'checked'; ?> />
-                <span title='<?= $c_from['c_full_name'] . ' ('.$c_from['c_key_field'].')' ?>'><?= $c_from['c_name'] ?></span>
+                <span class="text_simple" title='<?= $c_from['c_full_name'] . ' ('.$c_from['c_key_field'].')' ?>'><?= $c_from['c_name'] ?></span>
                 <span class="color_grey font_size_nine">
                 <?php
                 echo $string_utility->getAddressToView(2, $c_from);
                 ?>
                 </span>
-                <b class="font_size_eighteen"> &#8674; </b>
+                <b class="font_size_eighteen text_simple"> &#8674; </b>
 
-                <span title='<?= $t_point['full_name'] . ' ('.$t_point['key_field'].')'  ?>'><?= $t_point['name'] ?></span>
+                <span class="text_simple" title='<?= $t_point['full_name'] . ' ('.$t_point['key_field'].')'  ?>'><b class="font_size_nine">[ТРАНЗИТ]</b> <?= $t_point['name'] ?></span>
                 <span class="color_grey font_size_nine">
                 <?php
                 echo $string_utility->getAddressToView(2, $t_point);
                 ?>
                 </span>
 
-                <b class="font_size_eighteen"> &#8674; </b>
-                <span title='<?= $c_to['c_full_name'] . ' ('.$c_to['c_key_field'].')'  ?>'><?= $c_to['c_name'] ?></span>
+                <b class="font_size_eighteen text_simple"> &#8674; </b>
+                <span class="text_simple" title='<?= $c_to['c_full_name'] . ' ('.$c_to['c_key_field'].')'  ?>'><?= $c_to['c_name'] ?></span>
                 <span class="color_grey font_size_nine">
                 <?php
                 echo $string_utility->getAddressToView(2, $c_to);

@@ -47,7 +47,7 @@ include ROOT . '/views/layouts/header.php';
                 </td>
                 <td class="bg_none one_eighth ">
                     <div class="inline bg_button" title="Выбрать доверенное лицо" style="padding: 0">
-                        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_SEND ?>">
+                        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_RECEIVE ?>">
                             <img src="/template/images/proxy_person.png" alt="Выбрать доверенное лицо" />
                         </a>
                     </div><span class="right_indent negative_left_indent"></span>
@@ -61,13 +61,13 @@ include ROOT . '/views/layouts/header.php';
                 </td>
             </tr>
             <tr class="presentation">
-                <td class="accent">Доверенность</td>
-                <td class="dinamic_content">
+                <td class="accent one_eighth">Доверенность</td>
+                <td class="quarter dinamic_content">
                     <?php if ($proxy != null && $proxy_person != null): ?>
                         <div  id="proxy">
                             <p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
-                            <p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
-                            <p>Дата истечения: <?= $proxy['date_expired'] ?></p>
+                            <p>Дата выдачи: <?= $date_converter->dateToString($proxy['date_issued']) ?></p>
+                            <p>Дата истечения: <?= $date_converter->dateToString($proxy['date_expired']) ?></p>
                         </div>
                     <?php endif; // if ($proxy == null || $proxy_person == null): ?>
                 </td>

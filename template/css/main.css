@@ -356,6 +356,10 @@ tr.under_row{
     overflow-y:scroll;
 }
 
+.text_simple{
+    color: #101921;
+}
+
 #admin_menu_panel > a{
     margin-right: 10px;
     margin-left: 10px;

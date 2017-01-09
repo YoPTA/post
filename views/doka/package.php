@@ -54,6 +54,7 @@ include ROOT . '/views/layouts/header.php';
             <h2 class="font_size_fourteen">Отправитель</h2>
             <div class="half">
                 <?= $from_company['full_name'] ?>
+                <br />
                 <span class="color_grey font_size_twelve">
                 <?php
                 if($from_company['address_zip'] != null)
@@ -84,6 +85,7 @@ include ROOT . '/views/layouts/header.php';
             <h2 class="font_size_fourteen">Получатель</h2>
             <div class="half">
                 <?= $to_company['full_name'] ?>
+                <br />
                 <span class="color_grey font_size_twelve"><?php
                 if($to_company['address_zip'] != null)
                     echo $to_company['address_zip'].', ';

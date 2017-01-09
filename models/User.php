@@ -46,6 +46,25 @@ class User
     {
         session_start();
         $_SESSION['user'] = $userId;
+        $_SESSION['session_start_time'] = time(); // Начало сессии
+    }
+
+    /*
+     * Проверяем время начала входа пользователя.
+     * Если время более 1 суток, то сессия отчищается.
+     */
+    public static function checkSessionTime()
+    {
+        $time_now = time();
+        $time_limit = 86400;
+        if ($time_now > $_SESSION['session_start_time'] +  $time_limit )
+        {
+            // Стартуем сессию
+            $_SESSION = array();
+            session_destroy ();
+            // Перенаправляем пользователя на главную страницу
+            header("Location: /site/login");
+        }
     }
 
     /*

@@ -61,13 +61,13 @@ include ROOT . '/views/layouts/header.php';
             </td>
         </tr>
         <tr class="presentation">
-            <td class="accent">Доверенность</td>
-            <td class="dinamic_content">
+            <td class="accent one_eighth">Доверенность</td>
+            <td class="quarter dinamic_content">
                 <?php if ($proxy != null && $proxy_person != null): ?>
                 <div  id="proxy">
                     <p>Орган выдачи: <?= $proxy['authority_issued'] ?></p>
-                    <p>Дата выдачи: <?= $proxy['date_issued'] ?></p>
-                    <p>Дата истечения: <?= $proxy['date_expired'] ?></p>
+                    <p>Дата выдачи: <?= $date_converter->dateToString($proxy['date_issued']) ?></p>
+                    <p>Дата истечения: <?= $date_converter->dateToString($proxy['date_expired']) ?></p>
                 </div>
                 <?php endif; // if ($proxy == null || $proxy_person == null): ?>
             </td>
