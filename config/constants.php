@@ -19,7 +19,7 @@ define('FROM_COMPANY', 'from');
 define('TO_COMPANY', 'to');
 
 // Адрес DNS/IP
-define('SOURCE_SITE', 'http://10.10.10.100/site/?command=getlistdata&number=');
+define('SOURCE_SITE', 'http://10.10.10.100/site/?command=getlistdata&number='); // В боевом режиме использовать адрес - 10.8.0.122
 
 // Кодировка со строчной буквы
 define('DEFAULT_ENCODING_LOWERCASE', 'utf8');
