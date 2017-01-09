@@ -6,6 +6,10 @@ a:hover{
     color: rgba(57, 142, 255, .7);
 }
 
+a.for_button{
+    text-decoration: none;
+}
+
 div.menu {
     font-size: 0px;
 }

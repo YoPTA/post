@@ -29,7 +29,7 @@ include ROOT . '/views/layouts/header.php';
             <input type="submit" value="Найти" class="button one_eighth" /><span class="right_indent"></span>
         </div>
         <div class="inline fr">
-            <a href="/proxy/person_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>">
+            <a class="for_button" href="/proxy/person_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>">
                 <input type="button" class="button one_eighth" value="Добавить" />
             </a>
         </div>
@@ -57,12 +57,17 @@ $i = 0;
         <tr class="presentation">
             <td align="center"><?= $i; ?></td>
             <td>
-                <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>">
-                    <?= $p_person['lastname']. ' ' . $p_person['firstname'] . ' ' . $p_person['middlename'] ?>
-                </a>
+                <?= $p_person['lastname']. ' ' . $p_person['firstname'] . ' ' . $p_person['middlename'] ?>
             </td>
-            <?php if ($is_change_proxy) : ?>
+
             <td class="one_eighth" align="center">
+                <div class="bg_button inline">
+                    <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Выбрать доверенное лицо">
+                        <img src="/template/images/check.png" />
+                    </a>
+                </div>
+
+                <?php if ($is_change_proxy) : ?>
                 <div class="bg_button inline">
                     <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Редактировать доверенное лицо">
                         <img src="/template/images/edit.png" />
@@ -73,8 +78,9 @@ $i = 0;
                         <img src="/template/images/delete.png" />
                     </a>
                 </div>
+                <?php endif; // if ($is_change_proxy) : ?>
             </td>
-            <?php endif; // if ($is_change_proxy) : ?>
+
         </tr>
         <?php
             endforeach; // foreach ($proxy_persons as $p_person):

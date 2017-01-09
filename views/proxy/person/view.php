@@ -81,7 +81,7 @@ include ROOT . '/views/layouts/header.php';
             <input type="submit" value="Найти" class="button one_eighth" /><span class="right_indent"></span>
         </div>
         <div class="inline fr">
-            <a href="/proxy/proxy_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
+            <a class="for_button" href="/proxy/proxy_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
                 <input type="button" class="button one_eighth" value="Добавить" />
             </a>
         </div>
@@ -93,17 +93,16 @@ include ROOT . '/views/layouts/header.php';
     $i = 0;
     ?>
     <form method="POST">
-    <div class="full_width">
+    <!-- <div class="full_width">
         <button class="continue" name="continue" id="continue" title="Продолжить">
             <div class="bg_button">
             <img src="/template/images/arrow_forward.png" alt="ВПЕРЕД" style="vertical-align: middle" />
             </div>
         </button>
-    </div>
+    </div> -->
     <br />
     <table class="view full_width" cellspacing="0" cellpadding="0">
         <tr class="head" align="center">
-            <td class="one_sixteenth">...</td>
             <td class="one_sixteenth">№ п/п</td>
             <td class="one_eighth">Номер доверенности</td>
             <td class="quarter">Орган выдачи</td>
@@ -120,14 +119,17 @@ include ROOT . '/views/layouts/header.php';
         ?>
 
         <tr class="presentation">
-            <td align="center"><input type="radio" name="selected_proxy" value="<?= $p_list['id'] ?>"/></td>
             <td align="center"><?= $i ?></td>
             <td><?= $p_list['number'] ?></td>
             <td><?= $p_list['authority_issued'] ?></td>
             <td><?= $date_converter->dateToString($p_list['date_issued']) ?></td>
             <td><?= $date_converter->dateToString($p_list['date_expired']) ?></td>
-            <?php if ($is_change_proxy): ?>
+
             <td align="center">
+                <button value="<?= $p_list['id'] ?>" class="button check" name="continue" title="Выбрать доверенность" style="vertical-align: bottom">
+                    <img src="/template/images/check.png" alt="Выбрать" />
+                </button>
+                <?php if ($is_change_proxy): ?>
                 <div class="bg_button inline">
                     <a href="/proxy/proxy_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
                         <img src="/template/images/edit.png" />
@@ -138,14 +140,14 @@ include ROOT . '/views/layouts/header.php';
                         <img src="/template/images/delete.png" />
                     </a>
                 </div>
+                <?php endif; //if ($is_change_proxy): ?>
             </td>
-            <?php endif; //if ($is_change_proxy): ?>
         </tr>
         <?php
         if ($is_admin):
         ?>
         <tr>
-            <td colspan="5"></td>
+            <td colspan="4"></td>
             <td colspan="2" class="under_row">
                 <div>
                     Добавлена: <?= $p_list['created_datetime'] ?><br />

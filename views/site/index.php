@@ -60,13 +60,13 @@ include ROOT . '/views/layouts/header.php';
                     onclick="window.open('/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', <?= DEFAULT_WINDOW ?>)">
                         <img src="/template/images/view_content.png">
                 </div>
-                <span class="negative_left_indent right_indent"></span>
+
                 <div class="bg_button inline" title="Посмотреть сопроводительный лист"
                      onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', <?= DEFAULT_WINDOW ?>)">
                     <img src="/template/images/barcode.png">
                 </div>
-                <span class="negative_left_indent right_indent"></span>
-                <div class="bg_button inline negative_left_indent" title="Посмотреть маршрут">
+
+                <div class="bg_button inline" title="Посмотреть маршрут">
                      <a href="/route/view?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>">
                         <img src="/template/images/location.png">
                      </a>

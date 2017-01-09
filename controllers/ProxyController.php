@@ -311,7 +311,7 @@ class ProxyController
             {
                 $errors['document_series'] = 'Серия паспорта должна быть четырехзначным числом формате ХХХХ';
             }
-            if (!Validate::checkStr($proxy_person['document_series'], 4))
+            if (!Validate::checkStrEqualLength($proxy_person['document_series'], 4))
             {
                 $errors['document_series'] = 'Серия паспорта не может быть такой длины';
             }
@@ -320,14 +320,9 @@ class ProxyController
             {
                 $errors['document_number'] = 'Номер паспорта должен быть шестизначным числом формате ХХХХХХ';
             }
-            if (!Validate::checkStr($proxy_person['document_number'], 6))
+            if (!Validate::checkStrEqualLength($proxy_person['document_number'], 6))
             {
                 $errors['document_number'] = 'Номер паспорта не может быть такой длины';
-            }
-
-            if (!Validate::checkStr($proxy_person['document_series'], 6))
-            {
-                $errors['document_series'] = 'Номер паспорта не может быть такой длины';
             }
 
             if (!Validate::checkStr($proxy_person['date_issued'], 10))
@@ -344,7 +339,7 @@ class ProxyController
             {
                 $errors['place_code'] = 'Код выдачи должен быть шестизначным числом формате ХХХХХХ';
             }
-            if (!Validate::checkStr($proxy_person['place_code'], 6))
+            if (!Validate::checkStrEqualLength($proxy_person['place_code'], 6))
             {
                 $errors['place_code'] = 'Код выдачи не может быть такой длины';
             }
@@ -507,14 +502,14 @@ class ProxyController
 
         if (isset($_POST['continue']))
         {
-
+            $p_id = htmlspecialchars($_POST['continue']);
             Proxy::outProxy();
             Proxy::outProxyPerson();
 
-            if (isset($_POST['selected_proxy']))
+            /*if (isset($_POST['selected_proxy']))
             {
                 $p_id =  htmlspecialchars($_POST['selected_proxy']);
-            }
+            }*/
             Proxy::memorizeProxy($p_id);
             Proxy::memorizeProxyPerson($p_pid);
             $page_name = null;
@@ -731,7 +726,7 @@ class ProxyController
             {
                 $errors['document_series'] = 'Серия паспорта должна быть четырехзначным числом формате ХХХХ';
             }
-            if (!Validate::checkStr($proxy_person['document_series'], 4))
+            if (!Validate::checkStrEqualLength($proxy_person['document_series'], 4))
             {
                 $errors['document_series'] = 'Серия паспорта не может быть такой длины';
             }
@@ -740,14 +735,9 @@ class ProxyController
             {
                 $errors['document_number'] = 'Номер паспорта должен быть шестизначным числом формате ХХХХХХ';
             }
-            if (!Validate::checkStr($proxy_person['document_number'], 6))
+            if (!Validate::checkStrEqualLength($proxy_person['document_number'], 6))
             {
                 $errors['document_number'] = 'Номер паспорта не может быть такой длины';
-            }
-
-            if (!Validate::checkStr($proxy_person['document_series'], 6))
-            {
-                $errors['document_series'] = 'Номер паспорта не может быть такой длины';
             }
 
             if (!Validate::checkStr($proxy_person['date_issued'], 10))
@@ -764,7 +754,7 @@ class ProxyController
             {
                 $errors['place_code'] = 'Код выдачи должен быть шестизначным числом формате ХХХХХХ';
             }
-            if (!Validate::checkStr($proxy_person['place_code'], 6))
+            if (!Validate::checkStrEqualLength($proxy_person['place_code'], 6))
             {
                 $errors['place_code'] = 'Код выдачи не может быть такой длины';
             }
