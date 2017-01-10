@@ -13,8 +13,8 @@ include ROOT . '/views/layouts/header.php';
         <input type="hidden" name="page" value="<?= $page ?>"  />
         <input type="text" id="date_create" name="date_create" value="<?= $date_create ?>" class="tcal quarter" placeholder="Дата выдачи" /><span class="right_indent"></span>
         <select class="one_eighth" name="office">
-            <option value="<?= OFFICE_NOW ?>" <?php if ($office == OFFICE_NOW) echo 'selected'; ?> >Текущий офис</option>
             <option value="<?= OFFICE_ALL ?>" <?php if ($office == OFFICE_ALL) echo 'selected'; ?> >Все офисы</option>
+            <option value="<?= OFFICE_NOW ?>" <?php if ($office == OFFICE_NOW) echo 'selected'; ?> >Текущий офис</option>
         </select><span class="right_indent"></span>
 
         <input type="submit" value="Найти" class="button one_eighth" />

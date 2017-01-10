@@ -17,7 +17,7 @@ class SiteController
         $page = 1;
         $date_create = null;
         $package_type = 0;
-        $office = OFFICE_NOW;
+        $office = OFFICE_ALL;
 
         if (!isset($_GET['track']))
         {
