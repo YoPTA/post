@@ -41,6 +41,7 @@ $pagetitle = 'Сопроводительный лист';
             <img src="/temp/users/<?= $user_id ?>/<?= USER_BARCODE ?>.png" alt="Не удалось загрузить штрих-код" />
             <p>Посылка: <b><?= $package_info['p_note'] ?></b></p>
             <p>Трек-номер: <b><?= $package_info['p_number'] ?></b></p>
+            <p>Количество объектов посылок: <b><?= $package_objects_count ?></b></p>
 
         </div>
 
@@ -113,7 +114,7 @@ $pagetitle = 'Сопроводительный лист';
             </p>
         </div>
 
-        <?php if (is_array($package_objects) && $package_objects != null): ?>
+        <?php if (is_array($package_objects) && $package_objects != null && 1 > 2): ?>
         <div class="">
             <hr class="type" />
             <h3>Объекты посылки</h3>

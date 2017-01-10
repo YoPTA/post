@@ -460,8 +460,10 @@ class SiteController
         {
             $errors['p_number']= 'Не удалось определить трек-номер';
         }
+        $package_objects_count = 0;
 
         $package_objects = Package::getPackageObjects($pid);
+        $package_objects_count = count($package_objects);
 
         if ($is_create)
         {
