@@ -276,7 +276,7 @@ class SiteController
                 Package::outPackage();
                 Package::outPackageObjects();
 
-                header('Location: /site/index?track='. $track .'&page=1&date_create=&package_type='.PACKAGE_ALL.'&office='.OFFICE_NOW);
+                header('Location: /site/index?track='. $track .'&page=1&date_create=&package_type='.PACKAGE_ALL.'&office='.OFFICE_ALL);
             }
         }
 

@@ -12,7 +12,7 @@ include ROOT . '/views/layouts/header.php';
         <input type="search" name="track" placeholder="Введите трек-номер" class="quarter" value="<?= $track ?>" /><span class="right_indent"></span>
         <input type="hidden" name="page" value="<?= $page ?>"  />
         <input type="text" id="date_create" name="date_create" value="<?= $date_create ?>" class="tcal quarter" placeholder="Дата выдачи" /><span class="right_indent"></span>
-        <select class="one_eighth" name="office">
+        <select class="one_eighth" name="office" onchange="this.form.submit();">
             <option value="<?= OFFICE_ALL ?>" <?php if ($office == OFFICE_ALL) echo 'selected'; ?> >Все офисы</option>
             <option value="<?= OFFICE_NOW ?>" <?php if ($office == OFFICE_NOW) echo 'selected'; ?> >Текущий офис</option>
         </select><span class="right_indent"></span>
