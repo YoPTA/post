@@ -108,6 +108,65 @@ ol.undreline li{
     text-decoration: underline;
 }
 
+p.under{
+    margin: 0;
+}
+
+span.arrow_bottom{
+    vertical-align: top;
+    margin: 0 5px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-top: 4px solid #333333;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+span.arrow_left{
+    vertical-align: top;
+    margin: 0 5px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-right: 4px solid #333333;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+span.arrow_right{
+    vertical-align: top;
+    margin: 0 5px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 4px solid #333333;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+}
+
+span.arrow_top{
+    vertical-align: top;
+    margin: 0 5px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-bottom: 4px solid #333333;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+}
+
+span.arrow_right_red{
+    vertical-align: top;
+    margin: 0 5px;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 15px solid rgba(206, 47, 47, 1);
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+
 span.acorrect{
     color: rgba(183, 68, 66, 1);
     font-size: 12px;

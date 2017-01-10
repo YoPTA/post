@@ -283,12 +283,30 @@ class Route
           company_address.is_transit,
           company.name AS c_name,
           company.full_name AS c_full_name,
-          company.key_field AS c_key_field
+          company.key_field AS c_key_field,
+          route.receive_proxy_person_id,
+          route.send_proxy_person_id,
+          proxy_person.lastname AS send_pp_lastname,
+          proxy_person.firstname AS send_pp_firstname,
+          proxy_person.middlename AS send_pp_middlename,
+          proxy_person1.lastname AS receive_pp_lastname,
+          proxy_person1.firstname AS receive_pp_firstname,
+          proxy_person1.middlename AS receive_pp_middlename,
+          user.lastname AS send_u_lastname,
+          user.firstname AS send_u_firstname,
+          user.middlename AS send_u_middlename,
+          user1.lastname AS receive_u_lastname,
+          user1.firstname AS receive_u_firstname,
+          user1.middlename AS receive_u_middlename
         FROM
           route
           INNER JOIN package ON (route.package_id = package.id)
           INNER JOIN company_address ON (route.company_address_id = company_address.id)
           INNER JOIN company ON (company_address.company_id = company.id)
+          INNER JOIN proxy_person ON (route.send_proxy_person_id = proxy_person.id)
+          INNER JOIN proxy_person proxy_person1 ON (route.receive_proxy_person_id = proxy_person1.id)
+          INNER JOIN user ON (route.send_user_id = user.id)
+          INNER JOIN user user1 ON (route.receive_user_id = user1.id)
         WHERE
           route.package_id = :package_id
         ORDER BY route.id';

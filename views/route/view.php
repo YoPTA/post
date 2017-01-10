@@ -103,7 +103,7 @@ $td_id = 0;
         <tr>
             <td class="one_sixteenth" align="right">
                 <?php if ($is_point_main): ?>
-                    <img src="/template/images/pointer.png" />
+                    <span class="arrow_right_red"></span>
                 <?php endif; //if ($is_point_main): ?>
             </td>
             <td align="center" id="<?= $td_id ?>"  class="one_sixteenth">
@@ -127,6 +127,36 @@ $td_id = 0;
                 echo $string_utility->getAddressToView(2, $package_route[$i]);
                 ?>
                 </span>
+                <br />
+                <div class="font_size_nine" style="position: absolute;">
+                    <?php if ($package_route[$i]['is_receive'] == 1): ?>
+                        <p class="under">
+                            <span class="arrow_right" title="Получено"></span>
+                            <?= $date_converter->datetimeToString($package_route[$i]['datetime_receive']) ?>,
+                            <span title="От кого">
+                                <?= $package_route[$i]['receive_pp_lastname'] . ' '. $package_route[$i]['receive_pp_firstname'] . ' ' . $package_route[$i]['receive_pp_middlename'] ?>
+                            </span>
+                            &#8594;
+                            <span title="Кому">
+                                <?= $package_route[$i]['receive_u_lastname'] . ' '. $package_route[$i]['receive_u_firstname'] . ' ' . $package_route[$i]['receive_u_middlename'] ?>
+                            </span>
+                        </p>
+                    <?php endif; //if ($package_route[$i]['is_receive'] == 1): ?>
+
+                    <?php if ($package_route[$i]['is_send'] == 1): ?>
+                        <p class="under">
+                            <span class="arrow_left" title="Отправлено"></span>
+                            <?= $date_converter->datetimeToString($package_route[$i]['datetime_send']) ?>,
+                            <span title="От кого">
+                                <?= $package_route[$i]['send_u_lastname'] . ' '. $package_route[$i]['send_u_firstname'] . ' ' . $package_route[$i]['send_u_middlename'] ?>
+                            </span>
+                            &#8594;
+                            <span title="Кому">
+                                <?= $package_route[$i]['send_pp_lastname'] . ' '. $package_route[$i]['send_pp_firstname'] . ' ' . $package_route[$i]['send_pp_middlename'] ?>
+                            </span>
+                        </p>
+                    <?php endif; //if ($package_route[$i]['is_send'] == 1): ?>
+                </div>
             </td>
         </tr>
         <?php
@@ -137,7 +167,7 @@ $td_id = 0;
         <tr>
             <td align="right">
                 <?php if ($is_point_separator): ?>
-                    <img src="/template/images/pointer.png" />
+                    <span class="arrow_right_red"></span>
                 <?php endif; //if ($is_point_separator): ?>
             </td>
             <td align="center" id="<?= $td_id ?>" class="one_sixteenth">
