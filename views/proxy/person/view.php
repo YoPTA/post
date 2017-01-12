@@ -9,7 +9,7 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>">
+        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>">
             &#8592; Вернуться к доверенным лицам
         </a>
     </div>
@@ -49,13 +49,13 @@ include ROOT . '/views/layouts/header.php';
     <span class="right_indent"></span>
     <div class="inline">
         <div class="bg_button inline">
-            <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Редактировать доверенное лицо">
+            <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Редактировать доверенное лицо">
                 <img src="/template/images/edit.png" />
             </a>
         </div>
         <span class="right_indent"></span>
         <div class="bg_button inline">
-            <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Удалить доверенное лицо">
+            <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Удалить доверенное лицо">
                 <img src="/template/images/delete.png" />
             </a>
         </div>
@@ -70,8 +70,9 @@ include ROOT . '/views/layouts/header.php';
             <input type="hidden" name="package_type" value="<?= $package_type ?>">
             <input type="hidden" name="office" value="<?= $office ?>">
             <input type="hidden" name="pid" value="<?= $pid ?>">
-            <input type="hidden" name="rid" value="<?= $rid ?>">
+            <input type="hidden" name="rid" value="<?= $rid ?>" />
             <input type="hidden" name="user_ref" value="<?= $user_ref ?>">
+            <input type="hidden" name="wow" value="<?= $wow ?>">
             <input type="hidden" name="search" value="<?= $search ?>" />
             <input type="hidden" name="p_pid" value="<?= $p_pid ?>" />
 
@@ -81,7 +82,7 @@ include ROOT . '/views/layouts/header.php';
             <input type="submit" value="Найти" class="button one_eighth" /><span class="right_indent"></span>
         </div>
         <div class="inline fr">
-            <a class="for_button" href="/proxy/proxy_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
+            <a class="for_button" href="/proxy/proxy_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
                 <input type="button" class="button one_eighth" value="Добавить" />
             </a>
         </div>
@@ -131,12 +132,12 @@ include ROOT . '/views/layouts/header.php';
                 </button>
                 <?php if ($is_change_proxy): ?>
                 <div class="bg_button inline">
-                    <a href="/proxy/proxy_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
+                    <a href="/proxy/proxy_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
                         <img src="/template/images/edit.png" />
                     </a>
                 </div>
                 <div class="bg_button inline">
-                    <a href="/proxy/proxy_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
+                    <a href="/proxy/proxy_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
                         <img src="/template/images/delete.png" />
                     </a>
                 </div>

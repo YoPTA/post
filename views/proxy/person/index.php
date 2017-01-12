@@ -9,7 +9,7 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/route/<?= $page_name ?>?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>">
+        <a href="/route/<?= $page_name ?>?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&wow=<?= $wow ?>">
             &#8592; Вернуться назад
         </a>
     </div>
@@ -24,12 +24,13 @@ include ROOT . '/views/layouts/header.php';
             <input type="hidden" name="pid" value="<?= $pid ?>">
             <input type="hidden" name="rid" value="<?= $rid ?>">
             <input type="hidden" name="user_ref" value="<?= $user_ref ?>">
+            <input type="hidden" name="wow" value="<?= $wow ?>">
 
             <input type="search" name="search" placeholder="ФИО" class="quarter" value="<?= $search ?>" /><span class="right_indent"></span>
             <input type="submit" value="Найти" class="button one_eighth" /><span class="right_indent"></span>
         </div>
         <div class="inline fr">
-            <a class="for_button" href="/proxy/person_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>">
+            <a class="for_button" href="/proxy/person_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>">
                 <input type="button" class="button one_eighth" value="Добавить" />
             </a>
         </div>
@@ -62,19 +63,19 @@ $i = 0;
 
             <td class="one_eighth" align="center">
                 <div class="bg_button inline">
-                    <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Выбрать доверенное лицо">
+                    <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Выбрать доверенное лицо">
                         <img src="/template/images/check.png" />
                     </a>
                 </div>
 
                 <?php if ($is_change_proxy) : ?>
                 <div class="bg_button inline">
-                    <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Редактировать доверенное лицо">
+                    <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Редактировать доверенное лицо">
                         <img src="/template/images/edit.png" />
                     </a>
                 </div>
                 <div class="bg_button inline">
-                    <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Удалить доверенное лицо">
+                    <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_person['id'] ?>" title="Удалить доверенное лицо">
                         <img src="/template/images/delete.png" />
                     </a>
                 </div>

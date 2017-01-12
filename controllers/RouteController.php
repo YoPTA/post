@@ -111,6 +111,8 @@ class RouteController
         $rid = null; // Id маршрута
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
 
+        $with_or_without = 0; // С доверенным лицом или без него
+
 
         $send_values = null; // Данные об отправлении
         $route = null; // Информация о маршруте
@@ -153,6 +155,16 @@ class RouteController
         if ($package_type < 0)
         {
             $package_type = 0;
+        }
+
+        if (isset($_GET['wow']))
+        {
+            $with_or_without = htmlspecialchars($_GET['wow']);
+        }
+
+        if ($with_or_without <= 0 || !is_numeric($with_or_without) || $with_or_without > 2)
+        {
+            $with_or_without = 0;
         }
 
         if (isset($_GET['office']))
@@ -198,6 +210,7 @@ class RouteController
 		
         $proxy_id = Proxy::checkProxy(); // Доверенность
         $proxy_person_id = Proxy::checkProxyPerson(); // Доверреное лицо
+        $proxy_person_proxies = Proxy::getProxyList($proxy_person_id, null);
 		
 		if ($proxy_id != null)
 		{
@@ -208,7 +221,10 @@ class RouteController
 			$proxy_person = Proxy::getProxyPerson($proxy_person_id);
 		}
 
-        $without_proxy = 0; // Без доверенного лица
+        if (isset($_POST['with_or_without']))
+        {
+            $with_or_without = htmlspecialchars($_POST['with_or_without']);
+        }
 
         if (isset($_POST['send']))
         {
@@ -238,25 +254,47 @@ class RouteController
                 $errors['datetime_receive'] = 'Попытка отправить посылку, которая еще не получалась';
             }
 
-            if (isset($_POST['without_proxy']))
+
+            if ($with_or_without == 1)
             {
                 $proxy_id = 0;
                 $proxy_person_id = 0;
-                $without_proxy = $_POST['without_proxy'];
             }
-            else
+            else if ($with_or_without == 2)
             {
-                if ($proxy_id == null || $proxy_id == 0)
-                {
-                    // Если не выбрана доверенность
-                    $errors['proxy_id'] = 'Не выбрана доверенность';
-                }
 
                 if ($proxy_person_id == null || $proxy_person_id == 0)
                 {
                     // Если не выбрано доверенное лицо
                     $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
                 }
+                if ($proxy_id == null || $proxy_id == 0)
+                {
+                    // Если не выбрана доверенность
+                    $errors['proxy_id'] = 'Не выбрана доверенность';
+                }
+
+                $is_match = false; // Совпадение доверенности и доверенного лица
+
+                if ($proxy_person_proxies != null && is_array($proxy_person_proxies))
+                {
+                    foreach ($proxy_person_proxies as $ppp_item)
+                    {
+                        if ($ppp_item['id'] == $proxy_id)
+                        {
+                            $is_match = true;
+                            break;
+                        }
+                    }
+                }
+                if (!$is_match)
+                {
+                    $errors['proxy_or_proxy_person'] = 'Доверенность не принадлежит доверенному лицу. Выберите другую.';
+                }
+            }
+            else
+            {
+                $errors['nothing'] = 'Не выбран тип передачи';
             }
 
             // Если ошибок не оказалось
@@ -310,6 +348,7 @@ class RouteController
         $rid = null; // Id маршрута
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
 
+        $with_or_without = 0; // С доверенным лицом или без него
 
         $receive_values = null; // Данные об отправлении
         $route = null; // Информация о маршруте
@@ -352,6 +391,16 @@ class RouteController
         if ($package_type < 0)
         {
             $package_type = 0;
+        }
+
+        if (isset($_GET['wow']))
+        {
+            $with_or_without = htmlspecialchars($_GET['wow']);
+        }
+
+        if ($with_or_without <= 0 || !is_numeric($with_or_without) || $with_or_without > 2)
+        {
+            $with_or_without = 0;
         }
 
         if (isset($_GET['office']))
@@ -398,6 +447,7 @@ class RouteController
 
         $proxy_id = Proxy::checkProxy(); // Доверенность
         $proxy_person_id = Proxy::checkProxyPerson(); // Доверреное лицо
+        $proxy_person_proxies = Proxy::getProxyList($proxy_person_id, null);
 
         if ($proxy_id != null)
         {
@@ -408,7 +458,10 @@ class RouteController
             $proxy_person = Proxy::getProxyPerson($proxy_person_id);
         }
 
-        $without_proxy = 0; // Без доверенного лица
+        if (isset($_POST['with_or_without']))
+        {
+            $with_or_without = htmlspecialchars($_POST['with_or_without']);
+        }
 
         if (isset($_POST['receive']))
         {
@@ -432,25 +485,46 @@ class RouteController
                 $errors['datetime_receive'] = 'Ошибка с датой подтверждения';
             }
 
-            if (isset($_POST['without_proxy']))
+            if ($with_or_without == 1)
             {
                 $proxy_id = 0;
                 $proxy_person_id = 0;
-                $without_proxy = $_POST['without_proxy'];
             }
-            else
+            else if ($with_or_without == 2)
             {
-                if ($proxy_id == null || $proxy_id == 0)
-                {
-                    // Если не выбрана доверенность
-                    $errors['proxy_id'] = 'Не выбрана доверенность';
-                }
 
                 if ($proxy_person_id == null || $proxy_person_id == 0)
                 {
                     // Если не выбрано доверенное лицо
                     $errors['proxy_person_id'] = 'Не выбрано доверенное лицо';
                 }
+                if ($proxy_id == null || $proxy_id == 0)
+                {
+                    // Если не выбрана доверенность
+                    $errors['proxy_id'] = 'Не выбрана доверенность';
+                }
+
+                $is_match = false; // Совпадение доверенности и доверенного лица
+
+                if ($proxy_person_proxies != null && is_array($proxy_person_proxies))
+                {
+                    foreach ($proxy_person_proxies as $ppp_item)
+                    {
+                        if ($ppp_item['id'] == $proxy_id)
+                        {
+                            $is_match = true;
+                            break;
+                        }
+                    }
+                }
+                if (!$is_match)
+                {
+                    $errors['proxy_or_proxy_person'] = 'Доверенность не принадлежит доверенному лицу. Выберите другую.';
+                }
+            }
+            else
+            {
+                $errors['nothing'] = 'Не выбран тип передачи';
             }
 
             // Если ошибок не оказалось

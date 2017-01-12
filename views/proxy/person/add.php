@@ -10,7 +10,7 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&search=<?= $search ?>">
+        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>">
             &#8592; Вернуться к доверенным лицам
         </a>
     </div>
