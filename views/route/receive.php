@@ -171,6 +171,7 @@ include ROOT . '/views/layouts/header.php';
                 });
                 return false;
             });
+        });
     </script>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

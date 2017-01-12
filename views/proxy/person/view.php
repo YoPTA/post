@@ -1,5 +1,5 @@
 <?php
-$pagetitle = 'Доверенное лицо';
+$pagetitle = 'Доверенности ' .$case_name->fullName($case_name->gcaseRod);
 $page_id = 'page_index';
 
 //Подключаем шапку
@@ -14,54 +14,6 @@ include ROOT . '/views/layouts/header.php';
         </a>
     </div>
     <br /><br />
-    <div class="inline">
-        <table class="view half">
-            <tr class="presentation">
-                <td class="accent">Доверенное лицо</td>
-                <td class="quarter">
-                    <?= $proxy_person['lastname'].' '.$proxy_person['firstname'].' ' .$proxy_person['middlename'] ?>
-                </td>
-            </tr>
-            <tr class="presentation">
-                <td class="accent">Серия и номер паспорта</td>
-                <td>
-                    <?= $proxy_person['document_series'].' '.$proxy_person['document_number'] ?>
-                </td>
-            </tr>
-            <tr class="presentation">
-                <td class="accent">Дата выдачи</td>
-                <td><?= $date_converter->dateToString($proxy_person['date_issued']) ?></td>
-            </tr>
-            <tr class="presentation">
-                <td class="accent">Место выдачи</td>
-                <td><?= $proxy_person['place_name'] ?></td>
-            </tr>
-            <tr class="presentation">
-                <td class="accent">Код выдачи</td>
-                <td><?= $proxy_person['place_code'] ?></td>
-            </tr>
-            <tr class="presentation">
-                <td class="accent">Номер телефона</td>
-                <td><?= $proxy_person['phone_number'] ?></td>
-            </tr>
-        </table>
-    </div>
-    <span class="right_indent"></span>
-    <div class="inline">
-        <div class="bg_button inline">
-            <a href="/proxy/person_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Редактировать доверенное лицо">
-                <img src="/template/images/edit.png" />
-            </a>
-        </div>
-        <span class="right_indent"></span>
-        <div class="bg_button inline">
-            <a href="/proxy/person_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>" title="Удалить доверенное лицо">
-                <img src="/template/images/delete.png" />
-            </a>
-        </div>
-    </div>
-
-    <br /><br /><br />
     <form method="GET">
         <div class="inline fl">
             <input type="hidden" name="track" value="<?= $track ?>">
@@ -90,17 +42,7 @@ include ROOT . '/views/layouts/header.php';
     </form>
     <br /><br /><br />
 
-    <?php
-    $i = 0;
-    ?>
     <form method="POST">
-    <!-- <div class="full_width">
-        <button class="continue" name="continue" id="continue" title="Продолжить">
-            <div class="bg_button">
-            <img src="/template/images/arrow_forward.png" alt="ВПЕРЕД" style="vertical-align: middle" />
-            </div>
-        </button>
-    </div> -->
     <br />
     <table class="view full_width" cellspacing="0" cellpadding="0">
         <tr class="head" align="center">
@@ -114,6 +56,7 @@ include ROOT . '/views/layouts/header.php';
             <?php endif; // if ($is_change_proxy): ?>
         </tr>
         <?php
+        $i = 0;
         if (is_array($proxy_list)):
             foreach ($proxy_list as $p_list):
                 $i++;
