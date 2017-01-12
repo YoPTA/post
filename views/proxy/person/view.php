@@ -1,5 +1,9 @@
 <?php
-$pagetitle = 'Доверенности ' .$case_name->fullName($case_name->gcaseRod);
+$pagetitle = 'Доверенности ' .$case_name->lastName($case_name->gcaseRod) . ' '. mb_substr($proxy_person['firstname'], 0, 1, DEFAULT_ENCODING_LOWERCASE).'. ';
+if ($proxy_person['middlename'] != null)
+{
+    $pagetitle .= mb_substr($proxy_person['middlename'], 0, 1, DEFAULT_ENCODING_LOWERCASE). '.';
+}
 $page_id = 'page_index';
 
 //Подключаем шапку
