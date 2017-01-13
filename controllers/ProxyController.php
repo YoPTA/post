@@ -410,9 +410,9 @@ class ProxyController
         $date_converter = new Date_Converter();
         $validate = new Validate();
 
-        /*require_once ROOT.'/components/NameCaseLib/NCLNameCaseRu.php';
-        $name_case = new NCLNameCaseRu();*/
-
+        // Подключаем класс со склонениями имен
+        require_once ROOT.'/components/NameCaseLib/NCLNameCaseRu.php';
+        $name_case = new NCLNameCaseRu();
 
         $errors = false;
 
@@ -527,26 +527,6 @@ class ProxyController
         $search_date_issued_sql_format = $date_converter->stringToDate($search_date_issued);
 
         $proxy_person = Proxy::getProxyPersonInfo($p_pid);
-
-        require_once ROOT.'/components/case.php'; // Подключаем компонент со склонением имен
-
-        $proxy_person_fullname = '';
-        if ($proxy_person['lastname'] != null)
-        {
-            $proxy_person_fullname .= $proxy_person['lastname'];
-        }
-        if ($proxy_person['firstname'] != null)
-        {
-            $proxy_person_fullname .=' '. $proxy_person['firstname'];
-        }
-
-        if ($proxy_person['middlename'] != null)
-        {
-            $proxy_person_fullname .=' '. $proxy_person['middlename'];
-        }
-
-        $case_name = new RussianNameProcessor($proxy_person_fullname);
-
 
         $var_is_date = $validate->checkDate($search_date_issued_sql_format, 'Y-m-d');
 

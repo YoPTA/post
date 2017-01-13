@@ -534,6 +534,15 @@ class RouteController
                 $receive_values['receive_proxy_person_id'] = $proxy_person_id;
                 $receive_values['receive_user_id'] = $user_id;
                 $receive_values['datetime_receive'] = date('Y-m-d H:i:s');
+
+                $package_info = Package::getPackage($pid);
+
+                if ($route['company_address_id'] == $package_info['to_company_address_id'])
+                {
+                    Package::updateReceiptDatetime($pid, $receive_values['datetime_receive']);
+                }
+
+
                 Route::receive($rid, $receive_values);
                 Proxy::outProxy();
                 Proxy::outProxyPerson();

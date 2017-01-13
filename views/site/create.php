@@ -96,7 +96,7 @@ include ROOT . '/views/layouts/header.php';
             <?php endif; // if($package != null && $package_objects != null): ?>
 
             <!--</div> -->
-            </div>
+        </div>
 
         <div class="inline half font_size_twelve" style="vertical-align: top;">
             <div class="inline"><h2>Получатель</h2></div>

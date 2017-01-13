@@ -429,16 +429,17 @@ class Package
     /*
      * Обновить дату получения посылки
      * @var $id int - id посылки
+     * @var $receipt_datetime string - Дата и время получения
      */
-    public static function updateReceiptDatetime($id)
+    public static function updateReceiptDatetime($id, $receipt_datetime)
     {
-        $receipt_datetime = date('Y-m-d H:i:s');
         $sql = 'UPDATE package
           SET receipt_datetime = :receipt_datetime
           WHERE id = :id';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
-        $result->bindParam(':receipt_datetime', $receipt_datetime, PDO::PARAM_INT);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':receipt_datetime', $receipt_datetime, PDO::PARAM_STR);
         $result->execute();
     }
 
