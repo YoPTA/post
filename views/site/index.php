@@ -83,5 +83,3 @@ include ROOT . '/views/layouts/header.php';
     <div id="pagination" class="pagination full_width font_size_twelve"><?= $pagination->get(); ?></div>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>
-
-

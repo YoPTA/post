@@ -78,6 +78,21 @@ class User_Role
     }
 
     /*
+     * Проверяем является может ли пользователь изменять организации и
+     * адрес организации.
+     * Работает со статическим приватным полем $roles.
+     * return boolean
+     */
+    public static function checkChangeCompany()
+    {
+        if(self::$roles['is_change_company'] == 1)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*
      * Проверяем может ли пользователь отправлять посылки
      * Работает со статическим приватным полем $roles.
      * return boolean

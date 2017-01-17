@@ -476,6 +476,50 @@ class SiteController
         }
     }
 
+    public function actionChoose()
+    {
+        $is_create = false;
+        $user = null;
+        $user_id = null;
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $from_company_id = Company::checkCompanyInMemory(FROM_COMPANY); // Откуда
+        $to_company_id = Company::checkCompanyInMemory(TO_COMPANY); // Кому
+
+        $company_from = null; // Компания отправитель
+        $company_to = null; // Компания получатель
+
+        $package_list = null; // Посылка
+        $package__objects = null; // Объекты посылки
+
+
+
+
+
+        if($from_company_id != null)
+        {
+            $company_from = Company::getCompany($from_company_id);
+        }
+
+        if ($to_company_id != null)
+        {
+            $company_to = Company::getCompany($to_company_id);
+        }
+
+
+        if ($is_create)
+        {
+            require_once ROOT . '/views/site/choose.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
     public function actionTest()
     {
         $user = null;

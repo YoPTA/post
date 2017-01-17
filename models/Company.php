@@ -7,7 +7,7 @@ class Company
      ********************* Поля класса *********************
      *******************************************************/
 
-
+    const SHOW_BY_DEFAULT = 20;
 
     /***********************************************************
      ********************** Методы класса **********************
@@ -44,7 +44,7 @@ class Company
         $result = $db->prepare($sql);
         $result->bindParam(':company_id', $company_id, PDO::PARAM_INT);
         $result->execute();
-        $company_address =  null;
+        $company_address = null;
         $i = 0;
         while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             $company_address[$i] = $row;
@@ -92,12 +92,86 @@ class Company
         // Обращаемся к записи
         $company = $result->fetch(PDO::FETCH_ASSOC);
 
-        if($company)
-        {
+        if ($company) {
             return $company;
         }
         return false;
     }
+
+    /*
+     * Получаем информацию о организации (все поля)
+     * @var $search_param array() - искомые значения
+     * @var $page int - номер страницы
+     * return array() OR boolean
+     */
+    public static function getCompanies($search_param = null, $page = 1)
+    {
+        $search_param['search_value'] = '%' . $search_param['search_value'] . '%';
+        $page = intval($page);
+        if ($page < 1) {
+            $page = 1;
+        }
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+        $sql = 'SELECT
+          company.id,
+          company.name,
+          company.full_name,
+          company.key_field,
+          company.flag
+        FROM
+          company
+        WHERE
+          (company.name LIKE ? OR
+          company.full_name LIKE ? OR
+          company.key_field LIKE ?) AND
+          company.flag > 0 AND
+          company.id > 0
+        ORDER BY company.name LIMIT ' . self::SHOW_BY_DEFAULT . ' OFFSET ' . $offset;
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->execute([$search_param['search_value'], $search_param['search_value'], $search_param['search_value']]);
+
+        // Получение и возврат результатов
+        $companies = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $companies[$i] = $row;
+            $i++;
+        }
+        return $companies;
+    }
+
+    /*
+     * Получаем общее количество организаций
+     * @var $search_param array() - искомые значения
+     * return int
+     */
+    public static function getTotalCompanies($search_param)
+    {
+        $search_param['search_value'] = '%' . $search_param['search_value'] . '%';
+        $sql = 'SELECT
+          COUNT(*) AS row_count
+        FROM
+          company
+        WHERE
+          (company.name LIKE ? OR
+          company.full_name LIKE ? OR
+          company.key_field LIKE ?) AND
+          company.flag > 0 AND
+          company.id > 0';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->execute([$search_param['search_value'], $search_param['search_value'], $search_param['search_value']]);
+        // Обращаемся к записи
+        $count = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($count) {
+            return $count['row_count'];
+        }
+        return 0;
+    }
+
 
     /*
      * Получаем все организации

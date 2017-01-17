@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Дек 29 2016 г., 08:12
+-- Время создания: Янв 17 2017 г., 09:30
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `company` (
 
 INSERT INTO `company` (`id`, `name`, `full_name`, `key_field`, `flag`) VALUES
 (0, 'Нет', 'Нет', '0', 0),
-(1, 'ГАУ "МФЦ"', 'ГАУ Пензенской области "Многофункциональный центр предоставления государственных и муниципальных услуг"', '5835080816', 0);
+(1, 'ГАУ "МФЦ"', 'ГАУ Пензенской области "Многофункциональный центр предоставления государственных и муниципальных услуг"', '5835080816', 2);
 
 -- --------------------------------------------------------
 
@@ -343,6 +343,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   `name` varchar(100) NOT NULL,
   `is_create` int(1) NOT NULL COMMENT 'Может ли создавать',
   `is_change_proxy` int(1) NOT NULL COMMENT 'Может ли изменять доверенности или доверенные лица',
+  `is_change_company` int(1) NOT NULL COMMENT 'Может ли изменять организацию и адрес организации',
   `is_receive` int(1) NOT NULL COMMENT 'Может ли получать посылки',
   `is_send` int(1) NOT NULL COMMENT 'Может ли отправлять посылки',
   `is_admin` int(1) NOT NULL COMMENT 'Обладает ли правами администратора',
@@ -353,11 +354,11 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 -- Дамп данных таблицы `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_receive`, `is_send`, `is_admin`, `flag`) VALUES
-(0, 'Нет', 0, 0, 0, 0, 0, 0),
-(1, 'Специалист', 1, 0, 0, 1, 0, 0),
-(2, 'Админ', 1, 1, 1, 1, 1, 0),
-(3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0);
+INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_change_company`, `is_receive`, `is_send`, `is_admin`, `flag`) VALUES
+(0, 'Нет', 0, 0, 0, 0, 0, 0, 0),
+(1, 'Специалист', 1, 1, 1, 0, 1, 0, 0),
+(2, 'Админ', 1, 1, 1, 1, 1, 1, 0),
+(3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0, 0);
 
 --
 -- Индексы сохранённых таблиц

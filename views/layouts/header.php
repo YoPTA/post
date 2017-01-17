@@ -30,7 +30,7 @@
                                 <ul class="children">
                                     <li><a href="/site/index"><div class="one_eighth header_btn"><span style="font-size: 10px;">&#9993;</span>&#160;Отследить</div></a></li>
                                     <?php if($is_create): ?>
-                                    <li><a href="/site/create"><div class="one_eighth header_btn"><span>&#9998;</span>&#160;Создать</div></a></li>
+                                    <li><a href="/site/choose"><div class="one_eighth header_btn"><span>&#9998;</span>&#160;Создать</div></a></li>
                                     <?php endif; ?>
                                 </ul>
                             </a>

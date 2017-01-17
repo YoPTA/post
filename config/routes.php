@@ -6,6 +6,8 @@ return [
     'admin/user_index' => 'adminuser/index',
 
 
+    'company/company_index' => 'company/companyindex',
+
 
     'doka/package' => 'doka/package',
 
@@ -16,7 +18,8 @@ return [
     'site/login' => 'site/login',
     'site/logout' => 'site/logout',
     'site/barcode_39' => 'site/barcode39',
-    'site/test' => 'site/test',
+    //'site/test' => 'site/test',
+    'site/choose' => 'site/choose',
 
     'route/view' => 'route/view',
     'route/send' => 'route/send',

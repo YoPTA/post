@@ -19,6 +19,9 @@ $is_create = User_Role::checkCreate();
 // Права редактирования доверенностей и доверенных лиц
 $is_change_proxy = User_Role::checkChangeProxy();
 
+// Права редактирования организаций и адреса организации
+$is_change_company = User_Role::checkChangeCompany();
+
 // Права отправления
 $is_send = User_Role::checkSend();
 
