@@ -23,9 +23,11 @@ class DokaController
     {
         $is_create = false;
         $user = null;
+        $user_id = null;
 
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
+        $date_time = new DateTime();
 
         $errors = false;
 
@@ -126,6 +128,8 @@ class DokaController
 
                         if($is_c_in_db == false)
                         {
+                            $from_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                            $from_company['created_user_id'] = $user_id;
                             // Добавляем новую компанию
                             $new_company = Company::addCompany($from_company);
                             if($new_company != false)
@@ -204,6 +208,8 @@ class DokaController
 
                         if($is_c_in_db == false)
                         {
+                            $to_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                            $to_company['created_user_id'] = $user_id;
                             // Добавляем новую компанию
                             $new_company = Company::addCompany($to_company);
                             if($new_company != false)

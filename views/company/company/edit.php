@@ -1,5 +1,5 @@
 <?php
-$pagetitle = 'Добавить организацию';
+$pagetitle = 'Редактировать организацию';
 $page_id = 'page_index';
 
 //Подключаем шапку
@@ -53,7 +53,7 @@ include ROOT . '/views/layouts/header.php';
                onblur="InputCount('key_field', 'one_eighth', 10, 'key_field_correct', 'ИНН орагнизации не может быть такой длины', 'Необходимо заполнить ИНН организации', '')"
             /><br /><br /><br />
 
-        <input type="submit" name="add" value="Добавить" class="button one_eighth" /><br /><br />
+        <input type="submit" name="edit" value="Редактировать" class="button one_eighth" /><br /><br />
 
     </form>
 

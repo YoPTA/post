@@ -143,6 +143,60 @@ class Company
     }
 
     /*
+     * Получить все поля из таблицы company по id
+     * @var $id int - ID организации
+     * return array()
+     */
+    public static function getCompanyInfo($id)
+    {
+        $sql = 'SELECT
+          *
+        FROM
+          company
+        WHERE
+          company.id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Обращаемся к записи
+        $company = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($company) {
+            return $company;
+        }
+        return false;
+    }
+
+    /*
+     * Получить все поля из таблицы company_address по id
+     * @var $id int - ID адреса организации
+     * return array()
+     */
+    public static function getCompanyAddressInfo($id)
+    {
+        $sql = 'SELECT
+          *
+        FROM
+          company_address
+        WHERE
+          company_address.id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Обращаемся к записи
+        $company_address = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($company_address) {
+            return $company_address;
+        }
+        return false;
+    }
+
+    /*
      * Получаем общее количество организаций
      * @var $search_param array() - искомые значения
      * return int
@@ -171,6 +225,8 @@ class Company
         }
         return 0;
     }
+
+
 
 
     /*
@@ -222,7 +278,7 @@ class Company
     /*
      * Проверка имеется данная запись в БД (поле и значение)
      * @var $key_field string - поле
-     * return boolean
+     * return boolean OR int
      */
     public static function checkKeyFieldExists($key_field)
     {
@@ -243,23 +299,66 @@ class Company
 
     /*
      * Добавление новой организации
-     * @var $company array - организация
+     * @var $company array() - организация
      * return int OR boolean
      */
     public static function addCompany($company)
     {
-        $sql = 'INSERT INTO company (name, full_name, key_field, flag)
-          VALUES (:name, :full_name, :key_field, 1)';
+        $sql = 'INSERT INTO company (name, full_name, key_field, created_datetime, created_user_id, flag)
+          VALUES (:name, :full_name, :key_field, :created_datetime, :created_user_id, 1)';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':name', $company['name'], PDO::PARAM_STR);
         $result->bindParam(':full_name', $company['full_name'], PDO::PARAM_STR);
-        $result->bindParam(':key_field', $company['key_field'], PDO::PARAM_STR);
+        $result->bindParam(':key_field', $company['key_field'], PDO::PARAM_INT);
+        $result->bindParam(':created_datetime', $company['created_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $company['created_user_id'], PDO::PARAM_INT);
         if($result->execute())
         {
             return $db->lastInsertId();
         }
         return false;
+    }
+
+    /*
+     * Обновление организации
+     * @var $id int - ID организации
+     * @var $company array() - организация
+     */
+    public static function updateCompany($id, $company)
+    {
+        $sql = 'UPDATE company
+          SET name = :name, full_name = :full_name, key_field = :key_field,
+          changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+          WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':name', $company['name'], PDO::PARAM_STR);
+        $result->bindParam(':full_name', $company['full_name'], PDO::PARAM_STR);
+        $result->bindParam(':key_field', $company['key_field'], PDO::PARAM_INT);
+        $result->bindParam(':changed_datetime', $company['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $company['changed_user_id'], PDO::PARAM_INT);
+        $result->execute();
+    }
+
+    /*
+     * Удаляем организацию
+     * @var $id int - ID организации
+     * @var $company array() - организация
+     */
+    public static function deleteCompany($id, $company)
+    {
+        $sql = 'UPDATE company
+          SET
+            changed_datetime = :changed_datetime, changed_user_id = :changed_user_id, flag = -1
+          WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':changed_datetime', $company['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $company['changed_user_id'], PDO::PARAM_INT);
+        $result->execute();
     }
 
     /*

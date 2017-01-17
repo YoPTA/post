@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Янв 17 2017 г., 09:30
+-- Время создания: Янв 17 2017 г., 13:16
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -31,6 +31,10 @@ CREATE TABLE IF NOT EXISTS `company` (
   `name` varchar(256) NOT NULL,
   `full_name` varchar(512) NOT NULL,
   `key_field` varchar(64) NOT NULL,
+  `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
+  `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
+  `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
   `flag` int(1) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -38,9 +42,9 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Дамп данных таблицы `company`
 --
 
-INSERT INTO `company` (`id`, `name`, `full_name`, `key_field`, `flag`) VALUES
-(0, 'Нет', 'Нет', '0', 0),
-(1, 'ГАУ "МФЦ"', 'ГАУ Пензенской области "Многофункциональный центр предоставления государственных и муниципальных услуг"', '5835080816', 2);
+INSERT INTO `company` (`id`, `name`, `full_name`, `key_field`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 'Нет', 'Нет', '0', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 'ГАУ "МФЦ"', 'ГАУ Пензенской области "Многофункциональный центр предоставления государственных и муниципальных услуг"', '5835080816', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -73,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `company_address` (
 
 INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `flag`) VALUES
 (0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, 0),
-(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, 0),
-(2, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, 0);
+(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, 2),
+(2, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -214,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `proxy_or_proxy_person` (
   `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
   `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
   `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший'
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `proxy_or_proxy_person`
@@ -499,7 +503,7 @@ ALTER TABLE `proxy`
 -- AUTO_INCREMENT для таблицы `proxy_or_proxy_person`
 --
 ALTER TABLE `proxy_or_proxy_person`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `proxy_person`
 --

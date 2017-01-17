@@ -7,6 +7,9 @@ return [
 
 
     'company/company_index' => 'company/companyindex',
+    'company/company_add' => 'company/companyadd',
+    'company/company_edit' => 'company/companyedit',
+    'company/company_delete' => 'company/companydelete',
 
 
     'doka/package' => 'doka/package',
