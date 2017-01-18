@@ -32,27 +32,84 @@ include ROOT . '/views/layouts/header.php';
 
 
     <form method="POST">
-        <label for="address_country">Страна</label>
+        <label for="address_country">Страна*</label>
         <span class="right_indent"></span>
-        <span class="acorrect" id="name_correct"></span><br />
-        <input type="text" placeholder="Наименование" id="name" name="name" class="quarter <?php if (isset($errors['name'])) echo 'error'; ?>" value="<?= $company['name'] ?>"
-               onblur="InputCount('name', 'quarter', 256, 'name_correct', 'Наименование не может быть такой длины', 'Необходимо заполнить наименование', '')"
+        <span class="acorrect" id="address_country_correct"></span><br />
+        <input type="text" placeholder="Страна" id="address_country" name="address_country" class="quarter <?php if (isset($errors['address_country'])) echo 'error'; ?>" value="<?= $company_address['address_country'] ?>"
+               onblur="InputCount('address_country', 'quarter', 128, 'address_country_correct', 'Страна не может быть такой длины', 'Необходимо заполнить страну', '')"
             /><br /><br />
 
-        <label for="full_name">Полное наименование</label>
+        <label for="address_region">Регион*</label>
         <span class="right_indent"></span>
-        <span class="acorrect" id="full_name_correct"></span><br />
-        <input type="text" placeholder="Полное наименование" id="full_name" name="full_name" class="quarter <?php if (isset($errors['full_name'])) echo 'error'; ?>" value="<?= $company['full_name'] ?>"
-               onblur="InputCount('full_name', 'quarter', 512, 'full_name_correct', 'Полное наименование не может быть такой длины', 'Необходимо заполнить полное наименование', '')"
+        <span class="acorrect" id="address_region_correct"></span><br />
+        <input type="text" placeholder="Регион" id="address_region" name="address_region" class="quarter <?php if (isset($errors['address_region'])) echo 'error'; ?>" value="<?= $company_address['address_region'] ?>"
+               onblur="InputCount('address_region', 'quarter', 256, 'address_region_correct', 'Регион не может быть такой длины', 'Необходимо заполнить регион', '')"
             /><br /><br />
 
-        <label for="key_field">ИНН организации</label>
+        <label for="address_area">Район</label>
         <span class="right_indent"></span>
-        <span class="acorrect" id="key_field_correct"></span><br />
-        <input type="text" placeholder="ИНН организации" id="key_field" name="key_field" class="one_eighth <?php if (isset($errors['key_field'])) echo 'error'; ?>" value="<?= $company['key_field'] ?>"
-               onblur="InputCount('key_field', 'one_eighth', 10, 'key_field_correct', 'ИНН орагнизации не может быть такой длины', 'Необходимо заполнить ИНН организации', '')"
-            /><br /><br /><br />
+        <span class="acorrect" id="address_area_correct"></span><br />
+        <input type="text" placeholder="Район" id="address_area" name="address_area" class="quarter <?php if (isset($errors['address_area'])) echo 'error'; ?>" value="<?= $company_address['address_area'] ?>"
+               onblur="InputCount('address_area', 'quarter', 256, 'address_area_correct', 'Район не может быть такой длины', 'Необходимо заполнить район', '')"
+            /><br /><br />
 
+        <label for="address_city">Город</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_city_correct"></span><br />
+        <input type="text" placeholder="Город" id="address_city" name="address_city" class="quarter <?php if (isset($errors['address_city'])) echo 'error'; ?>" value="<?= $company_address['address_city'] ?>"
+               onblur="InputCount('address_city', 'quarter', 128, 'address_city_correct', 'Город не может быть такой длины', 'Необходимо заполнить город', '')"
+            /><br /><br />
+
+        <label for="address_town">Населенный пункт</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_town_correct"></span><br />
+        <input type="text" placeholder="Населенный пункт" id="address_town" name="address_town" class="quarter <?php if (isset($errors['address_town'])) echo 'error'; ?>" value="<?= $company_address['address_town'] ?>"
+               onblur="InputCount('address_town', 'quarter', 128, 'address_town_correct', 'Населенный пункт не может быть такой длины', 'Необходимо заполнить населенный пункт', '')"
+            /><br /><br />
+
+        <label for="address_street">Улица*</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_street_correct"></span><br />
+        <input type="text" placeholder="Улица" id="address_street" name="address_street" class="quarter <?php if (isset($errors['address_street'])) echo 'error'; ?>" value="<?= $company_address['address_street'] ?>"
+               onblur="InputCount('address_street', 'quarter', 256, 'address_street_correct', 'Улица не может быть такой длины', 'Необходимо заполнить улицу', '')"
+            /><br /><br />
+
+        <label for="address_home">Дом</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_home_correct"></span><br />
+        <input type="text" placeholder="Дом" id="address_home" name="address_home" class="one_eighth <?php if (isset($errors['address_home'])) echo 'error'; ?>" value="<?= $company_address['address_home'] ?>"
+               onblur="InputCount('address_home', 'one_eighth', 32, 'address_home_correct', 'Дом не может быть такой длины', 'Необходимо заполнить дом', '')"
+            />
+
+        <span class="right_indent"></span>
+
+        <label for="address_case">Корпус</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_case_correct"></span><br />
+        <input type="text" placeholder="Корпус" id="address_case" name="address_case" class="one_eighth <?php if (isset($errors['address_case'])) echo 'error'; ?>" value="<?= $company_address['address_case'] ?>"
+               onblur="InputCount('address_case', 'one_eighth', 16, 'address_case_correct', 'Корпус не может быть такой длины', 'Необходимо заполнить корпус', '')"
+            />
+        <br /><br />
+
+        <label for="address_build">Дом</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_home_correct"></span><br />
+        <input type="text" placeholder="Дом" id="address_home" name="address_home" class="one_eighth <?php if (isset($errors['address_home'])) echo 'error'; ?>" value="<?= $company_address['address_home'] ?>"
+               onblur="InputCount('address_home', 'one_eighth', 32, 'address_home_correct', 'Дом не может быть такой длины', 'Необходимо заполнить дом', '')"
+            />
+
+        <span class="right_indent"></span>
+
+        <label for="address_case">Корпус</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="address_case_correct"></span><br />
+        <input type="text" placeholder="Корпус" id="address_case" name="address_case" class="one_eighth <?php if (isset($errors['address_case'])) echo 'error'; ?>" value="<?= $company_address['address_case'] ?>"
+               onblur="InputCount('address_case', 'one_eighth', 16, 'address_case_correct', 'Корпус не может быть такой длины', 'Необходимо заполнить корпус', '')"
+            />
+        <br /><br />
+
+
+        <br />
         <input type="submit" name="add" value="Добавить" class="button one_eighth" /><br /><br />
 
     </form>

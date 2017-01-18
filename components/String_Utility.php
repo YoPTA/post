@@ -29,10 +29,23 @@ class String_Utility
             $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_city']);
             $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_town']);
             $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_street']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_home']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_case']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_build']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_apartment']);
+            if ($address[$address_prefix.'ca_home'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'д. '.$address[$address_prefix.'ca_home']);
+            }
+            if ($address[$address_prefix.'ca_case'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'корп. '.$address[$address_prefix.'ca_case']);
+            }
+            if ($address[$address_prefix.'ca_build'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'строение '.$address[$address_prefix.'ca_build']);
+            }
+            if ($address[$address_prefix.'ca_build'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'кв. '.$address[$address_prefix.'ca_apartment']);
+            }
+
         }
         if ($parameter == 2)
         {
@@ -40,10 +53,22 @@ class String_Utility
             $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_city']);
             $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_town']);
             $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_street']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_home']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_case']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_build']);
-            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'ca_apartment']);
+            if ($address[$address_prefix.'ca_home'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'д. '.$address[$address_prefix.'ca_home']);
+            }
+            if ($address[$address_prefix.'ca_case'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'корп. '.$address[$address_prefix.'ca_case']);
+            }
+            if ($address[$address_prefix.'ca_build'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'строение '.$address[$address_prefix.'ca_build']);
+            }
+            if ($address[$address_prefix.'ca_build'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'кв. '.$address[$address_prefix.'ca_apartment']);
+            }
         }
 
         return $address_to_view;

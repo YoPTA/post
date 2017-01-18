@@ -515,6 +515,7 @@ class CompanyController
         }
 
         $company_address['address_country'] = 'Россия';
+        $company_address['address_region'] = 'Пензенская область';
 
 
         if (isset($_POST['address_country']))

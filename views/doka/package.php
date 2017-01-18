@@ -72,13 +72,13 @@ include ROOT . '/views/layouts/header.php';
                 if($from_company['address_street'] != null)
                     echo ', ' . $from_company['address_street'];
                 if($from_company['address_home'] != null)
-                    echo ', ' . $from_company['address_home'];
+                    echo ', д. ' . $from_company['address_home'];
                 if($from_company['address_case'] != null)
-                    echo ', ' . $from_company['address_case'];
+                    echo ', корп. ' . $from_company['address_case'];
                 if($from_company['address_build'] != null)
-                    echo ', '.$from_company['address_build'];
+                    echo ', строение '.$from_company['address_build'];
                 if($from_company['address_apartment'] != null)
-                    echo ', '.$from_company['address_apartment'];
+                    echo ', кв. '.$from_company['address_apartment'];
                 ?></span>
             </div>
             <hr>
@@ -102,13 +102,13 @@ include ROOT . '/views/layouts/header.php';
                 if($to_company['address_street'] != null)
                     echo ', ' . $to_company['address_street'];
                 if($to_company['address_home'] != null)
-                    echo ', ' . $to_company['address_home'];
+                    echo ', д. ' . $to_company['address_home'];
                 if($to_company['address_case'] != null)
-                    echo ', ' . $to_company['address_case'];
+                    echo ', корп. ' . $to_company['address_case'];
                 if($to_company['address_build'] != null)
-                    echo ', '.$to_company['address_build'];
+                    echo ', строение '.$to_company['address_build'];
                 if($to_company['address_apartment'] != null)
-                    echo ', '.$to_company['address_apartment'];
+                    echo ', кв. '.$to_company['address_apartment'];
                 ?></span>
             </div>
         </div>

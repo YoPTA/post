@@ -40,21 +40,21 @@ include ROOT . '/views/layouts/header.php';
             /><br /><br />
 
 
-        <label for="date_issued">Дата выдачи</label>
+        <label for="date_issued">Дата выдачи*</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="date_issued_correct"></span><br />
         <input type="text" placeholder="Дата выдачи" id="date_issued" name="date_issued" class="tcal quarter" value="<?= $proxy['date_issued'] ?>"
 
             /><br /><br />
 
-        <label for="date_expired">Дата истечения</label>
+        <label for="date_expired">Дата истечения*</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="date_expired_correct"></span><br />
         <input type="text" placeholder="Дата истечения" id="date_expired" name="date_expired" class="tcal quarter" value="<?= $proxy['date_expired'] ?>"
 
             /><br /><br />
 
-        <label for="authority_issued">Орган выдачи</label>
+        <label for="authority_issued">Орган выдачи*</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="authority_issued_correct"></span><br />
         <textarea placeholder="Орган выдачи" class="quarter <?php if (isset($errors['authority_issued'])) echo 'error'; ?>" id="authority_issued" name="authority_issued" rows="5"
