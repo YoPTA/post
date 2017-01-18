@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Янв 17 2017 г., 13:16
+-- Время создания: Янв 18 2017 г., 17:20
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -68,6 +68,10 @@ CREATE TABLE IF NOT EXISTS `company_address` (
   `address_apartment` varchar(16) NOT NULL COMMENT 'Квартира',
   `is_mfc` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли организация офисом мфц',
   `is_transit` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли компания транзитной точкой',
+  `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
+  `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
+  `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
   `flag` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -75,10 +79,10 @@ CREATE TABLE IF NOT EXISTS `company_address` (
 -- Дамп данных таблицы `company_address`
 --
 
-INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `flag`) VALUES
-(0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, 0),
-(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, 2),
-(2, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, 2);
+INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
+(2, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -134,6 +138,21 @@ CREATE TABLE IF NOT EXISTS `menu_panel` (
 
 INSERT INTO `menu_panel` (`id`, `name`, `title`, `description`, `url_address`, `parent_menu_panel_id`, `menu_index`, `member`, `flag`) VALUES
 (1, 'Пользователи', 'Пользователи', 'Страница предназначена для работы с пользователями системы', '/admin/user_index?search=&page=1', 0, 1, 8, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `notification`
+--
+
+CREATE TABLE IF NOT EXISTS `notification` (
+  `id` int(11) NOT NULL,
+  `name` varchar(640) NOT NULL,
+  `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
+  `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
+  `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -311,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 
 INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Нет', 'Нет', 'Нет', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(0, 'Нет', '', '', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
 (1, 'Романов', 'Сергей', 'Сергеевич', 'romanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
 (2, 'Лобанов', 'Семен', 'Семенович', 'lobanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
 
@@ -391,6 +410,12 @@ ALTER TABLE `document_type`
 -- Индексы таблицы `menu_panel`
 --
 ALTER TABLE `menu_panel`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `notification`
+--
+ALTER TABLE `notification`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -479,6 +504,11 @@ ALTER TABLE `document_type`
 --
 ALTER TABLE `menu_panel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT для таблицы `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `package`
 --

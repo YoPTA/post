@@ -473,6 +473,8 @@ class CompanyController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
 
+        $date_time = new DateTime();
+
         $errors = false;
 
         $company_address = null; // Адрес организации
@@ -507,6 +509,90 @@ class CompanyController
             $cid = htmlspecialchars($_GET['cid']);
         }
 
+        if ($cid == 0)
+        {
+            $errors['no_company'] = 'Вы не сможете добавить адрес, для данной организации';
+        }
+
+        $company_address['address_country'] = 'Россия';
+
+
+        if (isset($_POST['address_country']))
+        {
+            $company_address['address_country'] = htmlspecialchars(trim($_POST['address_country']));
+        }
+
+        if (isset($_POST['address_zip']))
+        {
+            $company_address['address_zip'] = htmlspecialchars(trim($_POST['address_zip']));
+        }
+
+        if (isset($_POST['address_region']))
+        {
+            $company_address['address_region'] = htmlspecialchars(trim($_POST['address_region']));
+        }
+
+        if (isset($_POST['address_area']))
+        {
+            $company_address['address_area'] = htmlspecialchars(trim($_POST['address_area']));
+        }
+
+        if (isset($_POST['address_city']))
+        {
+            $company_address['address_city'] = htmlspecialchars(trim($_POST['address_city']));
+        }
+        if (isset($_POST['address_town']))
+        {
+            $company_address['address_town'] = htmlspecialchars(trim($_POST['address_town']));
+        }
+
+        if (isset($_POST['address_street']))
+        {
+            $company_address['address_street'] = htmlspecialchars(trim($_POST['address_street']));
+        }
+
+        if (isset($_POST['address_home']))
+        {
+            $company_address['address_home'] = htmlspecialchars(trim($_POST['address_home']));
+        }
+
+        if (isset($_POST['address_case']))
+        {
+            $company_address['address_case'] = htmlspecialchars(trim($_POST['address_case']));
+        }
+
+        if (isset($_POST['address_build']))
+        {
+            $company_address['address_build'] = htmlspecialchars(trim($_POST['address_build']));
+        }
+
+        if (isset($_POST['address_apartment']))
+        {
+            $company_address['address_apartment'] = htmlspecialchars(trim($_POST['address_apartment']));
+        }
+
+        if (isset($_POST['is_mfc']))
+        {
+            $company_address['is_mfc'] = htmlspecialchars(trim($_POST['is_mfc']));
+        }
+
+        if (isset($_POST['is_transit']))
+        {
+            $company_address['is_transit'] = htmlspecialchars(trim($_POST['is_transit']));
+        }
+
+        if (isset($_POST['add']))
+        {
+
+
+
+
+            if ($errors == false)
+            {
+                $company_address['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $company_address['created_user_id'] = $user_id;
+            }
+        }
 
         if ($is_create)
         {
