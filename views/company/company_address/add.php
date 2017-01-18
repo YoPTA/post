@@ -1,5 +1,5 @@
 <?php
-$pagetitle = 'Добавить организацию';
+$pagetitle = 'Добавить адрес';
 $page_id = 'page_index';
 
 //Подключаем шапку
@@ -10,8 +10,8 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/company/company_index?c_type=<?= $c_type ?>&search_value=<?= $search_param['search_value'] ?>&page=<?= $page ?>">
-            &#8592; Вернуться к организациям
+        <a href="/company/company_address_index?c_type=<?= $c_type ?>&search_value=<?= $search_param['search_value'] ?>&page=<?= $page ?>&cid=<?= $cid ?>">
+            &#8592; Вернуться к адресам
         </a>
     </div>
     <br /><br />
@@ -32,18 +32,18 @@ include ROOT . '/views/layouts/header.php';
 
 
     <form method="POST">
-        <label for="name">Наименование</label>
+        <label for="address_country">Страна</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="name_correct"></span><br />
-        <input type="text" placeholder="Наименование" id="name" name="name" class="half <?php if (isset($errors['name'])) echo 'error'; ?>" value="<?= $company['name'] ?>"
-               onblur="InputCount('name', 'half', 256, 'name_correct', 'Наименование не может быть такой длины', 'Необходимо заполнить наименование', '')"
+        <input type="text" placeholder="Наименование" id="name" name="name" class="quarter <?php if (isset($errors['name'])) echo 'error'; ?>" value="<?= $company['name'] ?>"
+               onblur="InputCount('name', 'quarter', 256, 'name_correct', 'Наименование не может быть такой длины', 'Необходимо заполнить наименование', '')"
             /><br /><br />
 
         <label for="full_name">Полное наименование</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="full_name_correct"></span><br />
-        <input type="text" placeholder="Полное наименование" id="full_name" name="full_name" class="half <?php if (isset($errors['full_name'])) echo 'error'; ?>" value="<?= $company['full_name'] ?>"
-               onblur="InputCount('full_name', 'half', 512, 'full_name_correct', 'Полное наименование не может быть такой длины', 'Необходимо заполнить полное наименование', '')"
+        <input type="text" placeholder="Полное наименование" id="full_name" name="full_name" class="quarter <?php if (isset($errors['full_name'])) echo 'error'; ?>" value="<?= $company['full_name'] ?>"
+               onblur="InputCount('full_name', 'quarter', 512, 'full_name_correct', 'Полное наименование не может быть такой длины', 'Необходимо заполнить полное наименование', '')"
             /><br /><br />
 
         <label for="key_field">ИНН организации</label>

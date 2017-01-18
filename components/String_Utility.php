@@ -17,7 +17,7 @@ class String_Utility
      * @var $address_prefix string - префикс перед адресом
      * return string
      */
-    public function getAddressToView($parameter, $address, $address_prefix = '')
+    public function getAddressToView($parameter = 1, $address, $address_prefix = '')
     {
         $address_to_view = null;
 

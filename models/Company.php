@@ -16,30 +16,70 @@ class Company
     /*
      * Получаем информацию о адресе организации
      * @var $company_id int - id компании
+     * @var $address_type int - тип адреса
+     * @var $transit_param int - параметр транзита (если этот параметр = 1,
+     * тогда к выборке будут добавлены отбор по транзитным точкам. В противном
+     * выборки по транзитным точкам не будет).
      * return array() OR boolean
      */
-    public static function getCompanyAddressByCompany($company_id)
+    public static function getCompanyAddressByCompany($company_id, $address_type = 0, $transit_param = 1)
     {
-        $sql = 'SELECT
-          company_address.id,
-          company_address.address_country,
-          company_address.address_zip,
-          company_address.address_region,
-          company_address.address_area,
-          company_address.address_city,
-          company_address.address_town,
-          company_address.address_street,
-          company_address.address_home,
-          company_address.address_case,
-          company_address.address_build,
-          company_address.address_apartment,
-          company_address.flag
+        $select = '';
+        $where = '';
+
+        if ($address_type == 1)
+        {
+            $select = '
+              company_address.id,
+              company_address.address_country AS ca_country,
+              company_address.address_zip AS ca_zip,
+              company_address.address_region AS ca_region,
+              company_address.address_area AS ca_area,
+              company_address.address_city AS ca_city,
+              company_address.address_town AS ca_town,
+              company_address.address_street AS ca_street,
+              company_address.address_home AS ca_home,
+              company_address.address_case AS ca_case,
+              company_address.address_build AS ca_build,
+              company_address.address_apartment AS ca_apartment,
+              company_address.is_mfc,
+              company_address.is_transit,
+              company_address.flag
+            ';
+        }
+        else
+        {
+            $select = '
+              company_address.id,
+              company_address.address_country,
+              company_address.address_zip,
+              company_address.address_region,
+              company_address.address_area,
+              company_address.address_city,
+              company_address.address_town,
+              company_address.address_street,
+              company_address.address_home,
+              company_address.address_case,
+              company_address.address_build,
+              company_address.address_apartment,
+              company_address.is_mfc,
+              company_address.is_transit,
+              company_address.flag ';
+        }
+
+        if ($transit_param == 1)
+        {
+            $where .= ' AND company_address.is_transit = 0 ';
+        }
+
+        $sql = 'SELECT '
+            . $select .'
         FROM
           company_address
         WHERE
           company_address.company_id = :company_id AND
-          company_address.is_transit = 0 AND
-          company_address.flag >= 0';
+          company_address.flag >= 0 '. $where;
+
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':company_id', $company_id, PDO::PARAM_INT);
@@ -63,17 +103,18 @@ class Company
         $sql = 'SELECT
           company_address.id AS ca_id,
           company_address.company_id AS ca_company_id,
-          company_address.address_country AS ca_address_country,
-          company_address.address_zip AS ca_address_zip,
-          company_address.address_region AS ca_address_region,
-          company_address.address_area AS ca_address_area,
-          company_address.address_city AS ca_address_city,
-          company_address.address_town AS ca_address_town,
-          company_address.address_street AS ca_address_street,
-          company_address.address_home AS ca_address_home,
-          company_address.address_case AS ca_address_case,
-          company_address.address_build AS ca_address_build,
-          company_address.address_apartment AS ca_address_apartment,
+          company_address.address_country AS ca_country,
+          company_address.address_zip AS ca_zip,
+          company_address.address_region AS ca_region,
+          company_address.address_area AS ca_area,
+          company_address.address_city AS ca_city,
+          company_address.address_town AS ca_town,
+          company_address.address_street AS ca_street,
+          company_address.address_home AS ca_home,
+          company_address.address_case AS ca_case,
+          company_address.address_build AS ca_build,
+          company_address.address_apartment AS ca_apartment,
+          company_address.is_transit,
           company_address.flag AS ca_flag,
           company.name AS c_name,
           company.full_name AS c_full_name,
@@ -447,6 +488,32 @@ class Company
         }
         return $transits;
 
+    }
+
+    /*
+     * Проверка: принадлежит ли адрес организации данной организации
+     * @var $caid int - ID адреса организации
+     * @var $cid int - ID организации
+     * return boolean
+     */
+    public static function checkCompanyAddressBelongCompany($caid, $cid)
+    {
+        $sql = 'SELECT company_id FROM company_address WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $caid, PDO::PARAM_INT);
+        $result->execute();
+
+        $company_address = $result->fetch();
+
+        if($company_address)
+        {
+            if ($company_address['company_id'] == $cid)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /*

@@ -175,17 +175,17 @@ class SiteController
             $c_from['c_name'] = $company_from['c_name'];
             $c_from['c_full_name'] = $company_from['c_full_name'];
             $c_from['c_key_field'] = $company_from['c_key_field'];
-            $c_from['ca_country'] = $company_from['ca_address_country'];
-            $c_from['ca_zip'] = $company_from['ca_address_zip'];
-            $c_from['ca_region'] = $company_from['ca_address_region'];
-            $c_from['ca_area'] = $company_from['ca_address_area'];
-            $c_from['ca_city'] = $company_from['ca_address_city'];
-            $c_from['ca_town'] = $company_from['ca_address_town'];
-            $c_from['ca_street'] = $company_from['ca_address_street'];
-            $c_from['ca_home'] = $company_from['ca_address_home'];
-            $c_from['ca_case'] = $company_from['ca_address_case'];
-            $c_from['ca_build'] = $company_from['ca_address_build'];
-            $c_from['ca_apartment'] = $company_from['ca_address_apartment'];
+            $c_from['ca_country'] = $company_from['ca_country'];
+            $c_from['ca_zip'] = $company_from['ca_zip'];
+            $c_from['ca_region'] = $company_from['ca_region'];
+            $c_from['ca_area'] = $company_from['ca_area'];
+            $c_from['ca_city'] = $company_from['ca_city'];
+            $c_from['ca_town'] = $company_from['ca_town'];
+            $c_from['ca_street'] = $company_from['ca_street'];
+            $c_from['ca_home'] = $company_from['ca_home'];
+            $c_from['ca_case'] = $company_from['ca_case'];
+            $c_from['ca_build'] = $company_from['ca_build'];
+            $c_from['ca_apartment'] = $company_from['ca_apartment'];
         }
 
         $company_to = null;
@@ -197,17 +197,17 @@ class SiteController
             $c_to['c_name'] = $company_to['c_name'];
             $c_to['c_full_name'] = $company_to['c_full_name'];
             $c_to['c_key_field'] = $company_to['c_key_field'];
-            $c_to['ca_country'] = $company_to['ca_address_country'];
+            $c_to['ca_country'] = $company_to['ca_country'];
             $c_to['ca_zip'] = $company_to['ca_address_zip'];
-            $c_to['ca_region'] = $company_to['ca_address_region'];
-            $c_to['ca_area'] = $company_to['ca_address_area'];
-            $c_to['ca_city'] = $company_to['ca_address_city'];
-            $c_to['ca_town'] = $company_to['ca_address_town'];
-            $c_to['ca_street'] = $company_to['ca_address_street'];
-            $c_to['ca_home'] = $company_to['ca_address_home'];
-            $c_to['ca_case'] = $company_to['ca_address_case'];
-            $c_to['ca_build'] = $company_to['ca_address_build'];
-            $c_to['ca_apartment'] = $company_to['ca_address_apartment'];
+            $c_to['ca_region'] = $company_to['ca_region'];
+            $c_to['ca_area'] = $company_to['ca_area'];
+            $c_to['ca_city'] = $company_to['ca_city'];
+            $c_to['ca_town'] = $company_to['ca_town'];
+            $c_to['ca_street'] = $company_to['ca_street'];
+            $c_to['ca_home'] = $company_to['ca_home'];
+            $c_to['ca_case'] = $company_to['ca_case'];
+            $c_to['ca_build'] = $company_to['ca_build'];
+            $c_to['ca_apartment'] = $company_to['ca_apartment'];
         }
 
         if($to_company_id == $from_company_id && $to_company_id != null)
@@ -485,6 +485,10 @@ class SiteController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
 
+        $string_utility = new String_Utility();
+
+        $errors = false;
+
         $from_company_id = Company::checkCompanyInMemory(FROM_COMPANY); // Откуда
         $to_company_id = Company::checkCompanyInMemory(TO_COMPANY); // Кому
 
@@ -508,6 +512,37 @@ class SiteController
             $company_to = Company::getCompany($to_company_id);
         }
 
+        if ($from_company_id == $to_company_id && $from_company_id != null)
+        {
+            $errors['equals_companies'] = 'Отправитель и получатель должны быть разными';
+        }
+
+        if (isset($_POST['yes']))
+        {
+            if ($from_company_id == null)
+            {
+                $errors['from_company'] = 'Не выбран отправитель';
+            }
+
+            if ($to_company_id == null)
+            {
+                $errors['to_company'] = 'Не выбран получатель';
+            }
+
+
+            if ($errors == false)
+            {
+
+            }
+        }
+        if (isset($_POST['no']))
+        {
+            Company::outCompanyFromMemory(FROM_COMPANY);
+            Company::outCompanyFromMemory(TO_COMPANY);
+            Package::outPackage();
+            Package::outPackageObjects();
+            header('Location: /site/index');
+        }
 
         if ($is_create)
         {

@@ -95,7 +95,7 @@ class DokaController
                         {
 
                             // Если есть такая организация, то смотрим имеется ли такой адрес
-                            $get_company_address_by_company_id = Company::getCompanyAddressByCompany($is_c_in_db);
+                            $get_company_address_by_company_id = Company::getCompanyAddressByCompany($is_c_in_db, 0, 1);
                             if($get_company_address_by_company_id != null)
                             {
                                 foreach($get_company_address_by_company_id as $g_c_a_b_c_i)
@@ -173,7 +173,7 @@ class DokaController
                         if($is_c_in_db != false)
                         {
                             // Если есть такая организация, то смотрим имеется ли такой адрес
-                            $get_company_address_by_company_id = Company::getCompanyAddressByCompany($is_c_in_db);
+                            $get_company_address_by_company_id = Company::getCompanyAddressByCompany($is_c_in_db, 0, 1);
 
                             if($get_company_address_by_company_id != null)
                             {

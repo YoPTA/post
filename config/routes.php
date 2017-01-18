@@ -5,12 +5,15 @@ return [
     'admin/index' => 'admin/index',
     'admin/user_index' => 'adminuser/index',
 
+    'company/company_address_index' => 'company/companyaddressindex',
+    'company/company_address_add' => 'company/companyaddressadd',
+    'company/company_address_edit' => 'company/companyaddressedit',
+    'company/company_address_delete' => 'company/companyaddressdelete',
 
     'company/company_index' => 'company/companyindex',
     'company/company_add' => 'company/companyadd',
     'company/company_edit' => 'company/companyedit',
     'company/company_delete' => 'company/companydelete',
-
 
     'doka/package' => 'doka/package',
 

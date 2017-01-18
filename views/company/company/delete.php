@@ -10,11 +10,25 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/company/company_index?c_type=<?= $c_type ?>&search_value=<?= $search_param['search_value'] ?>&page<?= $page ?>">
+        <a href="/company/company_index?c_type=<?= $c_type ?>&search_value=<?= $search_param['search_value'] ?>&page=<?= $page ?>">
             &#8592; Вернуться к организациям
         </a>
     </div>
     <br /><br />
+
+    <?php if (isset($errors) && is_array($errors)): ?>
+        <div class="error font_size_twelve">
+            <div class="er"></div>
+            <h2 align="center">Ошибка ввода</h2>
+
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li class="type_none"> - <?php echo $error; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <br /><br />
+    <?php endif; ?>
 
     <form method="POST">
         <p class="font_size_twelve">Желаете удалить организацию:

@@ -247,6 +247,11 @@ class CompanyController
                 }
             }
 
+            if ($cid == 0)
+            {
+                $errors['not_edit'] = 'Нельзя редактировать данную запись!!!';
+            }
+
             if ($errors == false)
             {
                 $company['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
@@ -279,6 +284,8 @@ class CompanyController
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
 
+        $errors = false;
+
         $c_type = null; // Тип компании (получатель/отправитель)
         $search_param = null; // Искомое значение
         $page = 1; // Номер страницы
@@ -309,22 +316,28 @@ class CompanyController
         }
 
         $company = Company::getCompanyInfo($cid);
+        if ($cid == 0)
+        {
+            $errors['no_delete'] = 'Нельзя удалить эту запись!!!';
+        }
 
         if (isset($_POST['yes']))
         {
-
-            $company['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
-            $company['changed_user_id'] = $user_id;
-            Company::deleteCompany($cid, $company);
-
-            $total_companies = Company::getTotalCompanies($search_param);
-            if ($total_companies <= Company::SHOW_BY_DEFAULT)
+            if ($errors == false)
             {
-                $page = 1;
-            }
+                $company['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $company['changed_user_id'] = $user_id;
+                Company::deleteCompany($cid, $company);
 
-            header('Location: /company/company_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
-                .'&page='.$page);
+                $total_companies = Company::getTotalCompanies($search_param);
+                if ($total_companies <= Company::SHOW_BY_DEFAULT)
+                {
+                    $page = 1;
+                }
+
+                header('Location: /company/company_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
+                    .'&page='.$page);
+            }
         }
 
         if (isset($_POST['no']))
@@ -353,6 +366,158 @@ class CompanyController
      * Работа с адресами орагнизации НАЧАЛО
      *****************************/
 
+    public function actionCompanyAddressIndex()
+    {
+        $is_create = false;
+        $is_change_company = false;
+        $user = null;
+        $user_id = null;
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $string_utility = new String_Utility();
+
+        $total_adresses = 0;
+
+        $errors = false;
+
+        $c_type = null; // Тип компании (получатель/отправитель)
+        $search_param = null; // Искомое значение
+        $page = 1; // Номер страницы
+        $cid = null; // ID организации
+        $index_number = 0; // Порядковый номер
+
+        $company = null; // Информация об организации
+        $company_addresses = null; // Информация об адресах организации
+
+
+        if (isset($_GET['c_type']))
+        {
+            $c_type = htmlspecialchars($_GET['c_type']);
+        }
+
+        if (isset($_GET['search_value']))
+        {
+            $search_param['search_value'] = htmlspecialchars($_GET['search_value']);
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['cid']))
+        {
+            $cid = htmlspecialchars($_GET['cid']);
+        }
+
+        $company = Company::getCompanyInfo($cid);
+        if (count($company) > 0)
+        {
+            $company_addresses = Company::getCompanyAddressByCompany($cid, 1, 0);
+            $total_adresses = count($company_addresses);
+        }
+
+        if (isset($_POST['continue']))
+        {
+            $caid = htmlspecialchars($_POST['continue']);
+
+            // Проверяем принадлежит ли адрес организации указанной оргназиации
+            $check_ca_belong_c = Company::checkCompanyAddressBelongCompany($caid, $cid);
+
+            if (!$check_ca_belong_c)
+            {
+                $errors['company_address_not_belong_comapny'] = 'Адрес организации не соответствует организации';
+            }
+
+            if ($c_type != FROM_COMPANY && $c_type != TO_COMPANY)
+            {
+                $errors['c_type'] = 'Тип организации указан не верно';
+            }
+
+            if ($errors == false)
+            {
+                // Запоминаем отправителя
+                Company::memorizeCompany($caid, $c_type);
+                header('Location: /site/choose');
+            }
+
+
+        }
+
+
+        if ($is_create)
+        {
+            require_once ROOT . '/views/company/company_address/index.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
+    public function actionCompanyAddressAdd()
+    {
+        $is_create = false;
+        $is_change_company = false;
+        $user = null;
+        $user_id = null;
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $errors = false;
+
+        $company_address = null; // Адрес организации
+        $c_type = null; // Тип компании (получатель/отправитель)
+        $search_param = null; // Искомое значение
+        $page = 1; // Номер страницы
+        $cid = null; // ID организации
+
+
+        if (isset($_GET['c_type']))
+        {
+            $c_type = htmlspecialchars($_GET['c_type']);
+        }
+
+        if (isset($_GET['search_value']))
+        {
+            $search_param['search_value'] = htmlspecialchars($_GET['search_value']);
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['cid']))
+        {
+            $cid = htmlspecialchars($_GET['cid']);
+        }
+
+
+        if ($is_create)
+        {
+            require_once ROOT . '/views/company/company_address/add.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
 
     /*****************************
      * Работа с адресами орагнизации КОНЕЦ

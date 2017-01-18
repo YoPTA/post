@@ -7,6 +7,12 @@ include ROOT . '/views/layouts/header.php';
 ?>
     <script src="/template/js/jquery.maskedinput.min.js" type="text/javascript"></script>
     <h2 align="center"><?= $pagetitle ?></h2>
+    <div class="font_size_twelve" align="center">
+        <a href="/site/choose">
+            &#8592; Вернуться назад
+        </a>
+    </div>
+    <br /><br />
     <form method="GET">
         <div class="fl inline">
             <input type="hidden" name="c_type" value="<?= $c_type ?>"  />
