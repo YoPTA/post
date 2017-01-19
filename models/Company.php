@@ -411,9 +411,11 @@ class Company
     public static function addCompanyAddress($company_id, $company)
     {
         $sql = 'INSERT INTO company_address (company_id, address_country, address_zip, address_region, address_area,
-          address_city, address_town, address_street, address_home, address_case, address_build, address_apartment, flag)
+          address_city, address_town, address_street, address_home, address_case, address_build, address_apartment,
+          notification_id,	created_datetime, created_user_id, flag)
           VALUES (:company_id, :address_country, :address_zip, :address_region, :address_area,
-          :address_city, :address_town, :address_street, :address_home, :address_case, :address_build, :address_apartment, 1)';
+          :address_city, :address_town, :address_street, :address_home, :address_case, :address_build, :address_apartment,
+          :notification_id,	:created_datetime, :created_user_id, 1)';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
@@ -429,6 +431,9 @@ class Company
         $result->bindParam(':address_case', $company['address_case'], PDO::PARAM_STR);
         $result->bindParam(':address_build', $company['address_build'], PDO::PARAM_STR);
         $result->bindParam(':address_apartment', $company['address_apartment'], PDO::PARAM_STR);
+        $result->bindParam(':notification_id', $company['notification_id'], PDO::PARAM_INT);
+        $result->bindParam(':created_datetime', $company['created_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $company['created_user_id'], PDO::PARAM_INT);
         if($result->execute())
         {
             return $db->lastInsertId();
@@ -568,5 +573,27 @@ class Company
         {
             return 'to';
         }
+    }
+
+    /*
+     * Проверяем есть ли в базе данных такая организация
+     * @var $id int - ID
+     * return boolean
+     */
+    public static function checkCompanyInDb($id)
+    {
+        $sql = 'SELECT name FROM company WHERE id = :id AND flag > 0';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        $company = $result->fetch();
+
+        if($company)
+        {
+            return true;
+        }
+        return false;
     }
 }

@@ -86,6 +86,68 @@ class DokaController
                     $from_company['address_build'] = Doka::GetXMLValue($xml_from, 'AddressBuild');
                     $from_company['address_apartment'] = Doka::GetXMLValue($xml_from, 'AddressApatment');
 
+                    $notification = null; // Информация об уведомлении
+                    $notification_name = ''; // Полное наименование уведомления
+                    $notification_control = true; // Контроль добавления строки к уведомлению
+                    $notification_id = 0; // ID уведомления
+
+                    $notification_name = $from_company['address_country'] . '|||' . $from_company['address_region'];
+                    if ($notification_control)
+                    {
+                        if ($from_company['address_area'] != null)
+                        {
+                            $notification_name .= '|||'.$from_company['address_area'];
+                            $notification_control = false;
+                        }
+                    }
+
+                    if ($notification_control)
+                    {
+                        if ($from_company['address_city'] != null)
+                        {
+                            $notification_name .= '|||' .$from_company['address_city'];
+                            $notification_control = false;
+                        }
+                    }
+
+                    if ($notification_control)
+                    {
+                        if ($from_company['address_town'] != null)
+                        {
+                            $notification_name .= '|||'.$from_company['address_town'];
+                            $notification_control = false;
+                        }
+                    }
+
+                    if ($notification_control)
+                    {
+
+                        $notification_name .= '|||'.'ИзДокиПришлоПустоеПоле';
+                        $notification_control = false;
+                    }
+
+
+                    $check_notification = Notification::checkNotification($notification_name);
+
+
+                    if (!$check_notification)
+                    {
+                        $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                        $notification['created_user_id'] = $user_id;
+                        $notification['name'] = $notification_name;
+                        $notification_id = Notification::addNotification($notification);
+                        if (!$notification_id)
+                        {
+                            $notification_id = 0;
+                        }
+                    }
+                    else
+                    {
+                        $notification_id = $check_notification;
+                    }
+
+                    $from_company['notification_id'] = $notification_id;
+
                     if(!isset($errors['tag_from']))
                     {
                         $is_c_in_db = Company::checkKeyFieldExists($from_company['key_field']);
@@ -121,6 +183,8 @@ class DokaController
                             }
                             if($flag_to_add_CA)
                             {
+                                $from_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                                $from_company['created_user_id'] = $user_id;
                                 $from_company['id'] = Company::addCompanyAddress($is_c_in_db, $from_company);
                             }
 
@@ -134,6 +198,8 @@ class DokaController
                             $new_company = Company::addCompany($from_company);
                             if($new_company != false)
                             {
+                                $from_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                                $from_company['created_user_id'] = $user_id;
                                 // Добавляем адрес для компании
                                 $from_company['id'] = Company::addCompanyAddress($new_company, $from_company);
                                 if($from_company['id'] == false)
@@ -163,6 +229,67 @@ class DokaController
                     $to_company['address_case'] = Doka::GetXMLValue($xml_to, 'AddressCase');
                     $to_company['address_build'] = Doka::GetXMLValue($xml_to, 'AddressBuild');
                     $to_company['address_apartment'] = Doka::GetXMLValue($xml_to, 'AddressApatment');
+
+                    $notification = null; // Информация об уведомлении
+                    $notification_name = ''; // Полное наименование уведомления
+                    $notification_control = true; // Контроль добавления строки к уведомлению
+                    $notification_id = 0; // ID уведомления
+
+                    $notification_name = $to_company['address_country'] . '|||' . $to_company['address_region'];
+                    if ($notification_control)
+                    {
+                        if ($to_company['address_area'] != null)
+                        {
+                            $notification_name .= '|||'.$to_company['address_area'];
+                            $notification_control = false;
+                        }
+                    }
+
+                    if ($notification_control)
+                    {
+                        if ($to_company['address_city'] != null)
+                        {
+                            $notification_name .= '|||' .$to_company['address_city'];
+                            $notification_control = false;
+                        }
+                    }
+
+                    if ($notification_control)
+                    {
+                        if ($to_company['address_town'] != null)
+                        {
+                            $notification_name .= '|||'.$to_company['address_town'];
+                            $notification_control = false;
+                        }
+                    }
+
+                    if ($notification_control)
+                    {
+
+                        $notification_name .= '|||'.'ИзДокиПришлоПустоеПоле';
+                        $notification_control = false;
+                    }
+
+                    $check_notification = Notification::checkNotification($notification_name);
+
+
+                    if (!$check_notification)
+                    {
+                        $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                        $notification['created_user_id'] = $user_id;
+                        $notification['name'] = $notification_name;
+                        $notification_id = Notification::addNotification($notification);
+                        if (!$notification_id)
+                        {
+                            $notification_id = 0;
+                        }
+                    }
+                    else
+                    {
+                        $notification_id = $check_notification;
+                    }
+
+                    $to_company['notification_id'] = $notification_id;
 
                     $flag_to_add_CA = true;
                     if(!isset($errors['tag_to']))
@@ -201,6 +328,8 @@ class DokaController
 
                             if($flag_to_add_CA)
                             {
+                                $to_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                                $to_company['created_user_id'] = $user_id;
                                 $to_company['id'] = Company::addCompanyAddress($is_c_in_db, $to_company);
                             }
 
@@ -214,6 +343,8 @@ class DokaController
                             $new_company = Company::addCompany($to_company);
                             if($new_company != false)
                             {
+                                $to_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                                $to_company['created_user_id'] = $user_id;
                                 // Добавляем адрес для компании
                                 $to_company['id'] = Company::addCompanyAddress($new_company, $to_company);
                                 if($to_company['id'] == false)

@@ -509,10 +509,19 @@ class CompanyController
             $cid = htmlspecialchars($_GET['cid']);
         }
 
+        $check_company = Company::checkCompanyInDb($cid);
+
         if ($cid == 0)
         {
             $errors['no_company'] = 'Вы не сможете добавить адрес, для данной организации';
         }
+
+        if (!$check_company)
+        {
+            $errors['no_company_db'] = 'Организация, которой Вы добавляете адрес, не существует';
+        }
+
+
 
         $company_address['address_country'] = 'Россия';
         $company_address['address_region'] = 'Пензенская область';
@@ -585,13 +594,139 @@ class CompanyController
         if (isset($_POST['add']))
         {
 
+            if (!Validate::checkStr($company_address['address_country'], 128))
+            {
+                $errors['address_country'] = 'Страна не может быть такой длины';
+            }
 
+            if (!Validate::checkStr($company_address['address_region'], 256))
+            {
+                $errors['address_region'] = 'Регион не может быть такой длины';
+            }
 
+            if (!Validate::checkStr($company_address['address_street'], 256))
+            {
+                $errors['address_street'] = 'Улица не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_zip'], 16))
+            {
+                $errors['address_zip'] = 'Почтовый индекс не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_area'], 256))
+            {
+                $errors['address_area'] = 'Район не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_city'], 128))
+            {
+                $errors['address_city'] = 'Город не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_town'], 128))
+            {
+                $errors['address_town'] = 'Населенный пункт не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_home'], 32))
+            {
+                $errors['address_home'] = 'Дом не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_case'], 16))
+            {
+                $errors['address_case'] = 'Корпус не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_build'], 16))
+            {
+                $errors['address_build'] = 'Строение не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_apartment'], 16))
+            {
+                $errors['address_apartment'] = 'Квартира не может быть такой длины';
+            }
+
+            if ($company_address['is_mfc'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_mfc']) || $company_address['is_mfc'] > 1)
+            {
+                $errors['is_mfc'] = 'Попытка ввести неверное значение провалилась!';
+            }
+
+            if ($company_address['is_transit'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_transit']) || $company_address['is_transit'] > 1)
+            {
+                $errors['is_transit'] = 'Попытка ввести неверное значение провалилась!';
+            }
+
+            if ($company_address['address_area'] == null
+                && $company_address['address_city'] == null
+                && $company_address['address_town'] == null)
+            {
+                $errors['no_ACT'] = 'Не может быть одновременно отсутствие Района, Города и Населенного пункта';
+            }
+
+            $notification = null; // Информация об уведомлении
+            $notification_name = ''; // Полное наименование уведомления
+            $notification_control = true; // Контроль добавления строки к уведомлению
 
             if ($errors == false)
             {
+                $notification_name = $company_address['address_country'] . '|||' . $company_address['address_region'];
+
+                if ($notification_control)
+                {
+                    if ($company_address['address_area'] != null)
+                    {
+                        $notification_name .= '|||'.$company_address['address_area'];
+                        $notification_control = false;
+                    }
+                }
+
+                if ($notification_control)
+                {
+                    if ($company_address['address_city'] != null)
+                    {
+                        $notification_name .= '|||' .$company_address['address_city'];
+                        $notification_control = false;
+                    }
+                }
+
+                if ($notification_control)
+                {
+                    if ($company_address['address_town'] != null)
+                    {
+                        $notification_name .= '|||'.$company_address['address_town'];
+                        $notification_control = false;
+                    }
+                }
+
+                $check_notification = Notification::checkNotification($notification_name);
+                $notification_id = 0;
+
+                if (!$check_notification)
+                {
+                    $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                    $notification['created_user_id'] = $user_id;
+                    $notification['name'] = $notification_name;
+                    $notification_id = Notification::addNotification($notification);
+                    if (!$notification_id)
+                    {
+                        $notification_id = 0;
+                    }
+                }
+                else
+                {
+                    $notification_id = $check_notification;
+                }
+
                 $company_address['created_datetime'] = $date_time->format('Y-m-d H:i:s');
                 $company_address['created_user_id'] = $user_id;
+                $company_address['notification_id'] = $notification_id;
+
+                Company::addCompanyAddress($cid,$company_address);
+                header('Location: /company/company_address_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
+                    .'&page='.$page.'&cid='.$cid);
             }
         }
 

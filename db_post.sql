@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Янв 18 2017 г., 17:20
+-- Время создания: Янв 19 2017 г., 13:42
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -55,6 +55,7 @@ INSERT INTO `company` (`id`, `name`, `full_name`, `key_field`, `created_datetime
 CREATE TABLE IF NOT EXISTS `company_address` (
   `id` int(11) NOT NULL,
   `company_id` int(11) NOT NULL COMMENT 'Связь с таблицей company',
+  `notification_id` int(11) NOT NULL DEFAULT '0',
   `address_country` varchar(128) NOT NULL COMMENT 'Страна',
   `address_zip` varchar(12) NOT NULL COMMENT 'Почтовый индекс',
   `address_region` varchar(256) NOT NULL COMMENT 'Область',
@@ -79,10 +80,10 @@ CREATE TABLE IF NOT EXISTS `company_address` (
 -- Дамп данных таблицы `company_address`
 --
 
-INSERT INTO `company_address` (`id`, `company_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
-(2, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
+INSERT INTO `company_address` (`id`, `company_id`, `notification_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_mfc`, `is_transit`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
+(2, 1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -147,12 +148,21 @@ INSERT INTO `menu_panel` (`id`, `name`, `title`, `description`, `url_address`, `
 
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(11) NOT NULL,
-  `name` varchar(640) NOT NULL,
+  `name` varchar(646) NOT NULL,
   `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
   `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
   `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
-  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
+  `flag` int(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `notification`
+--
+
+INSERT INTO `notification` (`id`, `name`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 'Нет', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 'Россия|||Пензенская область|||г. Пенза', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -508,7 +518,7 @@ ALTER TABLE `menu_panel`
 -- AUTO_INCREMENT для таблицы `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT для таблицы `package`
 --
