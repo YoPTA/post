@@ -479,6 +479,7 @@ class SiteController
     public function actionChoose()
     {
         $is_create = false;
+        $is_admin = false;
         $user = null;
         $user_id = null;
 
@@ -488,6 +489,11 @@ class SiteController
         $string_utility = new String_Utility();
 
         $errors = false;
+
+        if (!$is_admin)
+        {
+            Company::memorizeCompany($user['company_address_id'], FROM_COMPANY);
+        }
 
         $from_company_id = Company::checkCompanyInMemory(FROM_COMPANY); // Откуда
         $to_company_id = Company::checkCompanyInMemory(TO_COMPANY); // Кому

@@ -27,11 +27,13 @@ include ROOT . '/views/layouts/header.php';
             <tr>
                 <td class="one_eighth accent">Отправитель</td>
                 <td class="">
+                    <?php if ($is_admin): ?>
                     <div class="bg_button inline">
                         <a href="/company/company_index?c_type=<?= FROM_COMPANY ?>" title="Выбрать">
                             <img src="/template/images/edit.png" />
                         </a>
                     </div>
+                    <?php endif; //if ($is_admin): ?>
                 </td>
             </tr>
 
