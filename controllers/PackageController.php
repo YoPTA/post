@@ -6,7 +6,7 @@ class PackageController
     public function actionObjects()
     {
         $user = null;
-        // Подключаем файл с проверками ролей пользователя
+        // РџРѕРґРєР»СЋС‡Р°РµРј С„Р°Р№Р» СЃ РїСЂРѕРІРµСЂРєР°РјРё СЂРѕР»РµР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         require_once ROOT . '/config/role_ckeck.php';
 
         $track = null;
@@ -15,7 +15,7 @@ class PackageController
         $date_create = null;
         $package_type = 0;
         $office = OFFICE_NOW;
-        $pid = null; // Id посылки
+        $pid = null; // Id РїРѕСЃС‹Р»РєРё
 
 
         if (!isset($_GET['track']))
@@ -85,5 +85,26 @@ class PackageController
 
         require_once ROOT . '/views/package/objects.php';
         return true;
+    }
+
+    public function actionIndex()
+    {
+        $user = null;
+        $is_create = false;
+        // РџРѕРґРєР»СЋС‡Р°РµРј С„Р°Р№Р» СЃ РїСЂРѕРІРµСЂРєР°РјРё СЂРѕР»РµР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        require_once ROOT . '/config/role_ckeck.php';
+
+
+        if ($is_create)
+        {
+            require_once ROOT . '/views/package/index.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+
+
     }
 }

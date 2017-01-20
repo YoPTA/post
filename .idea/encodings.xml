@@ -6,7 +6,6 @@
     <file url="file://$PROJECT_DIR$/components/Date_Converter.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/String_Utility.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/Validate.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/components/case.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/components/charsToReplace.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config/constants.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config/constants_admin_access_rights.php" charset="UTF-8" />
@@ -15,7 +14,9 @@
     <file url="file://$PROJECT_DIR$/config/routes.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/AdminController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/AdminuserController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/CompanyController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/DokaController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/PackageController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/ProfileController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/ProxyController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/RouteController.php" charset="UTF-8" />
@@ -25,6 +26,7 @@
     <file url="file://$PROJECT_DIR$/models/Document.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/Doka.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/Menu_Panel.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/models/Notification.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/Package.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/Proxy.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/models/Route.php" charset="UTF-8" />
@@ -39,10 +41,20 @@
     <file url="file://$PROJECT_DIR$/template/js/jquery.maskedinput.min.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/admin/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/admin/user/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company/add.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company/delete.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company/edit.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company_address/add.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company_address/delete.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company_address/edit.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/company/company_address/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/doka/package.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/layouts/admin_menu_panel.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/layouts/header.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/package/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/package/objects.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/package/package_preview.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/profile/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/proxy/person/add.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/proxy/person/delete.php" charset="UTF-8" />
@@ -56,6 +68,7 @@
     <file url="file://$PROJECT_DIR$/views/route/send.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/route/view.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/barcode_39.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/site/choose.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/create.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/error.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/index.php" charset="UTF-8" />

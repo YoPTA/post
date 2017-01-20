@@ -44,6 +44,7 @@ return [
 
 
     'package/objects' => 'package/objects',
+    'package/index' => 'package/index',
 
     //'site/select_company' => 'site/selectcompany',
 

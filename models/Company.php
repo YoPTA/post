@@ -480,8 +480,25 @@ class Company
         $result->bindParam(':changed_datetime', $company_address['changed_datetime'], PDO::PARAM_STR);
         $result->bindParam(':changed_user_id', $company_address['changed_user_id'], PDO::PARAM_INT);
 
+        $result->execute();
+    }
 
-
+    /*
+     * Удаляем адрес организации
+     * @var $id int - ID организации
+     * @var $company_address array() - организация
+     */
+    public static function deleteCompanyAddress($id, $company_address)
+    {
+        $sql = 'UPDATE company_address
+          SET
+            changed_datetime = :changed_datetime, changed_user_id = :changed_user_id, flag = -1
+          WHERE id = :id AND flag = 1 ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':changed_datetime', $company_address['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $company_address['changed_user_id'], PDO::PARAM_INT);
         $result->execute();
     }
 

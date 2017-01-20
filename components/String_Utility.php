@@ -11,6 +11,7 @@ class String_Utility
      * Возможные варианты $parameter:
      * 1 - Полный адрес
      * 2 - Без страны, почтового индекса и региона (области)
+     * 3 - Полный адрес, но при этом адрес передается в формате, как и в БД
      *
      *
      * @var $address array() - массив с адресом
@@ -68,6 +69,32 @@ class String_Utility
             if ($address[$address_prefix.'ca_build'] != null)
             {
                 $address_to_view = $this->insertToString($address_to_view, 'кв. '.$address[$address_prefix.'ca_apartment']);
+            }
+        }
+
+        if ($parameter == 3)
+        {
+            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'address_country'], 0);
+            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'address_region']);
+            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'address_area']);
+            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'address_city']);
+            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'address_town']);
+            $address_to_view = $this->insertToString($address_to_view, $address[$address_prefix.'address_street']);
+            if ($address[$address_prefix.'address_home'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'д. '.$address[$address_prefix.'address_home']);
+            }
+            if ($address[$address_prefix.'address_case'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'корп. '.$address[$address_prefix.'address_case']);
+            }
+            if ($address[$address_prefix.'address_build'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'строение '.$address[$address_prefix.'address_build']);
+            }
+            if ($address[$address_prefix.'address_apartment'] != null)
+            {
+                $address_to_view = $this->insertToString($address_to_view, 'кв. '.$address[$address_prefix.'address_apartment']);
             }
         }
 

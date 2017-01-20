@@ -1022,9 +1022,100 @@ class CompanyController
             }
         }
 
-        if ($is_create)
+        if ($is_change_company)
         {
             require_once ROOT . '/views/company/company_address/edit.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
+    public function actionCompanyAddressDelete()
+    {
+        $is_create = false;
+        $is_change_company = false;
+        $user = null;
+        $user_id = null;
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $date_time = new DateTime();
+        $string_utility = new String_Utility();
+
+        $errors = false;
+
+        $company_address = null; // Адрес организации
+        $c_type = null; // Тип компании (получатель/отправитель)
+        $search_param = null; // Искомое значение
+        $page = 1; // Номер страницы
+        $cid = null; // ID организации
+        $caid = null; // ID адреса организации
+
+
+        if (isset($_GET['c_type']))
+        {
+            $c_type = htmlspecialchars($_GET['c_type']);
+        }
+
+        if (isset($_GET['search_value']))
+        {
+            $search_param['search_value'] = htmlspecialchars($_GET['search_value']);
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['cid']))
+        {
+            $cid = htmlspecialchars($_GET['cid']);
+        }
+
+        if (isset($_GET['caid']))
+        {
+            $caid = htmlspecialchars($_GET['caid']);
+        }
+
+        $company_address = Company::getCompanyAddressInfo($caid);
+
+        if ($caid == 0)
+        {
+            $errors['no_company_address'] = ' Вы не сможете изменить адрес, для данной организации [CAID]';
+        }
+
+        if (isset($_POST['yes']))
+        {
+            if ($errors == false)
+            {
+                $company_address['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $company_address['changed_user_id'] = $user_id;
+                Company::deleteCompanyAddress($caid, $company_address);
+
+                header('Location: /company/company_address_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
+                    .'&page='.$page.'&cid='.$cid);
+            }
+        }
+
+        if (isset($_POST['no']))
+        {
+            header('Location: /company/company_address_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
+                .'&page='.$page.'&cid='.$cid);
+        }
+
+
+        if ($is_change_company)
+        {
+            require_once ROOT . '/views/company/company_address/delete.php';
             return true;
         }
         else
