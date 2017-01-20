@@ -407,7 +407,7 @@ class DokaController
                 // Запоминаем дела
                 Package::memorizePackageObjects($p_object);
             }
-            header('Location: /site/create');
+            header('Location: /site/choose');
         }
         if(isset($_POST['no']))
         {

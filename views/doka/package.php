@@ -9,7 +9,7 @@ include ROOT . '/views/layouts/header.php';
 
 <h2 align="center"><?= $pagetitle ?></h2>
 <div class="full_width font_size_twelve" align="center">
-    <a href="/site/create" align="center">&larr; Вернуться назад</a>
+    <a href="/site/choose" align="center">&larr; Вернуться назад</a>
 </div>
 <br/>
 <form method="POST">

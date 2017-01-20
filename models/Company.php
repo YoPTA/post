@@ -371,7 +371,7 @@ class Company
         $sql = 'UPDATE company
           SET name = :name, full_name = :full_name, key_field = :key_field,
           changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
-          WHERE id = :id';
+          WHERE id = :id AND flag = 1';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
@@ -393,7 +393,7 @@ class Company
         $sql = 'UPDATE company
           SET
             changed_datetime = :changed_datetime, changed_user_id = :changed_user_id, flag = -1
-          WHERE id = :id';
+          WHERE id = :id AND flag = 1';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
@@ -402,13 +402,15 @@ class Company
         $result->execute();
     }
 
+
+
     /*
      * Добавление адреса для организации
      * @var $company_id int - id организации
-     * @var $company array - организация
+     * @var $company_address array() - организация
      * return int or boolean
      */
-    public static function addCompanyAddress($company_id, $company)
+    public static function addCompanyAddress($company_id, $company_address)
     {
         $sql = 'INSERT INTO company_address (company_id, address_country, address_zip, address_region, address_area,
           address_city, address_town, address_street, address_home, address_case, address_build, address_apartment,
@@ -420,25 +422,67 @@ class Company
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':company_id', $company_id, PDO::PARAM_INT);
-        $result->bindParam(':address_country', $company['address_country'], PDO::PARAM_STR);
-        $result->bindParam(':address_zip', $company['address_zip'], PDO::PARAM_STR);
-        $result->bindParam(':address_region', $company['address_region'], PDO::PARAM_STR);
-        $result->bindParam(':address_area', $company['address_area'], PDO::PARAM_STR);
-        $result->bindParam(':address_city', $company['address_city'], PDO::PARAM_STR);
-        $result->bindParam(':address_town', $company['address_town'], PDO::PARAM_STR);
-        $result->bindParam(':address_street', $company['address_street'], PDO::PARAM_STR);
-        $result->bindParam(':address_home', $company['address_home'], PDO::PARAM_STR);
-        $result->bindParam(':address_case', $company['address_case'], PDO::PARAM_STR);
-        $result->bindParam(':address_build', $company['address_build'], PDO::PARAM_STR);
-        $result->bindParam(':address_apartment', $company['address_apartment'], PDO::PARAM_STR);
-        $result->bindParam(':notification_id', $company['notification_id'], PDO::PARAM_INT);
-        $result->bindParam(':created_datetime', $company['created_datetime'], PDO::PARAM_STR);
-        $result->bindParam(':created_user_id', $company['created_user_id'], PDO::PARAM_INT);
+        $result->bindParam(':address_country', $company_address['address_country'], PDO::PARAM_STR);
+        $result->bindParam(':address_zip', $company_address['address_zip'], PDO::PARAM_STR);
+        $result->bindParam(':address_region', $company_address['address_region'], PDO::PARAM_STR);
+        $result->bindParam(':address_area', $company_address['address_area'], PDO::PARAM_STR);
+        $result->bindParam(':address_city', $company_address['address_city'], PDO::PARAM_STR);
+        $result->bindParam(':address_town', $company_address['address_town'], PDO::PARAM_STR);
+        $result->bindParam(':address_street', $company_address['address_street'], PDO::PARAM_STR);
+        $result->bindParam(':address_home', $company_address['address_home'], PDO::PARAM_STR);
+        $result->bindParam(':address_case', $company_address['address_case'], PDO::PARAM_STR);
+        $result->bindParam(':address_build', $company_address['address_build'], PDO::PARAM_STR);
+        $result->bindParam(':address_apartment', $company_address['address_apartment'], PDO::PARAM_STR);
+        $result->bindParam(':notification_id', $company_address['notification_id'], PDO::PARAM_INT);
+        $result->bindParam(':created_datetime', $company_address['created_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $company_address['created_user_id'], PDO::PARAM_INT);
         if($result->execute())
         {
             return $db->lastInsertId();
         }
         return false;
+    }
+
+    /*
+     * Обновление адреса организации
+     * @var $id int - ID адреса организации
+     * @var $company_address array() - адрес организации
+     */
+    public static function updateCompanyAddress($id, $company_address)
+    {
+        $sql = 'UPDATE company_address
+          SET company_id = :company_id, notification_id = :notification_id, address_country = :address_country,
+          address_zip = :address_zip, address_region = :address_region, address_area = :address_area,
+          address_city = :address_city, address_town = :address_town, address_street = :address_street,
+          address_home = :address_home, address_case = :address_case, address_build = :address_build,
+          address_apartment = :address_apartment, is_mfc = :is_mfc, is_transit = :is_transit,
+          changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+          WHERE id = :id AND flag = 1 ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':company_id', $company_address['company_id'], PDO::PARAM_INT);
+        $result->bindParam(':notification_id', $company_address['notification_id'], PDO::PARAM_INT);
+        $result->bindParam(':address_country', $company_address['address_country'], PDO::PARAM_STR);
+        $result->bindParam(':address_zip', $company_address['address_zip'], PDO::PARAM_STR);
+        $result->bindParam(':address_region', $company_address['address_region'], PDO::PARAM_STR);
+        $result->bindParam(':address_area', $company_address['address_area'], PDO::PARAM_STR);
+        $result->bindParam(':address_city', $company_address['address_city'], PDO::PARAM_STR);
+        $result->bindParam(':address_town', $company_address['address_town'], PDO::PARAM_STR);
+        $result->bindParam(':address_street', $company_address['address_street'], PDO::PARAM_STR);
+        $result->bindParam(':address_home', $company_address['address_home'], PDO::PARAM_STR);
+        $result->bindParam(':address_case', $company_address['address_case'], PDO::PARAM_STR);
+        $result->bindParam(':address_build', $company_address['address_build'], PDO::PARAM_STR);
+        $result->bindParam(':address_apartment', $company_address['address_apartment'], PDO::PARAM_STR);
+        $result->bindParam(':is_mfc', $company_address['is_mfc'], PDO::PARAM_INT);
+        $result->bindParam(':is_transit', $company_address['is_transit'], PDO::PARAM_INT);
+        $result->bindParam(':changed_datetime', $company_address['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $company_address['changed_user_id'], PDO::PARAM_INT);
+
+
+
+        $result->execute();
     }
 
     /*

@@ -741,6 +741,298 @@ class CompanyController
         }
     }
 
+    public function actionCompanyAddressEdit()
+    {
+        $is_create = false;
+        $is_change_company = false;
+        $user = null;
+        $user_id = null;
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $date_time = new DateTime();
+
+        $errors = false;
+
+        $company_address = null; // Адрес организации
+        $c_type = null; // Тип компании (получатель/отправитель)
+        $search_param = null; // Искомое значение
+        $page = 1; // Номер страницы
+        $cid = null; // ID организации
+        $caid = null; // ID адреса организации
+
+
+        if (isset($_GET['c_type']))
+        {
+            $c_type = htmlspecialchars($_GET['c_type']);
+        }
+
+        if (isset($_GET['search_value']))
+        {
+            $search_param['search_value'] = htmlspecialchars($_GET['search_value']);
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['cid']))
+        {
+            $cid = htmlspecialchars($_GET['cid']);
+        }
+
+        if (isset($_GET['caid']))
+        {
+            $caid = htmlspecialchars($_GET['caid']);
+        }
+
+        $company_address = Company::getCompanyAddressInfo($caid);
+
+
+        $check_company = Company::checkCompanyInDb($cid);
+
+        if ($cid == 0)
+        {
+            $errors['no_company'] = 'Вы не сможете изменить адрес, для данной организации [CID]';
+        }
+
+        if ($caid == 0)
+        {
+            $errors['no_company_address'] = ' Вы не сможете изменить адрес, для данной организации [CAID]';
+        }
+
+        if (!$check_company)
+        {
+            $errors['no_company_db'] = 'Организация, которой Вы добавляете адрес, не существует';
+        }
+
+
+
+        $company_address['address_country'] = 'Россия';
+        $company_address['address_region'] = 'Пензенская область';
+
+
+        if (isset($_POST['address_country']))
+        {
+            $company_address['address_country'] = htmlspecialchars(trim($_POST['address_country']));
+        }
+
+        if (isset($_POST['address_zip']))
+        {
+            $company_address['address_zip'] = htmlspecialchars(trim($_POST['address_zip']));
+        }
+
+        if (isset($_POST['address_region']))
+        {
+            $company_address['address_region'] = htmlspecialchars(trim($_POST['address_region']));
+        }
+
+        if (isset($_POST['address_area']))
+        {
+            $company_address['address_area'] = htmlspecialchars(trim($_POST['address_area']));
+        }
+
+        if (isset($_POST['address_city']))
+        {
+            $company_address['address_city'] = htmlspecialchars(trim($_POST['address_city']));
+        }
+        if (isset($_POST['address_town']))
+        {
+            $company_address['address_town'] = htmlspecialchars(trim($_POST['address_town']));
+        }
+
+        if (isset($_POST['address_street']))
+        {
+            $company_address['address_street'] = htmlspecialchars(trim($_POST['address_street']));
+        }
+
+        if (isset($_POST['address_home']))
+        {
+            $company_address['address_home'] = htmlspecialchars(trim($_POST['address_home']));
+        }
+
+        if (isset($_POST['address_case']))
+        {
+            $company_address['address_case'] = htmlspecialchars(trim($_POST['address_case']));
+        }
+
+        if (isset($_POST['address_build']))
+        {
+            $company_address['address_build'] = htmlspecialchars(trim($_POST['address_build']));
+        }
+
+        if (isset($_POST['address_apartment']))
+        {
+            $company_address['address_apartment'] = htmlspecialchars(trim($_POST['address_apartment']));
+        }
+
+        if (isset($_POST['is_mfc']))
+        {
+            $company_address['is_mfc'] = htmlspecialchars(trim($_POST['is_mfc']));
+        }
+
+        if (isset($_POST['is_transit']))
+        {
+            $company_address['is_transit'] = htmlspecialchars(trim($_POST['is_transit']));
+        }
+
+        if (isset($_POST['edit']))
+        {
+
+            if (!Validate::checkStr($company_address['address_country'], 128))
+            {
+                $errors['address_country'] = 'Страна не может быть такой длины';
+            }
+
+            if (!Validate::checkStr($company_address['address_region'], 256))
+            {
+                $errors['address_region'] = 'Регион не может быть такой длины';
+            }
+
+            if (!Validate::checkStr($company_address['address_street'], 256))
+            {
+                $errors['address_street'] = 'Улица не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_zip'], 16))
+            {
+                $errors['address_zip'] = 'Почтовый индекс не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_area'], 256))
+            {
+                $errors['address_area'] = 'Район не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_city'], 128))
+            {
+                $errors['address_city'] = 'Город не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_town'], 128))
+            {
+                $errors['address_town'] = 'Населенный пункт не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_home'], 32))
+            {
+                $errors['address_home'] = 'Дом не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_case'], 16))
+            {
+                $errors['address_case'] = 'Корпус не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_build'], 16))
+            {
+                $errors['address_build'] = 'Строение не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($company_address['address_apartment'], 16))
+            {
+                $errors['address_apartment'] = 'Квартира не может быть такой длины';
+            }
+
+            if ($company_address['is_mfc'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_mfc']) || $company_address['is_mfc'] > 1)
+            {
+                $errors['is_mfc'] = 'Попытка ввести неверное значение провалилась!';
+            }
+
+            if ($company_address['is_transit'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_transit']) || $company_address['is_transit'] > 1)
+            {
+                $errors['is_transit'] = 'Попытка ввести неверное значение провалилась!';
+            }
+
+            if ($company_address['address_area'] == null
+                && $company_address['address_city'] == null
+                && $company_address['address_town'] == null)
+            {
+                $errors['no_ACT'] = 'Не может быть одновременно отсутствие Района, Города и Населенного пункта';
+            }
+
+            $notification = null; // Информация об уведомлении
+            $notification_name = ''; // Полное наименование уведомления
+            $notification_control = true; // Контроль добавления строки к уведомлению
+
+            if ($errors == false)
+            {
+                $notification_name = $company_address['address_country'] . '|||' . $company_address['address_region'];
+
+                if ($notification_control)
+                {
+                    if ($company_address['address_area'] != null)
+                    {
+                        $notification_name .= '|||'.$company_address['address_area'];
+                        $notification_control = false;
+                    }
+                }
+
+                if ($notification_control)
+                {
+                    if ($company_address['address_city'] != null)
+                    {
+                        $notification_name .= '|||' .$company_address['address_city'];
+                        $notification_control = false;
+                    }
+                }
+
+                if ($notification_control)
+                {
+                    if ($company_address['address_town'] != null)
+                    {
+                        $notification_name .= '|||'.$company_address['address_town'];
+                        $notification_control = false;
+                    }
+                }
+
+                $check_notification = Notification::checkNotification($notification_name);
+                $notification_id = 0;
+
+                if (!$check_notification)
+                {
+                    $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                    $notification['created_user_id'] = $user_id;
+                    $notification['name'] = $notification_name;
+                    $notification_id = Notification::addNotification($notification);
+                    if (!$notification_id)
+                    {
+                        $notification_id = 0;
+                    }
+                }
+                else
+                {
+                    $notification_id = $check_notification;
+                }
+
+                $company_address['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $company_address['changed_user_id'] = $user_id;
+                $company_address['notification_id'] = $notification_id;
+
+                Company::updateCompanyAddress($caid, $company_address);
+                header('Location: /company/company_address_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
+                    .'&page='.$page.'&cid='.$cid);
+            }
+        }
+
+        if ($is_create)
+        {
+            require_once ROOT . '/views/company/company_address/edit.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
     /*****************************
      * Работа с адресами орагнизации КОНЕЦ
      *****************************/

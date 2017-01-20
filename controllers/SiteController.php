@@ -501,8 +501,9 @@ class SiteController
         $company_from = null; // Компания отправитель
         $company_to = null; // Компания получатель
 
-        $package_list = null; // Посылка
-        $package__objects = null; // Объекты посылки
+        $package_list = Package::checkPackage(); // Посылка
+        $package_objects = Package::checkPackageObjects(); // Объекты посылки
+
 
 
 
@@ -534,6 +535,17 @@ class SiteController
             {
                 $errors['to_company'] = 'Не выбран получатель';
             }
+
+            if ($package_list == null)
+            {
+                $errors['package_list'] = 'Посылка не создана';
+            }
+
+            if ($package_objects == null)
+            {
+                $errors['package_objects'] = 'Объекты посылки не найдены';
+            }
+
 
 
             if ($errors == false)
