@@ -86,25 +86,4 @@ class PackageController
         require_once ROOT . '/views/package/objects.php';
         return true;
     }
-
-    public function actionIndex()
-    {
-        $user = null;
-        $is_create = false;
-        // Подключаем файл с проверками ролей пользователя
-        require_once ROOT . '/config/role_ckeck.php';
-
-
-        if ($is_create)
-        {
-            require_once ROOT . '/views/package/index.php';
-            return true;
-        }
-        else
-        {
-            header('Location: /site/error');
-        }
-
-
-    }
 }

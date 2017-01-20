@@ -203,7 +203,7 @@ include ROOT . '/views/layouts/header.php';
     <h2>Желаете создать посылку?</h2>
     <div align="">
         <input type="submit" name="create" value="Да" class="button one_sixteenth" /><span class="right_indent"></span>
-        <input type="submit" name="clear" value="Нет" class="button one_sixteenth" />
+        <input type="submit" name="no" value="Нет" class="button one_sixteenth" />
     </div>
     <?php endif; // if($errors == null): ?>
 

@@ -21,7 +21,7 @@ include ROOT . '/views/layouts/header.php';
 <?php endif; ?>
 
 <div class="font_size_fourteen full_width">
-
+<form method="POST">
     <div class="inline three_quarter">
         <table class="view half">
             <tr>
@@ -104,13 +104,61 @@ include ROOT . '/views/layouts/header.php';
                 </td>
             </tr>
 
-            <?php if ($package_list != null && is_array($package_list)): ?>
-            <tr class="presentation">
-                <td></td>
-                <td></td>
-            </tr>
+            <?php if ($package_list != null): ?>
+                <tr>
+                    <td colspan="2" class="accent">
+                        <?= $package_list ?>
+                    </td>
+                </tr>
             <?php endif; //if ($package_list != null && is_array($package_list)): ?>
+            <tr>
+                <td colspan="2">
+                    <hr />
+                </td>
+            </tr>
+        </table>
+        <br />
+        <table class="view half">
+            <tr>
+                <td class="one_eighth accent">Объекты посылки</td>
+                <td class="quarter">
+                    <div class="bg_button inline">
+                        <a href="/package/index" title="Добавить">
+                            <img src="/template/images/edit.png" />
+                        </a>
+                    </div>
+                </td>
+                <td class="one_eighth">
+                </td>
+            </tr>
+        </table>
+        <table class="view half">
 
+            <?php if($package_objects != null): ?>
+
+                <tr>
+                    <th align="center" class="one_sixteenth">№ п/п</th>
+                    <th align="center" class="quarter">Дело</th>
+                    <th class="quarter"></th>
+                </tr>
+
+                <?php
+                $i = 0;
+                foreach($package_objects as $p_key => $p_value):
+                    $i++;
+                    ?>
+                    <tr class="presentation">
+                        <td><?= $i; ?></td>
+                        <td><?= $p_value; ?></td>
+                        <td class="bg_none">
+                            <button value="<?= $p_key ?>" class="button check" name="package_object_delete" title="Удалить" style="vertical-align: bottom">
+                                <img src="/template/images/delete.png" alt="Удалить" />
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach;//foreach($package_objects as $p_obj): ?>
+
+            <?php endif; // if($package_objects != null): ?>
         </table>
     </div>
 
@@ -140,11 +188,10 @@ include ROOT . '/views/layouts/header.php';
 <hr />
 <h2>Желаете продолжить создание посылки?</h2>
 <div align="">
-    <form method="POST">
-        <input type="submit" name="yes" value="Да" class="button one_sixteenth" /><span class="right_indent"></span>
-        <input type="submit" name="no" value="Нет" class="button one_sixteenth" />
-    </form>
+    <input type="submit" name="yes" value="Да" class="button one_sixteenth" /><span class="right_indent"></span>
+    <input type="submit" name="no" value="Нет" class="button one_sixteenth" />
 </div>
+</form>
 <br /><br />
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

@@ -146,6 +146,11 @@ class SiteController
             Company::outCompanyFromMemory(TO_COMPANY);
             Package::outPackage();
             Package::outPackageObjects();
+            header('Location: /site/choose');
+        }
+        if (isset($_POST['no']))
+        {
+            header('Location: /site/choose');
         }
 
 
@@ -505,10 +510,6 @@ class SiteController
         $package_objects = Package::checkPackageObjects(); // Объекты посылки
 
 
-
-
-
-
         if($from_company_id != null)
         {
             $company_from = Company::getCompany($from_company_id);
@@ -550,7 +551,7 @@ class SiteController
 
             if ($errors == false)
             {
-
+                header('Location: /site/create');
             }
         }
         if (isset($_POST['no']))
