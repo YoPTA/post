@@ -43,6 +43,9 @@ return [
     'proxy/proxy_delete' => 'proxy/proxydelete',
 
 
+    'package/package_object_add' => 'package/packageobjectadd',
+
+    'package/package_add' => 'package/packageadd',
     'package/objects' => 'package/objects',
 
     //'site/select_company' => 'site/selectcompany',

@@ -40,6 +40,9 @@ include ROOT . '/views/layouts/header.php';
             <?php if ($company_from != null && is_array($company_from)): ?>
             <tr>
                 <td colspan="2">
+                    <?php if ($company_from['is_transit'] == 1): ?>
+                            <b class="font_size_ten" title="Транзитная точка">[ТРАНЗИТ]</b>
+                        <?php endif; //if ($company_from['is_transit']): ?>
                     <?= $company_from['c_full_name'] ?>
                     <br />
                     <span class="color_grey font_size_twelve">
@@ -97,7 +100,7 @@ include ROOT . '/views/layouts/header.php';
                 <td class="one_eighth accent">Посылка</td>
                 <td class="">
                     <div class="bg_button inline">
-                        <a href="/package/index" title="Выбрать">
+                        <a href="/package/package_add" title="Добавить посылку">
                             <img src="/template/images/edit.png" />
                         </a>
                     </div>
@@ -106,7 +109,7 @@ include ROOT . '/views/layouts/header.php';
 
             <?php if ($package_list != null): ?>
                 <tr>
-                    <td colspan="2" class="accent">
+                    <td colspan="2">
                         <?= $package_list ?>
                     </td>
                 </tr>
@@ -123,7 +126,7 @@ include ROOT . '/views/layouts/header.php';
                 <td class="one_eighth accent">Объекты посылки</td>
                 <td class="quarter">
                     <div class="bg_button inline">
-                        <a href="/package/index" title="Добавить">
+                        <a href="/package/package_object_add" title="Добавить объект">
                             <img src="/template/images/edit.png" />
                         </a>
                     </div>

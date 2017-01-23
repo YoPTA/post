@@ -309,6 +309,16 @@ class Package
     }
 
     /*
+     * Запоминаем объект посылки в сессию
+     * @var $p_object array() - объект посылки
+     */
+    public static function memorizePackageObject($p_object)
+    {
+        session_start();
+        $_SESSION['p_object'][] = $p_object;
+    }
+
+    /*
      * Проверяем ведомость в сессии
      * return int OR null
      */

@@ -13,7 +13,7 @@
     <file url="file://$PROJECT_DIR$/config/role_ckeck.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/config/routes.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/AdminController.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/controllers/AdminuserController.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/controllers/AdminUserController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/CompanyController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/DokaController.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controllers/PackageController.php" charset="UTF-8" />
@@ -52,9 +52,9 @@
     <file url="file://$PROJECT_DIR$/views/doka/package.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/layouts/admin_menu_panel.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/layouts/header.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/views/package/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/package/object/add.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/package/objects.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/views/package/package_preview.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/package/package/add.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/profile/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/proxy/person/add.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/proxy/person/delete.php" charset="UTF-8" />
