@@ -8,6 +8,7 @@
     <link href="/template/css/links.css" rel="stylesheet">
     <link href="/template/css/main.css" rel="stylesheet">
     <link href="/template/css/fonts.css" rel="stylesheet">
+    <link rel="stylesheet" href="/template/css/font-awesome.css">
     <link href="/template/css/pagination.css" rel="stylesheet">
     <link href="/template/css/tcal.css" rel="stylesheet">
     <script src="/template/js/jquery-1.8.3.min.js"></script>
@@ -25,18 +26,18 @@
                         <li class="menu_item">
                             <a href="/site/index">
                                 <div id="page_index" class="one_eighth right_indent header_btn">
-                                    <span style="font-size: 10px;">&#9993;</span>&#160;Посылка
+                                    <span class="fa fa-envelope" style=""></span>&#160;Посылка
                                     <span class="fr" style="margin-right: 10px; margin-left: -20px; font-size: 12px;">&#9660;</span></div>
                                 <ul class="children">
-                                    <li><a href="/site/index"><div class="one_eighth header_btn"><span style="font-size: 10px;">&#9993;</span>&#160;Отследить</div></a></li>
+                                    <li><a href="/site/index"><div class="one_eighth header_btn"><span class="fa fa-envelope"></span>&#160;Отследить</div></a></li>
                                     <?php if($is_create): ?>
-                                    <li><a href="/site/choose"><div class="one_eighth header_btn"><span>&#9998;</span>&#160;Создать</div></a></li>
+                                    <li><a href="/site/choose"><div class="one_eighth header_btn"><span class="fa fa-pencil"></span>&#160;Создать</div></a></li>
                                     <?php endif; ?>
                                 </ul>
                             </a>
                         </li>
 
-                        <!-- <li class="menu_item"><a href="/profile/index"><div id="page_profile" class="one_eighth right_indent header_btn"><span>&#9786;</span>&#160;Профиль</div></a></li> -->
+                        <li class="menu_item"><a href="/profile/index"><div id="page_notification" class="one_eighth right_indent header_btn"><span class="fa fa-bell"></span>&#160;Уведомления</div></a></li>
 
                     </ul>
                 </div>
@@ -46,12 +47,12 @@
                         <li class="menu_item">
                             <a href="/admin/index">
                                 <div id="page_admin" class="one_eighth right_indent header_btn">
-                                    <span style="font-size: 10px;">&#9812;</span>&#160;Админка
+                                    <span class="fa fa-spin fa-cog"></span>&#160;Админка
                                 </div>
                             </a>
                         </li>
                         <?php endif; ?>
-                        <li class="menu_item"><a href="/site/logout"><div id="page_logout" class="one_eighth header_btn "><span style="font-size: 11px;">&#8674;</span>&#160;Выход</div></a></li>
+                        <li class="menu_item"><a href="/site/logout"><div id="page_logout" class="one_eighth header_btn "><span class="fa fa-sign-out"></span>&#160;Выход</div></a></li>
                     </ul>
 
                 </div>
