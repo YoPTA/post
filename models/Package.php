@@ -371,6 +371,26 @@ class Package
     }
 
     /*
+     * Удаляем один объект посылки из сессии
+     * @var $id int - ID посылки
+     */
+    public static function outPackageObject($id)
+    {
+        session_start();
+        if(isset($_SESSION['p_object']))
+        {
+            foreach ($_SESSION['p_object'] as $p_key => $p_value)
+            {
+                if ($p_key == $id)
+                {
+                    unset($_SESSION['p_object'][$p_key]);
+                    break;
+                }
+            }
+        }
+    }
+
+    /*
      * Добавить посылку
      * @var $package array() - информация о посылке
      * return int OR boolean

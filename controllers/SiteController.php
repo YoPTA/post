@@ -506,9 +506,13 @@ class SiteController
         $company_from = null; // Компания отправитель
         $company_to = null; // Компания получатель
 
+        if (isset($_POST['package_object_delete']))
+        {
+            Package::outPackageObject($_POST['package_object_delete']);
+        }
+
         $package_list = Package::checkPackage(); // Посылка
         $package_objects = Package::checkPackageObjects(); // Объекты посылки
-
 
         if($from_company_id != null)
         {
@@ -525,6 +529,11 @@ class SiteController
             $errors['equals_companies'] = 'Отправитель и получатель должны быть разными';
         }
 
+        if (isset($_POST['package_object_delete']))
+        {
+            Package::outPackageObject($_POST['package_object_delete']);
+        }
+
         if (isset($_POST['yes']))
         {
             if ($from_company_id == null)
@@ -539,15 +548,13 @@ class SiteController
 
             if ($package_list == null)
             {
-                $errors['package_list'] = 'Посылка не создана';
+                $errors['package_list'] = 'Посылка не найдена';
             }
 
             if ($package_objects == null)
             {
                 $errors['package_objects'] = 'Объекты посылки не найдены';
             }
-
-
 
             if ($errors == false)
             {
