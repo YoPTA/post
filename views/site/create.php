@@ -22,22 +22,6 @@ include ROOT . '/views/layouts/header.php';
     <?php endif; ?>
 
     <form method="POST" name="create_form" onload="selectChanged();">
-    <div class="full_width">
-        <div class="inline half fl right_indent" align="left">
-            <a href="/doka/package">
-                <button type="button" class="button one_eighth" name="doka_package" value="Создать">
-                    <img src="/template/images/create.png"  />
-                    Создать
-                </button>
-            </a>
-        </div>
-        <div class="half inline fr" align="right">
-            <button  class="button one_eighth" name="clear" >
-                <img src="/template/images/besom.png" />
-                Отчистить
-            </button>
-        </div>
-    </div><br /><br /><br />
 
     <div class="shadowed" style="padding: 5px; padding-bottom: 20px; padding-top: 20px;">
         <div class="inline half font_size_twelve" style="vertical-align: top;">
