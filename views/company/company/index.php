@@ -49,6 +49,9 @@ include ROOT . '/views/layouts/header.php';
 
                 <td align="center"><?= $index_number; ?></td>
                 <td>
+                    <?php if ($company['is_mfc'] == 1): ?>
+                        <img src="/template/images/logo-color.PNG" alt="МФЦ" />
+                    <?php endif;// if ($company['is_mfc'] == 1): ?>
                     <?= $company['name'] ?>
                 </td>
 

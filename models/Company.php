@@ -156,6 +156,7 @@ class Company
           company.name,
           company.full_name,
           company.key_field,
+          company.is_mfc,
           company.flag
         FROM
           company
@@ -412,12 +413,17 @@ class Company
      */
     public static function addCompanyAddress($company_id, $company_address)
     {
+        if ($company_address['is_transit'] == null || !isset($company_address['is_transit']))
+        {
+            $company_address['is_transit'] = 0;
+        }
+
         $sql = 'INSERT INTO company_address (company_id, address_country, address_zip, address_region, address_area,
           address_city, address_town, address_street, address_home, address_case, address_build, address_apartment,
-          local_place_id,	created_datetime, created_user_id, flag)
+          local_place_id, is_transit,	created_datetime, created_user_id, flag)
           VALUES (:company_id, :address_country, :address_zip, :address_region, :address_area,
           :address_city, :address_town, :address_street, :address_home, :address_case, :address_build, :address_apartment,
-          :local_place_id,	:created_datetime, :created_user_id, 1)';
+          :local_place_id, :is_transit,	:created_datetime, :created_user_id, 1)';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
@@ -434,6 +440,7 @@ class Company
         $result->bindParam(':address_build', $company_address['address_build'], PDO::PARAM_STR);
         $result->bindParam(':address_apartment', $company_address['address_apartment'], PDO::PARAM_STR);
         $result->bindParam(':local_place_id', $company_address['local_place_id'], PDO::PARAM_INT);
+        $result->bindParam(':is_transit', $company_address['is_transit'], PDO::PARAM_INT);
         $result->bindParam(':created_datetime', $company_address['created_datetime'], PDO::PARAM_STR);
         $result->bindParam(':created_user_id', $company_address['created_user_id'], PDO::PARAM_INT);
         if($result->execute())
