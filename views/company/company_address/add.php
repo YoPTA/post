@@ -127,16 +127,6 @@ include ROOT . '/views/layouts/header.php';
 
     <div class="quarter">
     <div class="inline one_eighth" style="vertical-align: top;">
-        <label for="is_mfc">Офис МФЦ?</label><br />
-        <select name="is_mfc" id="is_mfc" class="one_eighth">
-            <option value="0" <?php if ($company_address['is_mfc'] == 0) echo 'selected'; ?> >Нет</option>
-            <option value="1" <?php if ($company_address['is_mfc'] == 1) echo 'selected'; ?>>Да</option>
-        </select>
-    </div>
-
-        <span class="right_indent"></span>
-
-    <div class="inline one_eighth" style="vertical-align: top;">
         <label for="is_transit">Транзитная точка?</label><br />
         <select name="is_transit" id="is_transit" class="one_eighth">
             <option value="0" <?php if ($company_address['is_transit'] == 0) echo 'selected'; ?> >Нет</option>

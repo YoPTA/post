@@ -51,7 +51,13 @@ include ROOT . '/views/layouts/header.php';
         <span class="acorrect" id="key_field_correct"></span><br />
         <input type="text" placeholder="ИНН организации" id="key_field" name="key_field" class="one_eighth <?php if (isset($errors['key_field'])) echo 'error'; ?>" value="<?= $company['key_field'] ?>"
                onblur="InputCount('key_field', 'one_eighth', 10, 'key_field_correct', 'ИНН орагнизации не может быть такой длины', 'Необходимо заполнить ИНН организации', '')"
-            /><br /><br /><br />
+            /><br /><br />
+
+        <label for="is_mfc">Офис МФЦ?</label><br />
+        <select name="is_mfc" id="is_mfc" class="one_eighth">
+            <option value="0" <?php if ($company['is_mfc'] == 0) echo 'selected'; ?> >Нет</option>
+            <option value="1" <?php if ($company['is_mfc'] == 1) echo 'selected'; ?>>Да</option>
+        </select><br /><br />
 
         <input type="submit" name="add" value="Добавить" class="button one_eighth" /><br /><br />
 

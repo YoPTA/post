@@ -117,6 +117,11 @@ class CompanyController
             $company['key_field'] = htmlspecialchars(trim($_POST['key_field']));
         }
 
+        if (isset($_POST['is_mfc']))
+        {
+            $company['is_mfc'] = htmlspecialchars(trim($_POST['is_mfc']));
+        }
+
         if (isset($_POST['add']))
         {
             if (!Validate::checkStr($company['name'], 256))
@@ -132,6 +137,11 @@ class CompanyController
             if (!Validate::checkStrEqualLength($company['key_field'], 10))
             {
                 $errors['key_field'] = 'ИНН организации не может быть такой длины';
+            }
+
+            if ($company['is_mfc'] < 0 || !preg_match("|^[\d]+$|", $company['is_mfc']) || $company['is_mfc'] > 1)
+            {
+                $errors['is_mfc'] = 'Попытка ввести неверное значение провалилась!';
             }
 
             $check_key_field = Company::checkKeyFieldExists($company['key_field']);
@@ -220,6 +230,11 @@ class CompanyController
             $company['key_field'] = htmlspecialchars(trim($_POST['key_field']));
         }
 
+        if (isset($_POST['is_mfc']))
+        {
+            $company['is_mfc'] = htmlspecialchars(trim($_POST['is_mfc']));
+        }
+
         if (isset($_POST['edit']))
         {
             if (!Validate::checkStr($company['name'], 256))
@@ -235,6 +250,11 @@ class CompanyController
             if (!Validate::checkStrEqualLength($company['key_field'], 10))
             {
                 $errors['key_field'] = 'ИНН организации не может быть такой длины';
+            }
+
+            if ($company['is_mfc'] < 0 || !preg_match("|^[\d]+$|", $company['is_mfc']) || $company['is_mfc'] > 1)
+            {
+                $errors['is_mfc'] = 'Попытка ввести неверное значение провалилась!';
             }
 
             $check_key_field = Company::checkKeyFieldExists($company['key_field']);
@@ -581,11 +601,6 @@ class CompanyController
             $company_address['address_apartment'] = htmlspecialchars(trim($_POST['address_apartment']));
         }
 
-        if (isset($_POST['is_mfc']))
-        {
-            $company_address['is_mfc'] = htmlspecialchars(trim($_POST['is_mfc']));
-        }
-
         if (isset($_POST['is_transit']))
         {
             $company_address['is_transit'] = htmlspecialchars(trim($_POST['is_transit']));
@@ -647,11 +662,6 @@ class CompanyController
             if (!Validate::checkStrCanEmpty($company_address['address_apartment'], 16))
             {
                 $errors['address_apartment'] = 'Квартира не может быть такой длины';
-            }
-
-            if ($company_address['is_mfc'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_mfc']) || $company_address['is_mfc'] > 1)
-            {
-                $errors['is_mfc'] = 'Попытка ввести неверное значение провалилась!';
             }
 
             if ($company_address['is_transit'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_transit']) || $company_address['is_transit'] > 1)
@@ -873,11 +883,6 @@ class CompanyController
             $company_address['address_apartment'] = htmlspecialchars(trim($_POST['address_apartment']));
         }
 
-        if (isset($_POST['is_mfc']))
-        {
-            $company_address['is_mfc'] = htmlspecialchars(trim($_POST['is_mfc']));
-        }
-
         if (isset($_POST['is_transit']))
         {
             $company_address['is_transit'] = htmlspecialchars(trim($_POST['is_transit']));
@@ -939,11 +944,6 @@ class CompanyController
             if (!Validate::checkStrCanEmpty($company_address['address_apartment'], 16))
             {
                 $errors['address_apartment'] = 'Квартира не может быть такой длины';
-            }
-
-            if ($company_address['is_mfc'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_mfc']) || $company_address['is_mfc'] > 1)
-            {
-                $errors['is_mfc'] = 'Попытка ввести неверное значение провалилась!';
             }
 
             if ($company_address['is_transit'] < 0 || !preg_match("|^[\d]+$|", $company_address['is_transit']) || $company_address['is_transit'] > 1)

@@ -194,6 +194,7 @@ class DokaController
                         {
                             $from_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
                             $from_company['created_user_id'] = $user_id;
+                            $from_company['is_mfc'] = 0;
                             // Добавляем новую компанию
                             $new_company = Company::addCompany($from_company);
                             if($new_company != false)
@@ -339,6 +340,7 @@ class DokaController
                         {
                             $to_company['created_datetime'] = $date_time->format('Y-m-d H:i:s');
                             $to_company['created_user_id'] = $user_id;
+                            $to_company['is_mfc'] = 0;
                             // Добавляем новую компанию
                             $new_company = Company::addCompany($to_company);
                             if($new_company != false)

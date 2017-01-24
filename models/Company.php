@@ -42,7 +42,6 @@ class Company
               company_address.address_case AS ca_case,
               company_address.address_build AS ca_build,
               company_address.address_apartment AS ca_apartment,
-              company_address.is_mfc,
               company_address.is_transit,
               company_address.flag
             ';
@@ -62,7 +61,6 @@ class Company
               company_address.address_case,
               company_address.address_build,
               company_address.address_apartment,
-              company_address.is_mfc,
               company_address.is_transit,
               company_address.flag ';
         }
@@ -345,13 +343,14 @@ class Company
      */
     public static function addCompany($company)
     {
-        $sql = 'INSERT INTO company (name, full_name, key_field, created_datetime, created_user_id, flag)
-          VALUES (:name, :full_name, :key_field, :created_datetime, :created_user_id, 1)';
+        $sql = 'INSERT INTO company (name, full_name, key_field, is_mfc, created_datetime, created_user_id, flag)
+          VALUES (:name, :full_name, :key_field, :is_mfc, :created_datetime, :created_user_id, 1)';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':name', $company['name'], PDO::PARAM_STR);
         $result->bindParam(':full_name', $company['full_name'], PDO::PARAM_STR);
         $result->bindParam(':key_field', $company['key_field'], PDO::PARAM_INT);
+        $result->bindParam(':is_mfc', $company['is_mfc'], PDO::PARAM_INT);
         $result->bindParam(':created_datetime', $company['created_datetime'], PDO::PARAM_STR);
         $result->bindParam(':created_user_id', $company['created_user_id'], PDO::PARAM_INT);
         if($result->execute())
@@ -369,7 +368,7 @@ class Company
     public static function updateCompany($id, $company)
     {
         $sql = 'UPDATE company
-          SET name = :name, full_name = :full_name, key_field = :key_field,
+          SET name = :name, full_name = :full_name, key_field = :key_field, is_mfc = :is_mfc,
           changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
           WHERE id = :id AND flag = 1';
         $db = Database::getConnection();
@@ -378,6 +377,7 @@ class Company
         $result->bindParam(':name', $company['name'], PDO::PARAM_STR);
         $result->bindParam(':full_name', $company['full_name'], PDO::PARAM_STR);
         $result->bindParam(':key_field', $company['key_field'], PDO::PARAM_INT);
+        $result->bindParam(':is_mfc', $company['is_mfc'], PDO::PARAM_INT);
         $result->bindParam(':changed_datetime', $company['changed_datetime'], PDO::PARAM_STR);
         $result->bindParam(':changed_user_id', $company['changed_user_id'], PDO::PARAM_INT);
         $result->execute();
@@ -455,7 +455,7 @@ class Company
           address_zip = :address_zip, address_region = :address_region, address_area = :address_area,
           address_city = :address_city, address_town = :address_town, address_street = :address_street,
           address_home = :address_home, address_case = :address_case, address_build = :address_build,
-          address_apartment = :address_apartment, is_mfc = :is_mfc, is_transit = :is_transit,
+          address_apartment = :address_apartment, is_transit = :is_transit,
           changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
           WHERE id = :id AND flag = 1 ';
         $db = Database::getConnection();
@@ -475,7 +475,6 @@ class Company
         $result->bindParam(':address_case', $company_address['address_case'], PDO::PARAM_STR);
         $result->bindParam(':address_build', $company_address['address_build'], PDO::PARAM_STR);
         $result->bindParam(':address_apartment', $company_address['address_apartment'], PDO::PARAM_STR);
-        $result->bindParam(':is_mfc', $company_address['is_mfc'], PDO::PARAM_INT);
         $result->bindParam(':is_transit', $company_address['is_transit'], PDO::PARAM_INT);
         $result->bindParam(':changed_datetime', $company_address['changed_datetime'], PDO::PARAM_STR);
         $result->bindParam(':changed_user_id', $company_address['changed_user_id'], PDO::PARAM_INT);
@@ -528,7 +527,7 @@ class Company
           company_address.address_build AS ca_build,
           company_address.address_apartment AS ca_apartment,
           company_address.is_transit,
-          company_address.is_mfc
+          company.is_mfc
         FROM
           company_address
           INNER JOIN company ON (company_address.company_id = company.id)
