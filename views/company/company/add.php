@@ -53,11 +53,11 @@ include ROOT . '/views/layouts/header.php';
                onblur="InputCount('key_field', 'one_eighth', 10, 'key_field_correct', 'ИНН орагнизации не может быть такой длины', 'Необходимо заполнить ИНН организации', '')"
             /><br /><br />
 
-        <label for="is_mfc">Офис МФЦ?</label><br />
+        <label for="is_mfc">МФЦ?</label><br />
         <select name="is_mfc" id="is_mfc" class="one_eighth">
             <option value="0" <?php if ($company['is_mfc'] == 0) echo 'selected'; ?> >Нет</option>
             <option value="1" <?php if ($company['is_mfc'] == 1) echo 'selected'; ?>>Да</option>
-        </select><br /><br />
+        </select><br /><br /><br />
 
         <input type="submit" name="add" value="Добавить" class="button one_eighth" /><br /><br />
 
