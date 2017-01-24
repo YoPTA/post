@@ -96,9 +96,6 @@ class RouteController
         $string_utility = new String_Utility();
         $date_converter = new Date_Converter();
 
-        $date_utility = new Date_Utility();
-
-
         $errors = false;
 
         $track = null;
@@ -333,8 +330,6 @@ class RouteController
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
         $date_converter = new Date_Converter();
-
-        $date_utility = new Date_Utility();
 
         $errors = false;
 
