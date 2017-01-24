@@ -666,63 +666,63 @@ class CompanyController
                 $errors['no_ACT'] = 'Не может быть одновременно отсутствие Района, Города и Населенного пункта';
             }
 
-            $notification = null; // Информация об уведомлении
-            $notification_name = ''; // Полное наименование уведомления
-            $notification_control = true; // Контроль добавления строки к уведомлению
+            $local_place = null; // Информация о локальной точке
+            $local_place_name = ''; // Полное наименование локальной точки
+            $local_place_control = true; // Контроль добавления строки к локальной точке
 
             if ($errors == false)
             {
-                $notification_name = $company_address['address_country'] . '|||' . $company_address['address_region'];
+                $local_place_name = $company_address['address_country'] . '|||' . $company_address['address_region'];
 
-                if ($notification_control)
+                if ($local_place_control)
                 {
                     if ($company_address['address_area'] != null)
                     {
-                        $notification_name .= '|||'.$company_address['address_area'];
-                        $notification_control = false;
+                        $local_place_name .= '|||'.$company_address['address_area'];
+                        $local_place_control = false;
                     }
                 }
 
-                if ($notification_control)
+                if ($local_place_control)
                 {
                     if ($company_address['address_city'] != null)
                     {
-                        $notification_name .= '|||' .$company_address['address_city'];
-                        $notification_control = false;
+                        $local_place_name .= '|||' .$company_address['address_city'];
+                        $local_place_control = false;
                     }
                 }
 
-                if ($notification_control)
+                if ($local_place_control)
                 {
                     if ($company_address['address_town'] != null)
                     {
-                        $notification_name .= '|||'.$company_address['address_town'];
-                        $notification_control = false;
+                        $local_place_name .= '|||'.$company_address['address_town'];
+                        $local_place_control = false;
                     }
                 }
 
-                $check_notification = Notification::checkNotification($notification_name);
-                $notification_id = 0;
+                $check_local_place = Local_Place::checkLocalPlace($local_place_name);
+                $local_place_id = 0;
 
-                if (!$check_notification)
+                if (!$check_local_place)
                 {
-                    $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
-                    $notification['created_user_id'] = $user_id;
-                    $notification['name'] = $notification_name;
-                    $notification_id = Notification::addNotification($notification);
-                    if (!$notification_id)
+                    $local_place['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                    $local_place['created_user_id'] = $user_id;
+                    $local_place['name'] = $local_place_name;
+                    $local_place_id = Local_Place::addLocalPlace($local_place);
+                    if (!$local_place_id)
                     {
-                        $notification_id = 0;
+                        $local_place_id = 0;
                     }
                 }
                 else
                 {
-                    $notification_id = $check_notification;
+                    $local_place_id = $check_local_place;
                 }
 
                 $company_address['created_datetime'] = $date_time->format('Y-m-d H:i:s');
                 $company_address['created_user_id'] = $user_id;
-                $company_address['notification_id'] = $notification_id;
+                $company_address['local_place_id'] = $local_place_id;
 
                 Company::addCompanyAddress($cid,$company_address);
                 header('Location: /company/company_address_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
@@ -958,63 +958,63 @@ class CompanyController
                 $errors['no_ACT'] = 'Не может быть одновременно отсутствие Района, Города и Населенного пункта';
             }
 
-            $notification = null; // Информация об уведомлении
-            $notification_name = ''; // Полное наименование уведомления
-            $notification_control = true; // Контроль добавления строки к уведомлению
+            $local_place = null; // Информация о локальной точке
+            $local_place_name = ''; // Полное наименование локальной точки
+            $local_place_control = true; // Контроль добавления строки к локальной точке
 
             if ($errors == false)
             {
-                $notification_name = $company_address['address_country'] . '|||' . $company_address['address_region'];
+                $local_place_name = $company_address['address_country'] . '|||' . $company_address['address_region'];
 
-                if ($notification_control)
+                if ($local_place_control)
                 {
                     if ($company_address['address_area'] != null)
                     {
-                        $notification_name .= '|||'.$company_address['address_area'];
-                        $notification_control = false;
+                        $local_place_name .= '|||'.$company_address['address_area'];
+                        $local_place_control = false;
                     }
                 }
 
-                if ($notification_control)
+                if ($local_place_control)
                 {
                     if ($company_address['address_city'] != null)
                     {
-                        $notification_name .= '|||' .$company_address['address_city'];
-                        $notification_control = false;
+                        $local_place_name .= '|||' .$company_address['address_city'];
+                        $local_place_control = false;
                     }
                 }
 
-                if ($notification_control)
+                if ($local_place_control)
                 {
                     if ($company_address['address_town'] != null)
                     {
-                        $notification_name .= '|||'.$company_address['address_town'];
-                        $notification_control = false;
+                        $local_place_name .= '|||'.$company_address['address_town'];
+                        $local_place_control = false;
                     }
                 }
 
-                $check_notification = Notification::checkNotification($notification_name);
-                $notification_id = 0;
+                $check_local_place = Local_Place::checkLocalPlace($local_place_name);
+                $local_place_id = 0;
 
-                if (!$check_notification)
+                if (!$check_local_place)
                 {
-                    $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
-                    $notification['created_user_id'] = $user_id;
-                    $notification['name'] = $notification_name;
-                    $notification_id = Notification::addNotification($notification);
-                    if (!$notification_id)
+                    $local_place['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                    $local_place['created_user_id'] = $user_id;
+                    $local_place['name'] = $local_place_name;
+                    $local_place_id = Local_Place::addLocalPlace($local_place);
+                    if (!$local_place_id)
                     {
-                        $notification_id = 0;
+                        $local_place_id = 0;
                     }
                 }
                 else
                 {
-                    $notification_id = $check_notification;
+                    $local_place_id = $check_local_place;
                 }
 
                 $company_address['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
                 $company_address['changed_user_id'] = $user_id;
-                $company_address['notification_id'] = $notification_id;
+                $company_address['local_place_id'] = $local_place_id;
 
                 Company::updateCompanyAddress($caid, $company_address);
                 header('Location: /company/company_address_index?c_type='.$c_type.'&search_value='.$search_param['search_value']

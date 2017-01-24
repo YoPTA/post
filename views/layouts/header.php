@@ -37,7 +37,7 @@
                             </a>
                         </li>
 
-                        <li class="menu_item"><a href="/profile/index"><div id="page_notification" class="one_eighth right_indent header_btn"><span class="fa fa-bell"></span>&#160;Уведомления</div></a></li>
+                        <li class="menu_item"><a href=""><div id="page_notification" class="one_eighth right_indent header_btn"><span class="fa fa-bell"></span>&#160;Уведомления</div></a></li>
 
                     </ul>
                 </div>

@@ -414,10 +414,10 @@ class Company
     {
         $sql = 'INSERT INTO company_address (company_id, address_country, address_zip, address_region, address_area,
           address_city, address_town, address_street, address_home, address_case, address_build, address_apartment,
-          notification_id,	created_datetime, created_user_id, flag)
+          local_place_id,	created_datetime, created_user_id, flag)
           VALUES (:company_id, :address_country, :address_zip, :address_region, :address_area,
           :address_city, :address_town, :address_street, :address_home, :address_case, :address_build, :address_apartment,
-          :notification_id,	:created_datetime, :created_user_id, 1)';
+          :local_place_id,	:created_datetime, :created_user_id, 1)';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
@@ -433,7 +433,7 @@ class Company
         $result->bindParam(':address_case', $company_address['address_case'], PDO::PARAM_STR);
         $result->bindParam(':address_build', $company_address['address_build'], PDO::PARAM_STR);
         $result->bindParam(':address_apartment', $company_address['address_apartment'], PDO::PARAM_STR);
-        $result->bindParam(':notification_id', $company_address['notification_id'], PDO::PARAM_INT);
+        $result->bindParam(':local_place_id', $company_address['local_place_id'], PDO::PARAM_INT);
         $result->bindParam(':created_datetime', $company_address['created_datetime'], PDO::PARAM_STR);
         $result->bindParam(':created_user_id', $company_address['created_user_id'], PDO::PARAM_INT);
         if($result->execute())
@@ -451,7 +451,7 @@ class Company
     public static function updateCompanyAddress($id, $company_address)
     {
         $sql = 'UPDATE company_address
-          SET company_id = :company_id, notification_id = :notification_id, address_country = :address_country,
+          SET company_id = :company_id, local_place_id = :local_place_id, address_country = :address_country,
           address_zip = :address_zip, address_region = :address_region, address_area = :address_area,
           address_city = :address_city, address_town = :address_town, address_street = :address_street,
           address_home = :address_home, address_case = :address_case, address_build = :address_build,
@@ -463,7 +463,7 @@ class Company
 
         $result->bindParam(':id', $id, PDO::PARAM_INT);
         $result->bindParam(':company_id', $company_address['company_id'], PDO::PARAM_INT);
-        $result->bindParam(':notification_id', $company_address['notification_id'], PDO::PARAM_INT);
+        $result->bindParam(':local_place_id', $company_address['local_place_id'], PDO::PARAM_INT);
         $result->bindParam(':address_country', $company_address['address_country'], PDO::PARAM_STR);
         $result->bindParam(':address_zip', $company_address['address_zip'], PDO::PARAM_STR);
         $result->bindParam(':address_region', $company_address['address_region'], PDO::PARAM_STR);

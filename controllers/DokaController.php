@@ -86,67 +86,67 @@ class DokaController
                     $from_company['address_build'] = Doka::GetXMLValue($xml_from, 'AddressBuild');
                     $from_company['address_apartment'] = Doka::GetXMLValue($xml_from, 'AddressApatment');
 
-                    $notification = null; // Информация об уведомлении
-                    $notification_name = ''; // Полное наименование уведомления
-                    $notification_control = true; // Контроль добавления строки к уведомлению
-                    $notification_id = 0; // ID уведомления
+                    $local_place = null; // Информация о локальных точках
+                    $local_place_name = ''; // Полное наименование локальной точки
+                    $local_place_control = true; // Контроль добавления строки к локальной точки
+                    $local_place_id = 0; // ID локальной точки
 
-                    $notification_name = $from_company['address_country'] . '|||' . $from_company['address_region'];
-                    if ($notification_control)
+                    $local_place_name = $from_company['address_country'] . '|||' . $from_company['address_region'];
+                    if ($local_place_control)
                     {
                         if ($from_company['address_area'] != null)
                         {
-                            $notification_name .= '|||'.$from_company['address_area'];
-                            $notification_control = false;
+                            $local_place_name .= '|||'.$from_company['address_area'];
+                            $local_place_control = false;
                         }
                     }
 
-                    if ($notification_control)
+                    if ($local_place_control)
                     {
                         if ($from_company['address_city'] != null)
                         {
-                            $notification_name .= '|||' .$from_company['address_city'];
-                            $notification_control = false;
+                            $local_place_name .= '|||' .$from_company['address_city'];
+                            $local_place_control = false;
                         }
                     }
 
-                    if ($notification_control)
+                    if ($local_place_control)
                     {
                         if ($from_company['address_town'] != null)
                         {
-                            $notification_name .= '|||'.$from_company['address_town'];
-                            $notification_control = false;
+                            $local_place_name .= '|||'.$from_company['address_town'];
+                            $local_place_control = false;
                         }
                     }
 
-                    if ($notification_control)
+                    if ($local_place_control)
                     {
 
-                        $notification_name .= '|||'.'ИзДокиПришлоПустоеПоле';
-                        $notification_control = false;
+                        $local_place_name .= '|||'.'ИзДокиПришлоПустоеПоле';
+                        $local_place_control = false;
                     }
 
 
-                    $check_notification = Notification::checkNotification($notification_name);
+                    $check_local_place = Local_Place::checkLocalPlace($local_place_name);
 
 
-                    if (!$check_notification)
+                    if (!$check_local_place)
                     {
-                        $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
-                        $notification['created_user_id'] = $user_id;
-                        $notification['name'] = $notification_name;
-                        $notification_id = Notification::addNotification($notification);
-                        if (!$notification_id)
+                        $local_place['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                        $local_place['created_user_id'] = $user_id;
+                        $local_place['name'] = $local_place_name;
+                        $local_place_id = Local_Place::addLocalPlace($local_place);
+                        if (!$local_place_id)
                         {
-                            $notification_id = 0;
+                            $local_place_id = 0;
                         }
                     }
                     else
                     {
-                        $notification_id = $check_notification;
+                        $local_place_id = $check_local_place;
                     }
 
-                    $from_company['notification_id'] = $notification_id;
+                    $from_company['local_place_id'] = $local_place_id;
 
                     if(!isset($errors['tag_from']))
                     {
@@ -230,66 +230,66 @@ class DokaController
                     $to_company['address_build'] = Doka::GetXMLValue($xml_to, 'AddressBuild');
                     $to_company['address_apartment'] = Doka::GetXMLValue($xml_to, 'AddressApatment');
 
-                    $notification = null; // Информация об уведомлении
-                    $notification_name = ''; // Полное наименование уведомления
-                    $notification_control = true; // Контроль добавления строки к уведомлению
-                    $notification_id = 0; // ID уведомления
+                    $local_place = null; // Информация об уведомлении
+                    $local_place_name = ''; // Полное наименование уведомления
+                    $local_place_control = true; // Контроль добавления строки к уведомлению
+                    $local_place_id = 0; // ID уведомления
 
-                    $notification_name = $to_company['address_country'] . '|||' . $to_company['address_region'];
-                    if ($notification_control)
+                    $local_place_name = $to_company['address_country'] . '|||' . $to_company['address_region'];
+                    if ($local_place_control)
                     {
                         if ($to_company['address_area'] != null)
                         {
-                            $notification_name .= '|||'.$to_company['address_area'];
-                            $notification_control = false;
+                            $local_place_name .= '|||'.$to_company['address_area'];
+                            $local_place_control = false;
                         }
                     }
 
-                    if ($notification_control)
+                    if ($local_place_control)
                     {
                         if ($to_company['address_city'] != null)
                         {
-                            $notification_name .= '|||' .$to_company['address_city'];
-                            $notification_control = false;
+                            $local_place_name .= '|||' .$to_company['address_city'];
+                            $local_place_control = false;
                         }
                     }
 
-                    if ($notification_control)
+                    if ($local_place_control)
                     {
                         if ($to_company['address_town'] != null)
                         {
-                            $notification_name .= '|||'.$to_company['address_town'];
-                            $notification_control = false;
+                            $local_place_name .= '|||'.$to_company['address_town'];
+                            $local_place_control = false;
                         }
                     }
 
-                    if ($notification_control)
+                    if ($local_place_control)
                     {
 
-                        $notification_name .= '|||'.'ИзДокиПришлоПустоеПоле';
-                        $notification_control = false;
+                        $local_place_name .= '|||'.'ИзДокиПришлоПустоеПоле';
+                        $local_place_control = false;
                     }
 
-                    $check_notification = Notification::checkNotification($notification_name);
+                    $check_local_place = Local_Place::checkLocalPlace($local_place_name);
 
 
-                    if (!$check_notification)
+                    if (!$check_local_place)
                     {
-                        $notification['created_datetime'] = $date_time->format('Y-m-d H:i:s');
-                        $notification['created_user_id'] = $user_id;
-                        $notification['name'] = $notification_name;
-                        $notification_id = Notification::addNotification($notification);
-                        if (!$notification_id)
+                        $local_place['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                        $local_place['created_user_id'] = $user_id;
+                        $local_place['name'] = $local_place_name;
+                        $local_place_id = Local_Place::addLocalPlace($local_place);
+                        if (!$local_place_id)
                         {
-                            $notification_id = 0;
+                            $local_place_id = 0;
                         }
                     }
                     else
                     {
-                        $notification_id = $check_notification;
+                        $local_place_id = $check_local_place;
                     }
 
-                    $to_company['notification_id'] = $notification_id;
+                    $to_company['local_place_id'] = $local_place_id;
 
                     $flag_to_add_CA = true;
                     if(!isset($errors['tag_to']))
