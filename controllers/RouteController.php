@@ -78,7 +78,7 @@ class RouteController
             $pid = htmlspecialchars($_GET['pid']);
         }
 
-        $package_route = Route::getPackageRoute($pid); // Поулчаем маршрут посылки
+        $package_route = Route::getPackageRoute($pid, 1); // Поулчаем маршрут посылки
 
         require_once ROOT . '/views/route/view.php';
         return true;

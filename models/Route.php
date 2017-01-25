@@ -244,69 +244,95 @@ class Route
     /*
      * Получить маршрут посылки
      * @var $package_id int - id посылки
+     * @var $package_param int - параметр
+     *
+     * Возможные параметры $package_param:
+     * 1 - Маршрут с дополнительными полями
+     * 2 - Все поля с таблицы route
+     *
      * return array()
      */
-    public static function getPackageRoute($package_id)
+    public static function getPackageRoute($package_id, $package_param = 1)
     {
-        $sql = 'SELECT
-          route.id,
-          route.package_id,
-          route.company_address_id,
-          route.is_receive,
-          route.is_send,
-          route.receive_proxy_id,
-          route.receive_user_id,
-          route.send_user_id,
-          route.send_proxy_id,
-          route.datetime_receive,
-          route.datetime_send,
-          route.relation_package_id,
-          package.number,
-          package.note,
-          package.from_company_address_id,
-          package.to_company_address_id,
-          package.user_id,
-          package.creation_datetime,
-          package.receipt_datetime,
-          company_address.company_id,
-          company_address.address_country AS ca_country,
-          company_address.address_zip AS ca_zip,
-          company_address.address_region AS ca_region,
-          company_address.address_area AS ca_area,
-          company_address.address_city AS ca_city,
-          company_address.address_town AS ca_town,
-          company_address.address_street AS ca_street,
-          company_address.address_home AS ca_home,
-          company_address.address_case AS ca_case,
-          company_address.address_build AS ca_build,
-          company_address.address_apartment AS ca_apartment,
-          company_address.is_transit,
-          company.name AS c_name,
-          company.full_name AS c_full_name,
-          company.key_field AS c_key_field,
-          route.receive_proxy_person_id,
-          route.send_proxy_person_id,
-          proxy_person.lastname AS send_pp_lastname,
-          proxy_person.firstname AS send_pp_firstname,
-          proxy_person.middlename AS send_pp_middlename,
-          proxy_person1.lastname AS receive_pp_lastname,
-          proxy_person1.firstname AS receive_pp_firstname,
-          proxy_person1.middlename AS receive_pp_middlename,
-          user.lastname AS send_u_lastname,
-          user.firstname AS send_u_firstname,
-          user.middlename AS send_u_middlename,
-          user1.lastname AS receive_u_lastname,
-          user1.firstname AS receive_u_firstname,
-          user1.middlename AS receive_u_middlename
+        $select = '';
+        $from = '';
+
+        if ($package_param == 2)
+        {
+            $select = ' * ';
+        }
+        else
+        {
+            $select = '
+              route.id,
+              route.package_id,
+              route.company_address_id,
+              route.is_receive,
+              route.is_send,
+              route.receive_proxy_id,
+              route.receive_user_id,
+              route.send_user_id,
+              route.send_proxy_id,
+              route.datetime_receive,
+              route.datetime_send,
+              route.relation_package_id,
+              package.number,
+              package.note,
+              package.from_company_address_id,
+              package.to_company_address_id,
+              package.user_id,
+              package.creation_datetime,
+              package.receipt_datetime,
+              company_address.company_id,
+              company_address.address_country AS ca_country,
+              company_address.address_zip AS ca_zip,
+              company_address.address_region AS ca_region,
+              company_address.address_area AS ca_area,
+              company_address.address_city AS ca_city,
+              company_address.address_town AS ca_town,
+              company_address.address_street AS ca_street,
+              company_address.address_home AS ca_home,
+              company_address.address_case AS ca_case,
+              company_address.address_build AS ca_build,
+              company_address.address_apartment AS ca_apartment,
+              company_address.is_transit,
+              company.name AS c_name,
+              company.full_name AS c_full_name,
+              company.key_field AS c_key_field,
+              route.receive_proxy_person_id,
+              route.send_proxy_person_id,
+              proxy_person.lastname AS send_pp_lastname,
+              proxy_person.firstname AS send_pp_firstname,
+              proxy_person.middlename AS send_pp_middlename,
+              proxy_person1.lastname AS receive_pp_lastname,
+              proxy_person1.firstname AS receive_pp_firstname,
+              proxy_person1.middlename AS receive_pp_middlename,
+              user.lastname AS send_u_lastname,
+              user.firstname AS send_u_firstname,
+              user.middlename AS send_u_middlename,
+              user1.lastname AS receive_u_lastname,
+              user1.firstname AS receive_u_firstname,
+              user1.middlename AS receive_u_middlename
+            ';
+
+            $from = '
+              INNER JOIN package ON (route.package_id = package.id)
+              INNER JOIN company_address ON (route.company_address_id = company_address.id)
+              INNER JOIN company ON (company_address.company_id = company.id)
+              INNER JOIN proxy_person ON (route.send_proxy_person_id = proxy_person.id)
+              INNER JOIN proxy_person proxy_person1 ON (route.receive_proxy_person_id = proxy_person1.id)
+              INNER JOIN user ON (route.send_user_id = user.id)
+              INNER JOIN user user1 ON (route.receive_user_id = user1.id)
+            ';
+        }
+
+
+
+        $sql = 'SELECT ' . $select
+            .'
         FROM
-          route
-          INNER JOIN package ON (route.package_id = package.id)
-          INNER JOIN company_address ON (route.company_address_id = company_address.id)
-          INNER JOIN company ON (company_address.company_id = company.id)
-          INNER JOIN proxy_person ON (route.send_proxy_person_id = proxy_person.id)
-          INNER JOIN proxy_person proxy_person1 ON (route.receive_proxy_person_id = proxy_person1.id)
-          INNER JOIN user ON (route.send_user_id = user.id)
-          INNER JOIN user user1 ON (route.receive_user_id = user1.id)
+          route ' . $from
+            . '
         WHERE
           route.package_id = :package_id
         ORDER BY route.id';
