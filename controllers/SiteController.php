@@ -220,17 +220,49 @@ class SiteController
             $errors[] = 'Откуда и Куда не должны совпадать!';
         }
 
+        if (isset($_POST['delivery_type']))
+        {
+            $delivery_type = htmlspecialchars($_POST['delivery_type']);
+        }
+        else
+        {
+            $errors[] = "Не выбран способ доставки";
+        }
+
         if(isset($_POST['create']))
         {
-            if(isset($_POST['delivery_type']) && $_POST['delivery_type'] != null)
+            $from_company_id = Company::checkCompanyInMemory(FROM_COMPANY); // Откуда
+            $to_company_id = Company::checkCompanyInMemory(TO_COMPANY); // Кому
+            $package_list = Package::checkPackage(); // Посылка
+            $package_objects = Package::checkPackageObjects(); // Объекты посылки
+
+            if ($from_company_id == null)
             {
-                $delivery_type = htmlspecialchars($_POST['delivery_type']);
-            }
-            else
-            {
-                $errors[] = "Не выбран способ доставки";
+                $errors['from_company'] = 'Не выбран отправитель';
             }
 
+            if ($to_company_id == null)
+            {
+                $errors['to_company'] = 'Не выбран получатель';
+            }
+
+            if ($package_list == null)
+            {
+                $errors['package_list'] = 'Посылка не найдена';
+            }
+
+            if ($package_objects == null)
+            {
+                $errors['package_objects'] = 'Объекты посылки не найдены';
+            }
+
+            if ($delivery_type != 0)
+            {
+                if (!Company::checkTransit($delivery_type))
+                {
+                    $errors['hacker'] = 'Да ты знаешь HTML. Это здорово!';
+                }
+            }
 
             if($errors == false)
             {

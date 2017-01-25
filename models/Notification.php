@@ -24,4 +24,14 @@ class Notification
         return false;
     }
 
+    /*
+     * Запуск уведомлений
+     * @var $company_address array() - информация об адресе организации
+     *
+     */
+    public static function launchNotification($company_address)
+    {
+
+    }
+
 }

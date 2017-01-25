@@ -136,6 +136,9 @@ include ROOT . '/views/layouts/header.php';
     <div class="full_width font_size_twelve border border_black" style="vertical-align: top;" align="left">
     <label>
         <input type="radio" name="delivery_type" value="0" <?php if($delivery_type == 0 || $delivery_type == null) echo 'checked'; ?> />
+        <?php if ($company_from['is_transit'] == 1): ?>
+            <b class="font_size_nine text_simple">[ТРАНЗИТ]</b>
+        <?php endif; //if ($company_from['is_transit'] == 1): ?>
         <span class="text_simple" title='<?= $c_from['c_full_name'] . ' ('.$c_from['c_key_field'].')'  ?>'><?= $c_from['c_name'] ?></span>
         <span class="color_grey font_size_nine">
         <?php
@@ -143,6 +146,9 @@ include ROOT . '/views/layouts/header.php';
         ?>
         </span>
         <b class="font_size_eighteen text_simple"> &#8674; </b>
+        <?php if ($company_to['is_transit'] == 1): ?>
+            <b class="font_size_nine text_simple">[ТРАНЗИТ]</b>
+        <?php endif; //if ($company_to['is_transit'] == 1): ?>
         <span class="text_simple" title='<?= $c_to['c_full_name'] . ' ('.$c_to['c_key_field'].')'  ?>'><?= $c_to['c_name'] ?></span>
         <span class="color_grey font_size_nine">
         <?php
@@ -154,7 +160,10 @@ include ROOT . '/views/layouts/header.php';
     <?php if (is_array($transit_points) && count($transit_points) > 0): ?>
         <?php foreach ($transit_points as $t_point): ?>
             <label>
-                <input type="radio" name="delivery_type" value="<?= $t_point['ca_id'] ?>" <?php if($delivery_type == $t_point['id']) echo 'checked'; ?> />
+                <input type="radio" name="delivery_type" value="<?= $t_point['ca_id'] ?>" <?php if($delivery_type == $t_point['ca_id']) echo 'checked'; ?> />
+                <?php if ($company_from['is_transit'] == 1): ?>
+                    <b class="font_size_nine text_simple">[ТРАНЗИТ]</b>
+                <?php endif; //if ($company_from['is_transit'] == 1): ?>
                 <span class="text_simple" title='<?= $c_from['c_full_name'] . ' ('.$c_from['c_key_field'].')' ?>'><?= $c_from['c_name'] ?></span>
                 <span class="color_grey font_size_nine">
                 <?php
@@ -171,6 +180,9 @@ include ROOT . '/views/layouts/header.php';
                 </span>
 
                 <b class="font_size_eighteen text_simple"> &#8674; </b>
+                <?php if ($company_to['is_transit'] == 1): ?>
+                    <b class="font_size_nine text_simple">[ТРАНЗИТ]</b>
+                <?php endif; //if ($company_to['is_transit'] == 1): ?>
                 <span class="text_simple" title='<?= $c_to['c_full_name'] . ' ('.$c_to['c_key_field'].')'  ?>'><?= $c_to['c_name'] ?></span>
                 <span class="color_grey font_size_nine">
                 <?php

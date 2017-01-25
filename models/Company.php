@@ -663,4 +663,26 @@ class Company
         }
         return false;
     }
+
+    /*
+     * Проверяем действительно ли данный адрес организации транзит
+     * @var $id int - Id
+     * return boolean
+     */
+    public static function checkTransit($id)
+    {
+        $sql = 'SELECT id FROM company_address WHERE id = :id AND flag > 0 AND is_transit = 1 ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        $company_address = $result->fetch();
+
+        if($company_address)
+        {
+            return true;
+        }
+        return false;
+    }
 }
