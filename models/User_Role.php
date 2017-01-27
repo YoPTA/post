@@ -119,4 +119,18 @@ class User_Role
         }
         return false;
     }
+
+    /*
+     * Проверяем может ли пользователь получать уведомления
+     * Работает со статическим приватным полем $roles.
+     * return boolean
+     */
+    public static function checkNotification()
+    {
+        if(self::$roles['is_notification'] == 1)
+        {
+            return true;
+        }
+        return false;
+    }
 }
