@@ -162,4 +162,66 @@ class User
         }
         return false;
     }
+
+    /*
+     * Получаем пользователей
+     * @var $parameter int - параметр
+     *
+     * Возможные варианты $parameter:
+     * 1 - Пользователи, которые относятся к организации
+     * 2 - Пользователи, которые относятся к рйону
+     *
+     * @var $address_or_place_id int - ID ареса организации или района
+     * return array()
+     */
+    public static function getUsersCompanyAddressOrLocalPlace($parameter = 1, $address_or_place_id = 0)
+    {
+        $where = '';
+
+        if ($address_or_place_id == 0)
+        {
+            return false;
+        }
+
+        if ($parameter == 1)
+        {
+            $where = ' AND
+                user.company_address_id = :address_or_place_id ';
+        }
+        else
+        {
+            $where = ' AND
+                company_address.local_place_id = :address_or_place_id ';
+        }
+
+        $sql = 'SELECT
+          user.id,
+          user.lastname,
+          user.firstname,
+          user.middlename,
+          user.login,
+          user.role_id,
+          user_role.is_notification
+        FROM
+          user
+          INNER JOIN user_role ON (user.role_id = user_role.id)
+          INNER JOIN company_address ON (user.company_address_id = company_address.id)
+        WHERE
+          user.flag > 0 ' . $where;
+
+        $db = Database::getConnection();
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':address_or_place_id', $address_or_place_id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Получение и возврат результатов
+        $users = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $users[$i] = $row;
+            $i++;
+        }
+        return $users;
+    }
 }
