@@ -169,4 +169,21 @@ class Validate
         }
         return $newString;
     }
+
+    /*
+     * Возвращает строку, обрезав ее и вставив символы, из параметров в указанной кодировке
+     * @var $str string - строка
+     * @var $value int - ограничитель
+     * @var $end_line string - концовка строки, в случае превышения
+     * @var $enc string - кодировка
+     */
+    public function my_strCut($str, $value, $end_line, $enc = DEFAULT_ENCODING_LOWERCASE)
+    {
+        if (strlen($str) > $value)
+        {
+            $str = mb_substr($str, 0, $value-strlen($end_line), $enc);
+            $str .= $end_line;
+        }
+        return $str;
+    }
 }

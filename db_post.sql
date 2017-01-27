@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Янв 24 2017 г., 13:27
+-- Время создания: Янв 26 2017 г., 13:42
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -172,7 +172,9 @@ INSERT INTO `menu_panel` (`id`, `name`, `title`, `description`, `url_address`, `
 
 CREATE TABLE IF NOT EXISTS `notification` (
   `id` int(11) NOT NULL,
-  `text_message` varchar(512) NOT NULL DEFAULT 'Для вас есть посылка' COMMENT 'Текст сообщения',
+  `name` varchar(512) NOT NULL DEFAULT 'Для вас есть посылка' COMMENT 'Заголовок сообщения',
+  `text_message` varchar(1024) NOT NULL DEFAULT 'Вам необходимо забрать посылку' COMMENT 'Короткий текст сообщения',
+  `detail_text_message` varchar(4096) NOT NULL DEFAULT 'Заберите посылку' COMMENT 'Полный текст сообщения',
   `user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Связь с таблицей user',
   `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
   `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
@@ -185,8 +187,8 @@ CREATE TABLE IF NOT EXISTS `notification` (
 -- Дамп данных таблицы `notification`
 --
 
-INSERT INTO `notification` (`id`, `text_message`, `user_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Нет', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
+INSERT INTO `notification` (`id`, `name`, `text_message`, `detail_text_message`, `user_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 'Для вас есть посылка', 'Вам необходимо забрать посылку', 'Заберите посылку', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -311,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `proxy_person` (
 --
 
 INSERT INTO `proxy_person` (`id`, `lastname`, `firstname`, `middlename`, `document_type_id`, `document_series`, `document_number`, `date_issued`, `date_expired`, `place_name`, `place_code`, `phone_number`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Нет', 'Нет', 'Нет', 1, '0000', '000000', '0000-00-00', '0000-00-00', 'Нет', '000-000', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
+(0, 'Нет', '', '', 1, '0000', '000000', '0000-00-00', '0000-00-00', 'Нет', '000-000', '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -365,8 +367,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, 'Нет', '', '', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 'Романов', 'Сергей', 'Сергеевич', 'romanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
-(2, 'Лобанов', 'Семен', 'Семенович', 'lobanov', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+(1, 'Романов', 'Сергей', 'Сергеевич', 'romanovss', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
+(2, 'Лобанов', 'Семен', 'Семенович', 'lobanovss', 'e10adc3949ba59abbe56e057f20f883e', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -398,24 +400,25 @@ INSERT INTO `user_group` (`id`, `name`, `description`, `member`, `flag`) VALUES
 CREATE TABLE IF NOT EXISTS `user_role` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `is_create` int(1) NOT NULL COMMENT 'Может ли создавать',
-  `is_change_proxy` int(1) NOT NULL COMMENT 'Может ли изменять доверенности или доверенные лица',
-  `is_change_company` int(1) NOT NULL COMMENT 'Может ли изменять организацию и адрес организации',
-  `is_receive` int(1) NOT NULL COMMENT 'Может ли получать посылки',
-  `is_send` int(1) NOT NULL COMMENT 'Может ли отправлять посылки',
-  `is_admin` int(1) NOT NULL COMMENT 'Обладает ли правами администратора',
-  `flag` int(1) NOT NULL
+  `is_create` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли создавать',
+  `is_change_proxy` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли изменять доверенности или доверенные лица',
+  `is_change_company` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли изменять организацию и адрес организации',
+  `is_receive` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли получать посылки',
+  `is_send` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли отправлять посылки',
+  `is_notification` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли получать уведомления',
+  `is_admin` int(1) NOT NULL DEFAULT '0' COMMENT 'Обладает ли правами администратора',
+  `flag` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user_role`
 --
 
-INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_change_company`, `is_receive`, `is_send`, `is_admin`, `flag`) VALUES
-(0, 'Нет', 0, 0, 0, 0, 0, 0, 0),
-(1, 'Специалист', 1, 1, 1, 0, 1, 0, 0),
-(2, 'Админ', 1, 1, 1, 1, 1, 1, 0),
-(3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_change_company`, `is_receive`, `is_send`, `is_notification`, `is_admin`, `flag`) VALUES
+(0, 'Нет', 0, 0, 0, 0, 0, 0, 0, 0),
+(1, 'Специалист', 1, 1, 1, 0, 1, 1, 0, 0),
+(2, 'Админ', 1, 1, 1, 1, 1, 1, 1, 0),
+(3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0, 0, 0);
 
 --
 -- Индексы сохранённых таблиц
