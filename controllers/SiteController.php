@@ -220,17 +220,17 @@ class SiteController
             $errors[] = 'Откуда и Куда не должны совпадать!';
         }
 
-        if (isset($_POST['delivery_type']))
-        {
-            $delivery_type = htmlspecialchars($_POST['delivery_type']);
-        }
-        else
-        {
-            $errors[] = "Не выбран способ доставки";
-        }
-
         if(isset($_POST['create']))
         {
+            if (isset($_POST['delivery_type']))
+            {
+                $delivery_type = htmlspecialchars($_POST['delivery_type']);
+            }
+            else
+            {
+                $errors[] = "Не выбран способ доставки";
+            }
+
             $from_company_id = Company::checkCompanyInMemory(FROM_COMPANY); // Откуда
             $to_company_id = Company::checkCompanyInMemory(TO_COMPANY); // Кому
             $package_list = Package::checkPackage(); // Посылка
