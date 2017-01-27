@@ -538,7 +538,13 @@ class RouteController
                 }
 
 
-                Route::receive($rid, $receive_values);
+                $receive_stat = Route::receive($rid, $receive_values);
+                if ($receive_stat)
+                {
+                    Notification::launchNotification($pid);
+                }
+
+
                 Proxy::outProxy();
                 Proxy::outProxyPerson();
                 header('Location: /site/index');

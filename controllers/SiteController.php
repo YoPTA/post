@@ -306,7 +306,12 @@ class SiteController
                 $receive_values['receive_proxy_person_id'] = PROXY_PERSON_DEFAULT;
                 $receive_values['receive_user_id'] = $user_id;
 
-                Route::receive($route_without_send, $receive_values);
+                $receive_stat = Route::receive($route_without_send, $receive_values);
+
+                if ($receive_stat)
+                {
+                    Notification::launchNotification($package_last_id);
+                }
 
                 Company::outCompanyFromMemory(FROM_COMPANY);
                 Company::outCompanyFromMemory(TO_COMPANY);

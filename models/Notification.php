@@ -2,6 +2,64 @@
 
 class Notification
 {
+    /*******************************************************
+     ********************* Поля класса *********************
+     *******************************************************/
+
+    const SHOW_BY_DEFAULT = 20;
+
+    /***********************************************************
+     ********************** Методы класса **********************
+     ***********************************************************/
+
+
+    /*
+     * Проверяем имеется ли
+     */
+    public static function checkNotification()
+    {
+
+    }
+
+    /*
+     * Получаем уведомления
+     * @var $user_id int - ID пользователя
+     * @var $page int - номер страницы
+     * return array()
+     */
+    public static function getNotificationsByUser($user_id, $page = 1)
+    {
+        $page = intval($page);
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+
+        $sql = 'SELECT
+          name, text_message, detail_text_message, created_datetime
+        FROM
+          notification
+        WHERE
+          user_id = :user_id
+        ORDER BY created_datetime LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Получение и возврат результатов
+        $notifications = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $notifications[$i] = $row;
+            $i++;
+        }
+        return $notifications;
+    }
+
     /*
      * Добавляем уведомление
      * @var $notification array() - информация об уведомлении
@@ -25,13 +83,121 @@ class Notification
     }
 
     /*
+     * Добавляем уведомления
+     * @var $notification array() - информация уведомлений
+     * @var $users array() - пользователи, для которых уведомления
+     */
+    public static function addNotifications($notification, $users)
+    {
+        if (count($users) == 0)
+        {
+            return false;
+        }
+
+        $db = Database::getConnection();
+        if (count($users) > 0)
+        {
+            foreach ($users as $user)
+            {
+                $sql = 'INSERT INTO notification (name, text_message, detail_text_message, user_id, created_datetime)
+                  VALUES (:name, :text_message, :detail_text_message, :user_id, :created_datetime) ';
+
+                $result = $db->prepare($sql);
+                $result->bindParam(':name', $notification['name'], PDO::PARAM_STR);
+                $result->bindParam(':text_message', $notification['text_message'], PDO::PARAM_STR);
+                $result->bindParam(':detail_text_message', $notification['detail_text_message'], PDO::PARAM_STR);
+                $result->bindParam(':user_id', $user['id'], PDO::PARAM_INT);
+                $result->bindParam(':created_datetime', $notification['created_datetime'], PDO::PARAM_STR);
+                $result->execute();
+            }
+        }
+    }
+
+    /*
      * Запуск уведомлений
-     * @var $company_address array() - информация об адресе организации
+     * @var $package_id int - ID посылки
      *
      */
-    public static function launchNotification($company_address)
+    public static function launchNotification($package_id)
     {
+        $next_route = null; // Следующий маршрут
+        $counter = 0; // Счетчик, для подсчета точек маршрута
+        $users = null; // Которые будут уведомлены
+        $package = null; // Посылка
+        $notification = null; // Уведомления
+        $from_company = null; // Организация откуда
+        $to_company = null; // Организация куда
 
+
+        $string_utility = new String_Utility();
+        $validate = new Validate();
+        $datetime = new DateTime();
+
+        // Получаем маршрут посылки
+        $package_route = Route::getPackageRoute($package_id, 3);
+
+        // Если записей меньше двух, то выходим из функции
+        if (count($package_route) < 2)
+        {
+            return false;
+        }
+
+        for ($i = count($package_route) - 1; $i >= 0; $i--)
+        {
+            if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0)
+            {
+                if ($package_route[$i]['is_transit'] == 1 && $counter > 0)
+                {
+                    $next_route = $package_route[$i + 1];
+                    break;
+                }
+            }
+            $counter++;
+        }
+
+        if ($next_route == null)
+        {
+            return false;
+        }
+
+
+        if ($next_route['is_mfc'] == 1)
+        {
+            $users = User::getUsersCompanyAddressOrLocalPlace(1, $next_route['company_address_id']);
+        }
+        else
+        {
+            $users = User::getUsersCompanyAddressOrLocalPlace(2, $next_route['local_place_id']);
+        }
+
+        if (count($users) < 1)
+        {
+            return false;
+        }
+
+        $package = Package::getPackage($package_id);
+
+        if (count($package) < 1)
+        {
+            return false;
+        }
+
+        $from_company = Company::getCompany($package['from_company_address_id']);
+        $to_company = Company::getCompany($package['to_company_address_id']);
+
+        $notification['name'] = 'Посылка от ' . $from_company['c_name'];
+        $notification['text_message'] = 'Вам необходимо забрать посылку с трек-номером ' . $package['number'];
+        $notification['detail_text_message'] = 'Необходимо прислать курьера за посылкой с трек-номером: ' . $package['number'] .'. ';
+        $notification['detail_text_message'] .= 'В данный момент посылка находится в организации ' . $from_company['c_full_name'] . ' ';
+        $notification['detail_text_message'] .= 'по адресу: ' . $from_company['ca_zip'] . ', ' . $string_utility->getAddressToView(1, $from_company, '') . '.';
+
+        $end_line = '...';
+        $notification['detail_text_message'] = $validate->my_strCut($notification['detail_text_message'], 4096, $end_line);
+        $notification['created_datetime'] = $datetime->format('Y-m-d H:i:s');
+
+        self::addNotifications($notification, $users);
+
+        return true;
     }
 
 }
