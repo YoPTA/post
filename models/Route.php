@@ -247,8 +247,9 @@ class Route
      * @var $package_param int - параметр
      *
      * Возможные параметры $package_param:
-     * 1 - Маршрут с дополнительными полями
-     * 2 - Все поля с таблицы route
+     * 1 - Маршрут с дополнительными полями;
+     * 2 - Все поля с таблицы route;
+     * 3 - Для уведомлений;
      *
      * return array()
      */
@@ -260,6 +261,22 @@ class Route
         if ($package_param == 2)
         {
             $select = ' * ';
+        }
+        elseif ($package_param == 3)
+        {
+            $select = '
+              company.is_mfc,
+              route.company_address_id,
+              company_address.is_transit,
+              route.id,
+              company_address.local_place_id,
+              route.is_receive,
+              route.is_send
+            ';
+            $from = '
+              INNER JOIN company_address ON (route.company_address_id = company_address.id)
+              INNER JOIN company ON (company_address.company_id = company.id)
+            ';
         }
         else
         {
