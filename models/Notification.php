@@ -14,11 +14,31 @@ class Notification
 
 
     /*
-     * Проверяем имеется ли
+     * Проверяем имеются ли у пользователя сообщения с определенным флагом
+     * @var $user_id int - ID пользователя
+     * @var $flag int - флаг
+     *
+     * Возможные варианты $flag:
+     * 1 - Не прочитанные сообщения
+     * 2 - Прочитанные сообщения
      */
-    public static function checkNotification()
+    public static function checkNotification($user_id, $flag)
     {
+        $sql = 'SELECT id FROM notification WHERE user_id = :user_id AND flag = :flag';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $result->bindParam(':flag', $flag, PDO::PARAM_INT);
+        $result->execute();
 
+        // Получение и возврат результатов
+        $notification = $result->fetch();
+
+        if($notification)
+        {
+            return true;
+        }
+        return false;
     }
 
     /*
