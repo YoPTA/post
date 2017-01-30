@@ -16,7 +16,7 @@ class SiteController
         $track = null;
         $page = 1;
         $date_create = null;
-        $package_type = 0;
+        $package_type = PACKAGE_ALL;
         $office = OFFICE_ALL;
 
         if (!isset($_GET['track']))
@@ -45,6 +45,11 @@ class SiteController
         if ($package_type < 0)
         {
             $package_type = 0;
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $package_type = htmlspecialchars($_GET['package_type']);
         }
 
         if (isset($_GET['office']))

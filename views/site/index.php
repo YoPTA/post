@@ -16,6 +16,11 @@ include ROOT . '/views/layouts/header.php';
             <option value="<?= OFFICE_ALL ?>" <?php if ($office == OFFICE_ALL) echo 'selected'; ?> >Все офисы</option>
             <option value="<?= OFFICE_NOW ?>" <?php if ($office == OFFICE_NOW) echo 'selected'; ?> >Текущий офис</option>
         </select><span class="right_indent"></span>
+        <select class="one_eighth" name="package_type" onchange="this.form.submit();">
+            <option value="<?= PACKAGE_ALL ?>" <?php if ($package_type == PACKAGE_ALL) echo 'selected'; ?> >Все посылки</option>
+            <option value="<?= PACKAGE_INPUT ?>" <?php if ($package_type == PACKAGE_INPUT) echo 'selected'; ?> >Входящие</option>
+            <option value="<?= PACKAGE_OUTPUT ?>" <?php if ($package_type == PACKAGE_OUTPUT) echo 'selected'; ?> >Исходящие</option>
+        </select><span class="right_indent"></span>
 
         <input type="submit" value="Найти" class="button one_eighth" />
     </form>
