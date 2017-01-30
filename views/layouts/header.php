@@ -37,7 +37,7 @@
                             </a>
                         </li>
                         <?php if ($is_notification): ?>
-                        <li class="menu_item"><a href=""><div id="page_notification" class="one_eighth right_indent header_btn"><span class="fa fa-bell"></span>&#160;Уведомления</div></a></li>
+                        <li class="menu_item"><a style="cursor: pointer;" onclick="window.open('/notification/index', 'notification', '<?= DEFAULT_WINDOW ?>'); "><div id="page_notification" class="one_eighth right_indent header_btn"><span class="fa fa-bell"></span>&#160;Уведомления</div></a></li>
                         <?php endif; //if ($is_notification): ?>
 
 
