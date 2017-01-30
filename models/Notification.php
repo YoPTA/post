@@ -12,6 +12,24 @@ class Notification
      ********************** Методы класса **********************
      ***********************************************************/
 
+    /*
+     * Обновить flag сообщений
+     * @var $user_id int - ID пользователя
+     */
+    public static function changeFlagNotification($user_id)
+    {
+        $sql = 'UPDATE
+            notification
+          SET
+            flag = 2
+          WHERE user_id = :user_id AND flag <> 0';
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $result->execute();
+    }
+
 
     /*
      * Проверяем имеются ли у пользователя сообщения с определенным флагом
@@ -44,26 +62,18 @@ class Notification
     /*
      * Получаем уведомления
      * @var $user_id int - ID пользователя
-     * @var $page int - номер страницы
      * return array()
      */
-    public static function getNotificationsByUser($user_id, $page = 1)
+    public static function getNotificationsByUser($user_id)
     {
-        $page = intval($page);
-        if ($page < 1)
-        {
-            $page = 1;
-        }
-
-        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
-
         $sql = 'SELECT
           name, text_message, detail_text_message, created_datetime
         FROM
           notification
         WHERE
-          user_id = :user_id
-        ORDER BY created_datetime LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
+          user_id = :user_id AND
+          flag > 0
+        ORDER BY created_datetime ';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
