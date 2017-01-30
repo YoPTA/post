@@ -28,6 +28,9 @@ $is_send = User_Role::checkSend();
 // Права Получения
 $is_receive = User_Role::checkReceive();
 
+// Права получать уведомления
+$is_notification = User_Role::checkNotification();
+
 
 // Проверка прав администратора
 

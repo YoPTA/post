@@ -637,4 +637,28 @@ class SiteController
         require_once ROOT . '/views/site/test.php';
         return true;
     }
+
+    public function actionNotification()
+    {
+        $user = null;
+        $user_id = null;
+        $is_notification = false;
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $check_notification = Notification::checkNotification($user_id, 1);
+
+        if ($check_notification)
+        {
+            echo '1';
+        }
+        else
+        {
+            echo '2';
+        }
+
+        return true;
+    }
+
+
 }

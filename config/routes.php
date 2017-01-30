@@ -26,6 +26,7 @@ return [
     'site/barcode_39' => 'site/barcode39',
     //'site/test' => 'site/test',
     'site/choose' => 'site/choose',
+    'site/notification' => 'site/notification',
 
     'route/view' => 'route/view',
     'route/send' => 'route/send',
@@ -42,6 +43,7 @@ return [
     'proxy/proxy_edit' => 'proxy/proxyedit',
     'proxy/proxy_delete' => 'proxy/proxydelete',
 
+    'notification/index' => 'notification/index',
 
     'package/package_object_add' => 'package/packageobjectadd',
 

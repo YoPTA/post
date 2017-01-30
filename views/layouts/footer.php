@@ -44,6 +44,29 @@
         );
     });
 </script>
+<?php
+if ($is_notification):
+?>
+<div id="dinamic_notification" hidden="hidden"></div>
+
+<script type="text/javascript">
+
+    var fn=function(){
+
+        $.post("/site/notification", {}, function (data) {
+
+            $("#dinamic_notification").html(data);
+
+            if ($("#dinamic_notification").text() == '1')
+            {
+                var myNewWindow = window.open("/notification/index","notification","<?= DEFAULT_WINDOW ?>");
+                myNewWindow.focus();
+            }
+        });
+    }
+    setInterval( fn,10*1000 );
+</script>
+<?php endif; //if ($is_notification): ?>
 
 </body>
 </html>
