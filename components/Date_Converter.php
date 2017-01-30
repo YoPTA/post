@@ -46,6 +46,29 @@ class Date_Converter
     }
 
     /*
+     * Преобразует дату и время в дату или время (дд.мм.гггг чч:мм:сс в дд.мм.гггг или чч:мм:сс)
+     * @var $datetime datetime - дата и время
+     * @var $param int - параметр (1 - Дата; 2 - Время)
+     * return string
+     */
+    public function datetimeToDateOrTime($datetime, $param = 1)
+    {
+        if (empty($datetime)) return false;
+
+        $segments = explode(' ', $datetime);
+        if (count($segments) != 2) return false;
+
+        if ($param == 2)
+        {
+            return $segments[1]; // Время
+        }
+        else
+        {
+            return $segments[0]; // Дата
+        }
+    }
+
+    /*
      * Преобразует строку в дату (дд.мм.гггг в гггг-мм-дд)
      * @var $string_to_convert string - дата
      * return string OR boolean
