@@ -151,6 +151,7 @@ class Notification
     public static function launchNotification($package_id)
     {
         $next_route = null; // Следующий маршрут
+        $now_route = null; // Текущий маршрут
         $counter = 0; // Счетчик, для подсчета точек маршрута
         $users = null; // Которые будут уведомлены
         $package = null; // Посылка
@@ -179,13 +180,14 @@ class Notification
                 if ($package_route[$i]['is_transit'] == 1 && $counter > 0)
                 {
                     $next_route = $package_route[$i + 1];
+                    $now_route = $package_route[$i];
                     break;
                 }
             }
             $counter++;
         }
 
-        if ($next_route == null)
+        if ($next_route == null || $now_route == null)
         {
             return false;
         }
@@ -213,13 +215,27 @@ class Notification
         }
 
         $from_company = Company::getCompany($package['from_company_address_id']);
-        $to_company = Company::getCompany($package['to_company_address_id']);
+        $now_route = Company::getCompany($now_route['company_address_id']);
+
+        if (count($from_company) < 1 || count($now_route) < 1)
+        {
+            return false;
+        }
 
         $notification['name'] = 'Посылка от ' . $from_company['c_name'];
         $notification['text_message'] = 'Вам необходимо забрать посылку с трек-номером ' . $package['number'];
-        $notification['detail_text_message'] = 'Необходимо прислать курьера за посылкой с трек-номером: ' . $package['number'] .'. ';
-        $notification['detail_text_message'] .= 'В данный момент посылка находится в организации ' . $from_company['c_full_name'] . ' ';
-        $notification['detail_text_message'] .= 'по адресу: ' . $from_company['ca_zip'] . ', ' . $string_utility->getAddressToView(1, $from_company, '') . '.';
+        $notification['detail_text_message'] = 'Необходимо прислать курьера за посылкой с трек-номером: ' . $package['number'] .".<br /><br /> ";
+        $notification['detail_text_message'] .= 'Посылка от: ' . $from_company['c_full_name'].".<br /><br /> ";
+
+        $transit_text = '';
+        if ($now_route['is_transit'] == 1)
+        {
+            $transit_text = 'в транзитной точке ';
+        }
+
+        $notification['detail_text_message'] .= 'В данный момент посылка находится '.$transit_text.'в организации: ' . $now_route['c_full_name'] . ' ';
+
+        $notification['detail_text_message'] .= 'по адресу: ' . $now_route['ca_zip'] . ', ' . $string_utility->getAddressToView(1, $now_route, '') . '.';
 
         $end_line = '...';
         $notification['detail_text_message'] = $validate->my_strCut($notification['detail_text_message'], 4096, $end_line);

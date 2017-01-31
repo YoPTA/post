@@ -45,8 +45,10 @@ $page_id = 'page_index';
                                             <?php
                                             $not_datetime = $date_converter->datetimeToString($notification['created_datetime']);
                                             ?>
-                                            Уведомление от <?= $date_converter->datetimeToDateOrTime($not_datetime, 1) ?>
-                                            в <?= $date_converter->datetimeToDateOrTime($not_datetime, 2) ?>
+                                            <span class="color_grey font_size_nine">
+                                                Уведомление от <?= $date_converter->datetimeToDateOrTime($not_datetime, 1) ?>
+                                                в <?= $date_converter->datetimeToDateOrTime($not_datetime, 2) ?>
+                                            </span>
                                         </div>
                                         <br />
                                         <div class="text_simple font_size_fourteen">
