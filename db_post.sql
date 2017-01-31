@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Янв 26 2017 г., 13:42
+-- Время создания: Янв 31 2017 г., 15:14
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
 --
 
 INSERT INTO `notification` (`id`, `name`, `text_message`, `detail_text_message`, `user_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Для вас есть посылка', 'Вам необходимо забрать посылку', 'Заберите посылку', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
+(0, 'Нет', 'Нет', 'Нет', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -202,6 +202,8 @@ CREATE TABLE IF NOT EXISTS `package` (
   `note` varchar(512) NOT NULL COMMENT 'Примечание(ведомость)',
   `from_company_address_id` int(11) NOT NULL,
   `to_company_address_id` int(11) NOT NULL,
+  `now_from_company_address_id` int(11) NOT NULL DEFAULT '0' COMMENT 'От какого адреса направляется посылка в данный момент',
+  `now_to_company_address_id` int(11) NOT NULL DEFAULT '0' COMMENT 'В какой адрес направляется посылка в данный момент',
   `user_id` int(11) NOT NULL,
   `creation_datetime` datetime NOT NULL,
   `receipt_datetime` datetime NOT NULL,
