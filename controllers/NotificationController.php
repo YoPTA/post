@@ -14,6 +14,7 @@ class NotificationController
         $date_converter = new Date_Converter();
 
         Notification::changeFlagNotification($user_id);
+        Notification::deleteNotifications();
 
         $notifications = Notification::getNotificationsByUser($user_id);
 

@@ -60,6 +60,21 @@ class Notification
     }
 
     /*
+     * Удаляем уведомления, которые были созданы месяц назад
+     */
+    public static function deleteNotifications()
+    {
+        $sql = 'DELETE
+            FROM
+              notification
+            WHERE
+              flag > 0 AND
+              DATE(`created_datetime`) < DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH)) ';
+        $db = Database::getConnection();
+        $db->query($sql);
+    }
+
+    /*
      * Получаем уведомления
      * @var $user_id int - ID пользователя
      * return array()
