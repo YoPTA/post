@@ -10,14 +10,14 @@
 
 /* input box in default state */ 
 .tcalInput {
-	background: url('/template/images/cal.gif') 100% 50% no-repeat;
+	background: url('tcalimg/cal.gif') 100% 50% no-repeat;
 
 	cursor: pointer;
 }
 
 /* additional properties for input boxe in activated state, above still applies unless in conflict */
 .tcalActive {
-	background-image: url('/template/images/no_cal.gif');
+	background-image: url('tcalimg/no_cal.gif');
 }
 /* container of calendar's pop-up */
 #tcal {
@@ -63,10 +63,10 @@
 	font-weight: bold;
 	white-space: nowrap;
 }
-#tcalPrevYear { background-image: url('/template/images/prev_year.gif'); }
-#tcalPrevMonth { background-image: url('/template/images/prev_mon.gif'); }
-#tcalNextMonth { background-image: url('/template/images/next_mon.gif'); }
-#tcalNextYear { background-image: url('/template/images/next_year.gif'); }
+#tcalPrevYear { background-image: url('tcalimg/prev_year.gif'); }
+#tcalPrevMonth { background-image: url('tcalimg/prev_mon.gif'); }
+#tcalNextMonth { background-image: url('tcalimg/next_mon.gif'); }
+#tcalNextYear { background-image: url('tcalimg/next_year.gif'); }
 
 /* table containing week days header and calendar grid */
 #tcalGrid {
@@ -96,5 +96,5 @@
 }		
 #tcalGrid td.tcalOtherMonth { color: silver; }
 #tcalGrid td.tcalWeekend { background-color: rgb(221, 221, 221); }
-#tcalGrid td.tcalToday { border: 1px solid red; }
-#tcalGrid td.tcalSelected { background-color: #FFB3BE; }		
+#tcalGrid td.tcalToday { border: 1px solid blue; }
+#tcalGrid td.tcalSelected { background-color: rgba(57, 142, 255, .6); }
