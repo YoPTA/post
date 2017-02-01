@@ -11,9 +11,6 @@ $pagetitle = 'Сопроводительный лист';
     <link href="/template/css/main.css" rel="stylesheet">
     <link href="/template/css/fonts.css" rel="stylesheet">
     <link href="/template/css/pagination.css" rel="stylesheet">
-    <link href="/template/css/tcal.css" rel="stylesheet">
-    <script src="/template/js/jquery-1.8.3.min.js"></script>
-    <script src="/template/js/tcal.js"></script>
     <title><?= $pagetitle; ?></title>
 </head>
 <body onload="print();">
