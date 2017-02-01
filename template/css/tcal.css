@@ -1,23 +1,13 @@
-/*
-	Stylesheet for Tigra Calendar v5.0
-	Product is Public Domain (Free for any kind of applicaiton, customization and derivative works are allowed) 
-	URL: http://www.softcomplex.com/products/tigra_calendar/
-
-	- all image paths are relative to path of stylesheet
-	- the styles below can be moved into the document or in existing stylesheet
-
-*/
-
-/* input box in default state */ 
+/* input box in default state */
 .tcalInput {
-	background: url('tcalimg/cal.gif') 100% 50% no-repeat;
+	background: url('tcalimg/cal.png') 100% 50% no-repeat;
 
 	cursor: pointer;
 }
 
 /* additional properties for input boxe in activated state, above still applies unless in conflict */
 .tcalActive {
-	background-image: url('tcalimg/no_cal.gif');
+	background-image: url('tcalimg/no_cal.png');
 }
 /* container of calendar's pop-up */
 #tcal {

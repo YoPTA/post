@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= DEFAULT_ENCODING_UPPERCASE ?>" />
     <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/template/css/chosen/chosen.css">
     <link href="/template/css/input.css" rel="stylesheet">
     <link href="/template/css/dimensions.css" rel="stylesheet">
     <link href="/template/css/links.css" rel="stylesheet">
@@ -11,7 +12,7 @@
     <link rel="stylesheet" href="/template/css/font-awesome.css">
     <link href="/template/css/pagination.css" rel="stylesheet">
     <link href="/template/css/tcal.css" rel="stylesheet">
-    <script src="/template/js/jquery-1.8.3.min.js"></script>
+    <script src="/template/js/jquery-3.0.0.min.js"></script>
     <script src="/template/js/tcal.js"></script>
     <title><?= $pagetitle;?></title>
 </head>
