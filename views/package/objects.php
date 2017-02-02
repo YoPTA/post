@@ -8,9 +8,7 @@ $page_id = 'page_index';
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=<?= DEFAULT_ENCODING_UPPERCASE ?>" />
         <link rel="icon" href="/favicon.ico">
-        <link href="/template/css/input.css" rel="stylesheet">
         <link href="/template/css/dimensions.css" rel="stylesheet">
-        <link href="/template/css/links.css" rel="stylesheet">
         <link href="/template/css/main.css" rel="stylesheet">
         <link href="/template/css/fonts.css" rel="stylesheet">
         <title><?= $pagetitle;?></title>

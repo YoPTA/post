@@ -5,12 +5,9 @@ $pagetitle = 'Сопроводительный лист';
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= DEFAULT_ENCODING_UPPERCASE ?>" />
-    <link href="/template/css/input.css" rel="stylesheet">
     <link href="/template/css/dimensions.css" rel="stylesheet">
-    <link href="/template/css/links.css" rel="stylesheet">
     <link href="/template/css/main.css" rel="stylesheet">
     <link href="/template/css/fonts.css" rel="stylesheet">
-    <link href="/template/css/pagination.css" rel="stylesheet">
     <title><?= $pagetitle; ?></title>
 </head>
 <body onload="print();">

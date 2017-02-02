@@ -1,6 +1,6 @@
 /* input box in default state */
 .tcalInput {
-	background: url('tcalimg/cal.png') 100% 50% no-repeat;
+	background: url('tcalimg/cal.png') 99% 50% no-repeat;
 
 	cursor: pointer;
 }
