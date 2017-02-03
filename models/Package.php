@@ -15,17 +15,19 @@ class Package
 
     /*
      * Получаем все посыкли офиса
-     * @var $track string - трек-номер
-     * @var $page int - номер страницы
-     * @var $date_create string - дата создания
-     * @var $package_type int - тип посылки (входящие/исходящие)
-     * @var $user_office int - офис пользователя
-     * @var $office int - выбор офиса
+     * @var $search array() - Параметры поиска
+     * @var $page int - Номер страницы
      * return array()
      */
-    public static function getPackages($track, $page, $date_create, $package_type, $user_office, $office)
+    public static function getPackages($search, $page = 1)
     {
-        $track = '%'.$track.'%';
+        if (count($search) < 1)
+        {
+            return false;
+        }
+
+        $date_converter = new Date_Converter();
+        $where = ' WHERE ';
         $page = intval($page);
         if ($page < 1)
         {
@@ -34,29 +36,48 @@ class Package
 
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
 
-        $where = ' WHERE
-            package.number LIKE ? ';
-        if (!empty($date_create) && $date_create != null)
+        if ($search['search_type'] == SEARCH_TYPE_TRACK)
         {
-            $where .= ' AND (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY ) ';
+            $where .= ' package.number = ? ';
         }
-
-        if ($office == OFFICE_NOW)
+        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
-            if ($package_type == PACKAGE_INPUT)
+            if ($search['package_type'] != PACKAGE_INPUT && $search['package_type'] != PACKAGE_OUTPUT)
             {
-                $where .= ' AND package.to_company_address_id = ? ';
+                return false;
             }
 
-            if ($package_type == PACKAGE_OUTPUT)
+            // Проверяем даты
+            // Если даты указаны в неверном формате, тогда выходим из метода
+            $d_c_begin = $date_converter->dateSplit($search['d_begin'], 1);
+            $d_c_end = $date_converter->dateSplit($search['d_end'], 1);
+            $check_d_begin = checkdate($d_c_begin['month'], $d_c_begin['day'], $d_c_begin['year']);
+            $check_d_end = checkdate($d_c_end['month'], $d_c_end['day'], $d_c_end['year']);
+            if (!$check_d_begin || !$check_d_end)
             {
-                $where .= ' AND package.from_company_address_id = ? ';
+                return false;
             }
 
-            if ($package_type == PACKAGE_ALL)
+            if ($search['search_relatively'] != SEARCH_RELATIVELY_FROM_OR_TO && $search['search_relatively'] != SEARCH_RELATIVELY_CURRENT)
             {
-                $where .= ' AND (package.from_company_address_id = ? OR package.to_company_address_id = ?) ';
+                return false;
             }
+
+            $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY ) ';
+
+            if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO)
+            {
+                $where .= ' AND (package.from_company_address_id = ? AND package.to_company_address_id = ?) ';
+            }
+
+            if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT)
+            {
+                $where .= ' AND (package.now_from_company_address_id = ? AND package.now_to_company_address_id = ?) ';
+            }
+        }
+        else
+        {
+            return false;
         }
 
         $sql = 'SELECT
@@ -108,41 +129,21 @@ class Package
         $db = Database::getConnection();
         $result = $db->prepare($sql);
 
-        if ($office == OFFICE_NOW)
+        if ($search['search_type'] == SEARCH_TYPE_TRACK)
         {
-            if (($package_type == PACKAGE_INPUT || $package_type == PACKAGE_OUTPUT) && !empty($date_create) && $date_create != null)
+            $result->execute([$search['track']]);
+        }
+        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
+        {
+            if ($search['package_type'] == PACKAGE_OUTPUT)
             {
-                $result->execute([$track, $date_create, $date_create, $user_office]);
+                $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
             }
-            if ($package_type == PACKAGE_ALL  && !empty($date_create) && $date_create != null)
+            if ($search['package_type'] == PACKAGE_INPUT)
             {
-                $result->execute([$track, $date_create, $date_create, $user_office, $user_office]);
-            }
-            if (($package_type == PACKAGE_INPUT || $package_type == PACKAGE_OUTPUT) && (empty($date_create) || $date_create == null))
-            {
-                $result->execute([$track, $user_office]);
-            }
-            if ($package_type == PACKAGE_ALL && (empty($date_create) || $date_create == null))
-            {
-                $result->execute([$track, $user_office, $user_office]);
+                $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
             }
         }
-        else
-        {
-            if (!empty($date_create) && $date_create != null)
-            {
-                $result->execute([$track, $date_create, $date_create]);
-            }
-            if (!empty($date_create) && $date_create != null)
-            {
-                $result->execute([$track, $date_create, $date_create]);
-            }
-            if (empty($date_create) || $date_create == null)
-            {
-                $result->execute([$track]);
-            }
-        }
-
 
         // Получение и возврат результатов
         $packages = null;
@@ -190,84 +191,78 @@ class Package
 
     /*
      * Получаем количество посылок по искомым параметрам
-     * @var $track string - трек-номер
-     * @var $date_create string - дата создания
-     * @var $package_type int - тип посылки
-     * @var $user_office int - офис пользователя
-     * @var $office int - выбор офиса
+     * @var $search array() - Параметры поиска
      * return int
      */
-    public static function getTotalPackages($track, $date_create, $package_type, $user_office, $office)
+    public static function getTotalPackages($search)
     {
-        $track = '%'.$track.'%';
-
-
-        $where = ' WHERE
-            package.number LIKE ? ';
-        if (!empty($date_create) && $date_create != null)
+        $date_converter = new Date_Converter();
+        $where = ' WHERE ';
+        if ($search['search_type'] == SEARCH_TYPE_TRACK)
         {
-            $where .= ' AND (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY ) ';
+            $where .= ' package.number = ? ';
         }
-
-        if ($office == OFFICE_NOW)
+        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
-            if ($package_type == PACKAGE_INPUT)
+            if ($search['package_type'] != PACKAGE_INPUT && $search['package_type'] != PACKAGE_OUTPUT)
             {
-                $where .= ' AND package.to_company_address_id = ? ';
+                return 0;
             }
 
-            if ($package_type == PACKAGE_OUTPUT)
+            // Проверяем даты
+            // Если даты указаны в неверном формате, тогда выходим из метода
+            $d_c_begin = $date_converter->dateSplit($search['d_begin'], 1);
+            $d_c_end = $date_converter->dateSplit($search['d_end'], 1);
+            $check_d_begin = checkdate($d_c_begin['month'], $d_c_begin['day'], $d_c_begin['year']);
+            $check_d_end = checkdate($d_c_end['month'], $d_c_end['day'], $d_c_end['year']);
+            if (!$check_d_begin || !$check_d_end)
             {
-                $where .= ' AND package.from_company_address_id = ? ';
+                return 0;
             }
 
-            if ($package_type == PACKAGE_ALL)
+            if ($search['search_relatively'] != SEARCH_RELATIVELY_FROM_OR_TO && $search['search_relatively'] != SEARCH_RELATIVELY_CURRENT)
             {
-                $where .= ' AND (package.from_company_address_id = ? OR package.to_company_address_id = ?) ';
+                return 0;
             }
+
+            $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY ) ';
+
+            if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO)
+            {
+                $where .= ' AND (package.from_company_address_id = ? AND package.to_company_address_id = ?) ';
+            }
+
+            if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT)
+            {
+                $where .= ' AND (package.now_from_company_address_id = ? AND package.now_to_company_address_id = ?) ';
+            }
+        }
+        else
+        {
+            return 0;
         }
 
         $sql = 'SELECT
           COUNT(*) AS row_count
         FROM
-          package '
-        . $where;
+          package '. $where;
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
 
-        if ($office == OFFICE_NOW)
+        if ($search['search_type'] == SEARCH_TYPE_TRACK)
         {
-            if (($package_type == PACKAGE_INPUT || $package_type == PACKAGE_OUTPUT) && !empty($date_create) && $date_create != null)
-            {
-                $result->execute([$track, $date_create, $date_create, $user_office]);
-            }
-            if ($package_type == PACKAGE_ALL  && !empty($date_create) && $date_create != null)
-            {
-                $result->execute([$track, $date_create, $date_create, $user_office, $user_office]);
-            }
-            if (($package_type == PACKAGE_INPUT || $package_type == PACKAGE_OUTPUT) && (empty($date_create) || $date_create == null))
-            {
-                $result->execute([$track, $user_office]);
-            }
-            if ($package_type == PACKAGE_ALL && (empty($date_create) || $date_create == null))
-            {
-                $result->execute([$track, $user_office, $user_office]);
-            }
+            $result->execute([$search['track']]);
         }
-        else
+        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
-            if (!empty($date_create) && $date_create != null)
+            if ($search['package_type'] == PACKAGE_OUTPUT)
             {
-                $result->execute([$track, $date_create, $date_create]);
+                $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
             }
-            if (!empty($date_create) && $date_create != null)
+            if ($search['package_type'] == PACKAGE_INPUT)
             {
-                $result->execute([$track, $date_create, $date_create]);
-            }
-            if (empty($date_create) || $date_create == null)
-            {
-                $result->execute([$track]);
+                $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
             }
         }
 

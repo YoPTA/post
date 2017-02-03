@@ -4,30 +4,69 @@ class SiteController
 {
     public function actionIndex()
     {
+        $is_admin = false;
         $user = null;
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
 
         $date_converter = new Date_Converter();
+        $date_time = new DateTime();
 
         $errors = false;
 
-        $track = null;
-        $page = 1;
-        $date_create = null;
-        $package_type = PACKAGE_ALL;
-        $office = OFFICE_ALL;
+        $companies = Company::getAllCompanies(); // Организации и адреса организаций
+        $only_companies = null; // Только организации
+        $user_company = Company::getCompany($user['company_address_id']); // Организация пользователя
+        $current = 0;
 
-        if (!isset($_GET['track']))
+        if (count($companies) > 0)
         {
-            header('Location: /site/index?track=&page=1&date_create=&package_type='.$package_type.'&office='.$office);
+            for ($i = 0; $i < count($companies); $i++)
+            {
+                if (count($only_companies) < 1)
+                {
+                    $only_companies[] = $companies[$i];
+                }
+                foreach ($only_companies as $oc)
+                {
+                    if ($oc['company_id'] == $companies[$i]['company_id'])
+                    {
+                        $current = 1;
+                    }
+                }
+                if ($current == 0)
+                {
+                    $only_companies[] = $companies[$i];
+                }
+                $current = 0;
+            }
         }
 
-        if (isset($_GET['track']))
+        $search = null; // Параметры поиска
+
+        $search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+        $page = 1; // Номер страницы
+        $search['track'] = null; // Трек-номер
+
+        $search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $search['date_create_begin'] = $date_time->format('01.m.Y'); // Период поиска с
+        $search['date_create_end'] = $date_time->format('t.m.Y'); // Период поиска по
+
+        $search['d_begin'] = null; // Дата С для поиска в БД
+        $search['d_end'] = null; // Дата По для поиска в БД
+
+
+        $search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $search['from_or_to'] = null; // От кого/Для кого
+        $search['to_or_from'] = null; // Для кого/От кого
+
+
+        if (isset($_GET['search_type']))
         {
-            $track = htmlspecialchars($_GET['track']);
+            $search['search_type'] = htmlspecialchars($_GET['search_type']);
         }
+
         if (isset($_GET['page']))
         {
             $page = htmlspecialchars($_GET['page']);
@@ -37,40 +76,52 @@ class SiteController
             $page = 1;
         }
 
-        if (isset($_GET['date_create']))
+        if (isset($_GET['track']))
         {
-            $date_create = htmlspecialchars($_GET['date_create']);
-        }
-
-        if ($package_type < 0)
-        {
-            $package_type = 0;
+            $search['track'] = htmlspecialchars(trim($_GET['track']));
         }
 
         if (isset($_GET['package_type']))
         {
-            $package_type = htmlspecialchars($_GET['package_type']);
+            $search['package_type'] = htmlspecialchars($_GET['package_type']);
         }
 
-        if (isset($_GET['office']))
+        if (isset($_GET['search_relatively']))
         {
-            $office = htmlspecialchars($_GET['office']);
+            $search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
-        if ($office < 0)
+        if (isset($_GET['date_create_begin']))
         {
-            $office = 0;
+            $search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
         }
 
-        if ($office == OFFICE_ALL)
+        $search['d_begin'] = $date_converter->stringToDate($search['date_create_begin']);
+
+        if (isset($_GET['date_create_end']))
         {
-            $package_type = PACKAGE_ALL;
+            $search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
         }
 
-        $packages = Package::getPackages($track, $page, $date_converter->stringToDate($date_create), $package_type, $user['company_address_id'], $office);
+        $search['d_end'] = $date_converter->stringToDate($search['date_create_end']);
 
-        $total_packages = Package::getTotalPackages($track, $date_converter->stringToDate($date_create), $package_type, $user['company_address_id'], $office);
+        if (isset($_GET['from_or_to']))
+        {
+            $search['from_or_to'] = htmlspecialchars($_GET['from_or_to']);
+        }
 
+        if (!$is_admin)
+        {
+            $search['from_or_to'] = $user['company_address_id'];;
+        }
+
+        if (isset($_GET['to_or_from']))
+        {
+            $search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
+        }
+
+        $packages = Package::getPackages($search, $page);
+        $total_packages = Package::getTotalPackages($search);
 
         $index_number = ($page - 1) * Package::SHOW_BY_DEFAULT;
         $pagination = new Pagination($total_packages, $page, Package::SHOW_BY_DEFAULT, 'page=');
@@ -83,54 +134,6 @@ class SiteController
     {
         require_once ROOT . '/views/site/error.php';
         return true;
-    }
-
-    public function actionSelectcompany()
-    {
-        $is_create = false;
-        $user = null;
-
-        // Подключаем файл с проверками ролей пользователя
-        require_once ROOT . '/config/role_ckeck.php';
-
-        $company_type = null; // Организация
-
-        $companies = Company::getAllCompanies(); // Получаем все организации
-
-        if(isset($_GET['c_t']))
-        {
-            $company_type = Company::determineCompanyType($_GET['c_t']);
-        }
-
-
-        $select_company = null;
-        if(Company::checkCompanyInMemory($company_type) != null)
-        {
-            $select_company = Company::checkCompanyInMemory($company_type);
-        }
-
-        if(isset($_POST['select']))
-        {
-            if(isset($_POST['company']))
-            {
-                $select_company = $_POST['company'];
-                if($company_type != null)
-                {
-                    Company::memorizeCompany($select_company, $company_type);
-                    header('Location: /site/create');
-                }
-            }
-        }
-
-        if($is_create)
-        {
-            require_once ROOT . '/views/site/selectcompany.php';
-            return true;
-        }
-        else
-        {
-            header('Location: /site/error');
-        }
     }
 
     public function actionCreate()
@@ -323,7 +326,7 @@ class SiteController
                 Package::outPackage();
                 Package::outPackageObjects();
 
-                header('Location: /site/index?track='. $track .'&page=1&date_create=&package_type='.PACKAGE_ALL.'&office='.OFFICE_ALL);
+                header('Location: /site/index?search_type='. SEARCH_TYPE_TRACK .'&page=1&track='. $track);
             }
         }
 
@@ -415,56 +418,7 @@ class SiteController
 
         $errors = false;
 
-        $track = null;
-        $site_page = 1;
-        $page = 1;
-        $date_create = null;
-        $package_type = 0;
-        $office = OFFICE_NOW;
         $pid = null; // Id посылки
-
-        if (isset($_GET['track']))
-        {
-            $track = htmlspecialchars($_GET['track']);
-        }
-
-        if (isset($_GET['site_page']))
-        {
-            $site_page = htmlspecialchars($_GET['site_page']);
-        }
-        if ($site_page < 1)
-        {
-            $site_page = 1;
-        }
-
-        if (isset($_GET['page']))
-        {
-            $page = htmlspecialchars($_GET['page']);
-        }
-        if ($page < 1)
-        {
-            $page = 1;
-        }
-
-        if (isset($_GET['date_create']))
-        {
-            $date_create = htmlspecialchars($_GET['date_create']);
-        }
-
-        if (isset($_GET['office']))
-        {
-            $office = htmlspecialchars($_GET['office']);
-        }
-
-        if ($office < 0)
-        {
-            $office = 0;
-        }
-
-        if ($office == OFFICE_ALL)
-        {
-            $package_type = PACKAGE_ALL;
-        }
 
         if (isset($_GET['pid']))
         {
@@ -478,7 +432,6 @@ class SiteController
         if ($package_info['p_number'] != null)
         {
             $file_path = $abs_file_path;
-            //echo $file_path;
             $barcode_filename = $file_path.USER_BARCODE;
             $barcode_filetype = 'png';
             $barcode_file = $barcode_filename.'.'.$barcode_filetype;
@@ -500,7 +453,6 @@ class SiteController
                 $barcode->setHexColor('#000000', '#FFFFFF');
 
                 $barcode->genBarCode($package_info['p_number'], $barcode_filetype, $barcode_filename);
-
             }
         }
         else

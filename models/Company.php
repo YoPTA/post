@@ -115,6 +115,7 @@ class Company
           company_address.is_transit,
           company_address.flag AS ca_flag,
           company.name AS c_name,
+          company.is_mfc,
           company.full_name AS c_full_name,
           company.key_field AS c_key_field,
           company.flag AS c_flag
@@ -276,30 +277,37 @@ class Company
     public static function getAllCompanies()
     {
         $sql = 'SELECT
-          company_address.id AS ca_id,
-          company_address.company_id AS ca_company_id,
-          company_address.address_country AS ca_address_country,
-          company_address.address_zip AS ca_address_zip,
-          company_address.address_region AS ca_address_region,
-          company_address.address_area AS ca_address_area,
-          company_address.address_city AS ca_address_city,
-          company_address.address_town AS ca_address_town,
-          company_address.address_street AS ca_address_street,
-          company_address.address_home AS ca_address_home,
-          company_address.address_case AS ca_address_case,
-          company_address.address_build AS ca_address_build,
-          company_address.address_apartment AS ca_address_apartment,
-          company_address.flag AS ca_flag,
-          company.name AS c_name,
-          company.full_name AS c_full_name,
-          company.key_field AS c_key_field,
-          company.flag AS c_flag
+          company_address.id,
+          company_address.company_id,
+          company_address.local_place_id,
+          company_address.address_country,
+          company_address.address_zip,
+          company_address.address_region,
+          company_address.address_area,
+          company_address.address_city,
+          company_address.address_town,
+          company_address.address_street,
+          company_address.address_home,
+          company_address.address_case,
+          company_address.address_build,
+          company_address.address_apartment,
+          company_address.is_transit,
+          company_address.created_datetime,
+          company_address.created_user_id,
+          company_address.changed_datetime,
+          company_address.changed_user_id,
+          company.name,
+          company.key_field,
+          company.is_mfc,
+          company.full_name
         FROM
           company_address
           INNER JOIN company ON (company_address.company_id = company.id)
         WHERE
-          (company_address.flag = 0 OR company_address.flag = 1) AND
-          (company.flag = 0 OR company.flag = 1)';
+          company_address.flag > 0 AND
+          company.flag > 0
+        ORDER BY
+          company_address.company_id';
 
         $db = Database::getConnection();
 
