@@ -57,3 +57,13 @@ define('USER_REFERENCE_SEND', 1);
 define('USER_REFERENCE_RECEIVE', 2);
 
 define('USER_BARCODE', 'barcode');
+
+// Способы поиска посылки
+define('SEARCH_TYPE_NONE', 0); // Не выбран
+define('SEARCH_TYPE_TRACK', 1); // По трек номеру
+define('SEARCH_TYPE_ADDRESS', 2); // По адресу
+
+// Поиск по адресу относительно
+define('SEARCH_RELATIVELY_NONE', 0); // Не выбрано
+define('SEARCH_RELATIVELY_FROM_OR_TO', 1); // Отправителя/Получателя
+define('SEARCH_RELATIVELY_CURRENT', 2); // Текущего местоположения
