@@ -196,6 +196,14 @@ include ROOT . '/views/layouts/header.php';
     <?php  endif; //if (is_array($transit_points) && count($transit_points) > 0): ?>
 
     </div>
+
+        <br /><br />
+    <div class="full_width">
+        <label><input type="checkbox" name="to_route_view" id="to_route_view"
+                      <?php if ($to_route_view == 1) echo 'checked'; ?>
+                      style="vertical-align: middle;" value="1" />После создания перейти сразу к маршруту</label>
+    </div>
+        <br />
     <h2>Желаете создать посылку?</h2>
     <div align="">
         <input type="submit" name="create" value="Да" class="button one_sixteenth" /><span class="right_indent"></span>
