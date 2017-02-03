@@ -8,7 +8,7 @@ include ROOT . '/views/layouts/header.php';
 ?>
 <h2 align="center"><?= $pagetitle ?></h2>
 <div class="font_size_twelve" align="center">
-    <a href="/site/index?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>">
+    <a href="/site/index?<?= $link_to_back ?>&page=<?= $page; ?>" >
         &#8592; Вернуться назад
     </a>
 </div>
@@ -195,13 +195,13 @@ $td_id = 0;
         <h2>Желаете <?php echo ($is_notfinish == 2) ? "подтвердить получение" : "отправить" ?>?</h2>
         <div>
             <?php if ($is_notfinish == 2): ?>
-                <a href="/route/receive?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route_id ?>">
+                <a href="/route/receive?<?= $link_to_back ?>&site_page=<?= $page ?>&pid=<?= $pid ?>&rid=<?= $package_route_id ?>">
             <?php else: //if ($is_notfinish == 2): ?>
-                <a href="/route/send?track=<?= $track ?>&site_page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $package_route_id ?>">
+                <a href="/route/send?<?= $link_to_back ?>&site_page=<?= $page ?>&pid=<?= $pid ?>&rid=<?= $package_route_id ?>">
             <?php endif; //if ($is_notfinish == 2): ?>
             <button class="button one_sixteenth">Да</button></a>
             <span class="right_indent"></span>
-            <a href="/site/index?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>"><button class="button one_sixteenth">Нет</button></a>
+            <a href="/site/index?<?= $link_to_back ?>&page=<?= $page ?>"><button class="button one_sixteenth">Нет</button></a>
         </div>
 
     <?php endif;//if ($is_notfinish != 0): ?>

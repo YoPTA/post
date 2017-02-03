@@ -8,7 +8,7 @@ include ROOT . '/views/layouts/header.php';
 ?>
 <h2 align="center"><?= $pagetitle ?></h2>
 <div class="font_size_twelve" align="center">
-    <a href="/route/view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>">
+    <a href="/route/view?<?= $link_to_back ?>&page=<?= $site_page ?>&pid=<?= $pid ?>">
         &#8592; Вернуться назад
     </a>
 </div>
