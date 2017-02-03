@@ -68,7 +68,13 @@ include ROOT . '/views/layouts/header.php';
 
                     <?php if ($is_admin): ?>
                     <div class="inline">
-                        <label for="from_or_to">От кого/Для кого</label><br />
+                        <label for="from_or_to">
+                            <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
+                                Для кого
+                            <?php else: //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                                От кого
+                            <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                        </label><br />
                         <select class="half" id="from_or_to" name="from_or_to" data-placeholder="Не выбрано" onchange="this.form.submit();">
 
                         <?php
@@ -112,7 +118,13 @@ include ROOT . '/views/layouts/header.php';
 
 
                     <div class="inline">
-                        <label for="to_or_from">Для кого/От кого</label><br />
+                        <label for="to_or_from">
+                            <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
+                            От кого
+                            <?php else: //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                            Для кого
+                            <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                        </label><br />
                         <select class="half" id="to_or_from" name="to_or_from" data-placeholder="Не выбрано" onchange="this.form.submit();">
 
                         <?php
@@ -181,10 +193,16 @@ include ROOT . '/views/layouts/header.php';
             </td>
 
             <td>
-                <div title="<?= $string_utility->getAddressToView(1, $package, 'from_'); ?>"><?= $package['from_company_name'] ?></div>
+                <div title="<?= $string_utility->getAddressToView(1, $package, 'from_'); ?>">
+                    <?php if ($package['from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                    <?= $package['from_company_name'] ?>
+                </div>
             </td>
             <td>
-                <div title="<?= $string_utility->getAddressToView(1, $package, 'to_'); ?>"><?= $package['to_company_name'] ?></div>
+                <div title="<?= $string_utility->getAddressToView(1, $package, 'to_'); ?>">
+                    <?php if ($package['to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                    <?= $package['to_company_name'] ?>
+                </div>
             </td>
             <td align="center"><?= $date_converter->dateToString($package['package_creation_datetime']) ?></td>
             <td><?= $package['user_lastname'].' '.$package['user_firstname'].' '.$package['user_middlename'] ?></td>
@@ -201,7 +219,7 @@ include ROOT . '/views/layouts/header.php';
                 </div>
 
                 <div class="bg_button inline" title="Посмотреть маршрут">
-                     <a href="/route/view?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>">
+                     <a href="/route/view?<?= $link_get_param ?>&pid=<?= $package['package_id'] ?>">
                         <img src="/template/images/location.png">
                      </a>
                 </div>

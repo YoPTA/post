@@ -20,6 +20,8 @@ class SiteController
         $user_company = Company::getCompany($user['company_address_id']); // Организация пользователя
         $current = 0;
 
+        $link_get_param = '';
+
         if (count($companies) > 0)
         {
             for ($i = 0; $i < count($companies); $i++)
@@ -120,6 +122,22 @@ class SiteController
             $search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
+        if ($search['search_type'] == SEARCH_TYPE_TRACK)
+        {
+            $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&track='.$search['track'];
+        }
+        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
+        {
+            $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&package_type='. $search['package_type']
+                .'&date_create_begin='. $search['date_create_begin'] .'&date_create_end='. $search['date_create_end']
+                .'&search_relatively='. $search['search_relatively'] .'&from_or_to='. $search['from_or_to']
+                .'&to_or_from='.$search['to_or_from'];
+        }
+        else
+        {
+            $link_get_param .= 'search_type='.SEARCH_TYPE_NONE.'&page=1';
+        }
+
         $packages = Package::getPackages($search, $page);
         $total_packages = Package::getTotalPackages($search);
 
@@ -168,6 +186,8 @@ class SiteController
 
         $route_without_send = null; // Id маршрута без отправки
         $receive_values = null; // Информация о получении
+
+        $to_route_view = 0; // Перейти к просмотрю маршрута
 
         $c_from = null;
         $c_to = null;
@@ -230,6 +250,10 @@ class SiteController
 
         if(isset($_POST['create']))
         {
+            if (isset($_POST['to_route_view']))
+            {
+                $to_route_view = htmlspecialchars($_POST['to_route_view']);
+            }
             if (isset($_POST['delivery_type']))
             {
                 $delivery_type = htmlspecialchars($_POST['delivery_type']);
@@ -325,8 +349,14 @@ class SiteController
                 Company::outCompanyFromMemory(TO_COMPANY);
                 Package::outPackage();
                 Package::outPackageObjects();
-
-                header('Location: /site/index?search_type='. SEARCH_TYPE_TRACK .'&page=1&track='. $track);
+                if ($to_route_view == 1)
+                {
+                    header('Location: /route/view?search_type='. SEARCH_TYPE_TRACK .'&page=1&track='. $track.'&pid='.$package_last_id);
+                }
+                else
+                {
+                    header('Location: /site/index?search_type='. SEARCH_TYPE_TRACK .'&page=1&track='. $track);
+                }
             }
         }
 
