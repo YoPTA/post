@@ -96,4 +96,42 @@ class Date_Converter
         }
         return false;
     }
+
+    /*
+     * Разбивает дату в массив (число, месяц, год)
+     * @var $date string - дата
+     * @var $param int - параметр, указывающий, в каком виде дата
+     * (1 - ГГГГ-ММ-ДД; 2 - ДД.ММ.ГГГГ)
+     * return array()
+     */
+    public function dateSplit($date, $param = 1)
+    {
+        $date_array['day'] = 0;
+        $date_array['month'] = 0;
+        $date_array['year'] = 0;
+
+        if ($param == 2)
+        {
+            $segments = explode('.', $date);
+            if (count($segments) == 3)
+            {
+                $date_array['day'] = (int)$segments[0];
+                $date_array['month'] = (int)$segments[1];
+                $date_array['year'] = (int)$segments[2];
+            }
+        }
+
+        if ($param == 1)
+        {
+            $segments = explode('-', $date);
+            if (count($segments) == 3)
+            {
+                $date_array['day'] = (int)$segments[2];
+                $date_array['month'] = (int)$segments[1];
+                $date_array['year'] = (int)$segments[0];
+            }
+        }
+
+        return $date_array;
+    }
 }
