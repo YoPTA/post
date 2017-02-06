@@ -326,6 +326,11 @@ class ProxyController
             $search = htmlspecialchars($_GET['search']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         if (isset($_POST['lastname']))
         {
             $proxy_person['lastname'] = htmlspecialchars(trim($validator->my_ucwords($_POST['lastname'])));
@@ -624,6 +629,12 @@ class ProxyController
         {
             $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
         }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         $search_date_issued_sql_format = $date_converter->stringToDate($search_date_issued);
 
         $proxy_person = Proxy::getProxyPersonInfo($p_pid);
@@ -823,6 +834,11 @@ class ProxyController
         if (isset($_GET['p_pid']))
         {
             $p_pid = htmlspecialchars($_GET['p_pid']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         $proxy_person = Proxy::getProxyPerson($p_pid);
@@ -1113,6 +1129,11 @@ class ProxyController
             $p_pid = htmlspecialchars($_GET['p_pid']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         $proxy_person = Proxy::getProxyPersonInfo($p_pid);
 
         if (isset($_POST['yes']))
@@ -1162,24 +1183,90 @@ class ProxyController
 
         $errors = false;
 
-        $track = null;
         $site_page = 1;
-        $page = 1;
-        $date_create = null;
-        $package_type = 0;
-        $office = OFFICE_NOW;
+        $page = 1; // Номер страницы
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $total_proxy_person = 0; // Общее кол-во доверенных лиц
+
+        $receive_values = null; // Данные о получении
+        $route = null; // Информация о маршруте
+
+        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+
+        $index_search['track'] = null; // Трек-номер
+
+        $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['date_create_begin'] = null; // Период поиска с
+        $index_search['date_create_end'] = null; // Период поиска по
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['from_or_to'] = null; // От кого/Для кого
+        $index_search['to_or_from'] = null; // Для кого/От кого
+
+        $link_to_back = '';
+
         $user_ref = null; // Откуда "пришел" пользователь
         $wow = 0; // С лицом или без
+
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $search_date_issued = null; // Искомая дата выдачи
 
 
+        if (isset($_GET['search_type']))
+        {
+            $index_search['search_type'] = htmlspecialchars($_GET['search_type']);
+        }
+
         if (isset($_GET['track']))
         {
-            $track = htmlspecialchars($_GET['track']);
+            $index_search['track'] = htmlspecialchars(trim($_GET['track']));
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['date_create_begin']))
+        {
+            $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
+        }
+
+        if (isset($_GET['date_create_end']))
+        {
+            $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['from_or_to']))
+        {
+            $index_search['from_or_to'] = htmlspecialchars($_GET['from_or_to']);
+        }
+
+        if (isset($_GET['to_or_from']))
+        {
+            $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
+        }
+
+        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+        }
+        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
+                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
+                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&to_or_from='.$index_search['to_or_from'];
+        }
+        else
+        {
+            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
         }
 
         if (isset($_GET['site_page']))
@@ -1200,36 +1287,6 @@ class ProxyController
             $page = 1;
         }
 
-        if (isset($_GET['date_create']))
-        {
-            $date_create = htmlspecialchars($_GET['date_create']);
-        }
-
-        if (isset($_GET['package_type']))
-        {
-            $package_type = htmlspecialchars($_GET['package_type']);
-        }
-
-        if ($package_type < 0)
-        {
-            $package_type = 0;
-        }
-
-        if (isset($_GET['office']))
-        {
-            $office = htmlspecialchars($_GET['office']);
-        }
-
-        if ($office < 0)
-        {
-            $office = 0;
-        }
-
-        if ($office == OFFICE_ALL)
-        {
-            $package_type = PACKAGE_ALL;
-        }
-
         if (isset($_GET['pid']))
         {
             $pid = htmlspecialchars($_GET['pid']);
@@ -1238,11 +1295,6 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
-        }
-
-        if (isset($_GET['user_ref']))
-        {
-            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['wow']))
@@ -1263,6 +1315,16 @@ class ProxyController
         if (isset($_GET['p_pid']))
         {
             $p_pid = htmlspecialchars($_GET['p_pid']);
+        }
+
+        if (isset($_GET['search_date_issued']))
+        {
+            $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         $proxy = null;
@@ -1329,9 +1391,9 @@ class ProxyController
 
                 unset($proxy);
                 unset($proxy_or_proxy_person);
-                header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
-                    .'&wow='.$wow.'&search='.$search.'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
+                header('Location: /proxy/person_view?'.$link_to_back.'&site_page='.$site_page.'&pid='.$pid
+                    .'&rid='.$rid.'&user_ref='.$user_ref .'&wow='.$wow.'&search='.$search.'&p_pid='.$p_pid
+                    .'&search_date_issued='.$search_date_issued);
             }
         }
 
@@ -1358,25 +1420,90 @@ class ProxyController
 
         $errors = false;
 
-        $track = null;
         $site_page = 1;
-        $page = 1;
-        $date_create = null;
-        $package_type = 0;
-        $office = OFFICE_NOW;
+        $page = 1; // Номер страницы
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $total_proxy_person = 0; // Общее кол-во доверенных лиц
+
+        $receive_values = null; // Данные о получении
+        $route = null; // Информация о маршруте
+
+        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+
+        $index_search['track'] = null; // Трек-номер
+
+        $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['date_create_begin'] = null; // Период поиска с
+        $index_search['date_create_end'] = null; // Период поиска по
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['from_or_to'] = null; // От кого/Для кого
+        $index_search['to_or_from'] = null; // Для кого/От кого
+
+        $link_to_back = '';
+
         $user_ref = null; // Откуда "пришел" пользователь
         $wow = 0; // С лицом или без
+
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $p_id = null; // Доверенность
         $search_date_issued = null; // Искомая дата выдачи
 
+        if (isset($_GET['search_type']))
+        {
+            $index_search['search_type'] = htmlspecialchars($_GET['search_type']);
+        }
 
         if (isset($_GET['track']))
         {
-            $track = htmlspecialchars($_GET['track']);
+            $index_search['track'] = htmlspecialchars(trim($_GET['track']));
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['date_create_begin']))
+        {
+            $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
+        }
+
+        if (isset($_GET['date_create_end']))
+        {
+            $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['from_or_to']))
+        {
+            $index_search['from_or_to'] = htmlspecialchars($_GET['from_or_to']);
+        }
+
+        if (isset($_GET['to_or_from']))
+        {
+            $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
+        }
+
+        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+        }
+        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
+                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
+                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&to_or_from='.$index_search['to_or_from'];
+        }
+        else
+        {
+            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
         }
 
         if (isset($_GET['site_page']))
@@ -1397,36 +1524,6 @@ class ProxyController
             $page = 1;
         }
 
-        if (isset($_GET['date_create']))
-        {
-            $date_create = htmlspecialchars($_GET['date_create']);
-        }
-
-        if (isset($_GET['package_type']))
-        {
-            $package_type = htmlspecialchars($_GET['package_type']);
-        }
-
-        if ($package_type < 0)
-        {
-            $package_type = 0;
-        }
-
-        if (isset($_GET['office']))
-        {
-            $office = htmlspecialchars($_GET['office']);
-        }
-
-        if ($office < 0)
-        {
-            $office = 0;
-        }
-
-        if ($office == OFFICE_ALL)
-        {
-            $package_type = PACKAGE_ALL;
-        }
-
         if (isset($_GET['pid']))
         {
             $pid = htmlspecialchars($_GET['pid']);
@@ -1435,11 +1532,6 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
-        }
-
-        if (isset($_GET['user_ref']))
-        {
-            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['wow']))
@@ -1465,6 +1557,11 @@ class ProxyController
         if (isset($_GET['search_date_issued']))
         {
             $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
+        }
+
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['p_id']))
@@ -1532,9 +1629,9 @@ class ProxyController
 
                 unset($proxy);
 
-                header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                    .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
-                    .'&wow='.$wow.'&search='.$search.'&p_pid='.$p_pid.'&search_date_issued='.$search_date_issued);
+                header('Location: /proxy/person_view?'.$link_to_back.'&site_page='.$site_page.'&pid='.$pid
+                    .'&rid='.$rid.'&user_ref='.$user_ref .'&wow='.$wow.'&search='.$search.'&p_pid='.$p_pid
+                    .'&search_date_issued='.$search_date_issued);
             }
         }
 
@@ -1561,25 +1658,90 @@ class ProxyController
 
         $errors = false;
 
-        $track = null;
         $site_page = 1;
-        $page = 1;
-        $date_create = null;
-        $package_type = 0;
-        $office = OFFICE_NOW;
+        $page = 1; // Номер страницы
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
+        $total_proxy_person = 0; // Общее кол-во доверенных лиц
+
+        $receive_values = null; // Данные о получении
+        $route = null; // Информация о маршруте
+
+        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+
+        $index_search['track'] = null; // Трек-номер
+
+        $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['date_create_begin'] = null; // Период поиска с
+        $index_search['date_create_end'] = null; // Период поиска по
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['from_or_to'] = null; // От кого/Для кого
+        $index_search['to_or_from'] = null; // Для кого/От кого
+
+        $link_to_back = '';
+
         $user_ref = null; // Откуда "пришел" пользователь
         $wow = 0; // С лицом или без
+
         $search = null; // Искомое значение
         $p_pid = null; // Доверенное лицо
         $p_id = null; // Доверенность
         $search_date_issued = null; // Искомая дата выдачи
 
+        if (isset($_GET['search_type']))
+        {
+            $index_search['search_type'] = htmlspecialchars($_GET['search_type']);
+        }
 
         if (isset($_GET['track']))
         {
-            $track = htmlspecialchars($_GET['track']);
+            $index_search['track'] = htmlspecialchars(trim($_GET['track']));
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['date_create_begin']))
+        {
+            $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
+        }
+
+        if (isset($_GET['date_create_end']))
+        {
+            $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['from_or_to']))
+        {
+            $index_search['from_or_to'] = htmlspecialchars($_GET['from_or_to']);
+        }
+
+        if (isset($_GET['to_or_from']))
+        {
+            $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
+        }
+
+        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+        }
+        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
+                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
+                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&to_or_from='.$index_search['to_or_from'];
+        }
+        else
+        {
+            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
         }
 
         if (isset($_GET['site_page']))
@@ -1600,36 +1762,6 @@ class ProxyController
             $page = 1;
         }
 
-        if (isset($_GET['date_create']))
-        {
-            $date_create = htmlspecialchars($_GET['date_create']);
-        }
-
-        if (isset($_GET['package_type']))
-        {
-            $package_type = htmlspecialchars($_GET['package_type']);
-        }
-
-        if ($package_type < 0)
-        {
-            $package_type = 0;
-        }
-
-        if (isset($_GET['office']))
-        {
-            $office = htmlspecialchars($_GET['office']);
-        }
-
-        if ($office < 0)
-        {
-            $office = 0;
-        }
-
-        if ($office == OFFICE_ALL)
-        {
-            $package_type = PACKAGE_ALL;
-        }
-
         if (isset($_GET['pid']))
         {
             $pid = htmlspecialchars($_GET['pid']);
@@ -1638,11 +1770,6 @@ class ProxyController
         if (isset($_GET['rid']))
         {
             $rid = htmlspecialchars($_GET['rid']);
-        }
-
-        if (isset($_GET['user_ref']))
-        {
-            $user_ref = htmlspecialchars($_GET['user_ref']);
         }
 
         if (isset($_GET['wow']))
@@ -1670,6 +1797,11 @@ class ProxyController
             $search_date_issued = htmlspecialchars($_GET['search_date_issued']);
         }
 
+        if (isset($_GET['user_ref']))
+        {
+            $user_ref = htmlspecialchars($_GET['user_ref']);
+        }
+
         if (isset($_GET['p_id']))
         {
             $p_id = htmlspecialchars($_GET['p_id']);
@@ -1683,16 +1815,16 @@ class ProxyController
             $proxy['changed_user_id'] = $user_id;
             Proxy::deleteProxy($p_id, $proxy);
 
-            header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
-                .'&wow='.$wow.'&search='.$search.'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
+            header('Location: /proxy/person_view?'.$link_to_back.'&site_page='.$site_page.'&pid='.$pid
+                .'&rid='.$rid.'&user_ref='.$user_ref .'&wow='.$wow.'&search='.$search
+                .'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
         }
 
         if (isset($_POST['no']))
         {
-            header('Location: /proxy/person_view?track='.$track.'&site_page='.$site_page.'&date_create='.$date_create
-                .'&package_type='.$package_type.'&office='.$office.'&pid='.$pid.'&rid='.$rid.'&user_ref='.$user_ref
-                .'&wow='.$wow.'&search='.$search.'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
+            header('Location: /proxy/person_view?'.$link_to_back.'&site_page='.$site_page.'&pid='.$pid
+                .'&rid='.$rid.'&user_ref='.$user_ref .'&wow='.$wow.'&search='.$search
+                .'&search_date_issued='.$search_date_issued.'&p_pid='.$p_pid);
         }
 
         if($is_change_proxy)
