@@ -471,6 +471,64 @@ class Package
     }
 
     /*
+     * Обновить текущие точки от кого и кому
+     * @var $id int - Id посылки
+     * @var $now_points array() - текущие адреса
+     */
+    private static function updateNowAddresses($id, $now_points)
+    {
+        $sql = 'UPDATE package
+          SET
+          now_from_company_address_id = :now_from_company_address_id,
+          now_to_company_address_id = :now_to_company_address_id
+          WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':now_from_company_address_id', $now_points['now_from_company_address_id'], PDO::PARAM_INT);
+        $result->bindParam(':now_to_company_address_id', $now_points['now_to_company_address_id'], PDO::PARAM_INT);
+        $result->execute();
+    }
+
+    /*
+     * Определяем текущие точки (от кого и кому) и обновляем  их
+     * @var $pid int - Id посылки
+     * return boolean
+     */
+    public static function setNowAddresses($pid)
+    {
+        // Поулучаем полный маршрут посылки
+        $routes = Route::getPackageRoute($pid, 2);
+
+        if (count($routes) < 2)
+        {
+            return false;
+        }
+
+        $now_points['now_from_company_address_id'] = 0;
+        $now_points['now_to_company_address_id'] = 0;
+
+        for($i = count($routes); $i >= 0; $i--)
+        {
+            if ($routes[$i]['is_receive'] == 1)
+            {
+                $now_points['now_from_company_address_id'] = $routes[$i]['company_address_id'];
+                $now_points['now_to_company_address_id'] = $routes[$i+1]['company_address_id'];
+                break;
+            }
+        }
+
+        if ($now_points['now_from_company_address_id'] == 0 || $now_points['now_to_company_address_id'] == 0)
+        {
+            return false;
+        }
+
+        // Обновляем текущие точки
+        self::updateNowAddresses($pid, $now_points);
+        return true;
+    }
+
+    /*
      * Добавляем объекты посылки
      * @var $p_objects array() - элементы посыллки
      */

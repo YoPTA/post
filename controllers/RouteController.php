@@ -632,6 +632,8 @@ class RouteController
 
 
                 $receive_stat = Route::receive($rid, $receive_values);
+                Package::setNowAddresses($pid);
+
                 if ($receive_stat)
                 {
                     Notification::launchNotification($pid);

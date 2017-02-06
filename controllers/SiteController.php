@@ -339,6 +339,7 @@ class SiteController
                 $receive_values['receive_user_id'] = $user_id;
 
                 $receive_stat = Route::receive($route_without_send, $receive_values);
+                Package::setNowAddresses($package_last_id);
 
                 if ($receive_stat)
                 {
@@ -613,13 +614,6 @@ class SiteController
 
         // Подключаем файл с проверками ролей пользователя
         require_once ROOT . '/config/role_ckeck.php';
-
-        $abs_file_path = $_SERVER['DOCUMENT_ROOT'].'/temp/users/'.$user_id;
-        $file_path = $abs_file_path;
-        $barcode_filename = $file_path.'barcode';
-        $png = 'png';
-        $barcode_filetype = 'PNG';
-        $barcode_file = $barcode_filename.'.'.$png;
 
         require_once ROOT . '/views/site/test.php';
         return true;
