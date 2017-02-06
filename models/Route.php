@@ -301,6 +301,7 @@ class Route
               package.creation_datetime,
               package.receipt_datetime,
               company_address.company_id,
+              company_address.local_place_id,
               company_address.address_country AS ca_country,
               company_address.address_zip AS ca_zip,
               company_address.address_region AS ca_region,
@@ -379,9 +380,24 @@ class Route
     public static function getRouteInfo($id)
     {
         $sql = 'SELECT
-            *
+            route.id,
+            route.package_id,
+            route.company_address_id,
+            route.is_receive,
+            route.is_send,
+            route.receive_proxy_id,
+            route.receive_proxy_person_id,
+            route.receive_user_id,
+            route.send_user_id,
+            route.send_proxy_id,
+            route.send_proxy_person_id,
+            route.datetime_receive,
+            route.datetime_send,
+            route.relation_package_id,
+            company_address.local_place_id
           FROM
             route
+            INNER JOIN company_address ON (route.company_address_id = company_address.id)
           WHERE
             route.id = :id';
         $db = Database::getConnection();

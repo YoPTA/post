@@ -118,6 +118,7 @@ class RouteController
         $user = null;
         $user_id = null;
 
+        $is_admin = false; // Права администратора
         $is_send = false; // Права отправления
 
         // Подключаем файл с проверками ролей пользователя
@@ -283,11 +284,14 @@ class RouteController
         {
             $with_or_without = htmlspecialchars($_POST['with_or_without']);
         }
+        $route = Route::getRouteInfo($rid);
+        if ($route['local_place_id'] != $user['local_place_id'] && !$is_admin)
+        {
+            header('Location: /site/error');
+        }
 
         if (isset($_POST['send']))
         {
-            $route = Route::getRouteInfo($rid);
-
             if ($route['package_id'] != $pid)
             {
                 // Если посылка не соответствует маршруту
@@ -386,6 +390,7 @@ class RouteController
         $user = null;
         $user_id = null;
 
+        $is_admin = false; // Права администратора
         $is_receive = false; // Права получения
 
         // Подключаем файл с проверками ролей пользователя
@@ -551,10 +556,14 @@ class RouteController
             $with_or_without = htmlspecialchars($_POST['with_or_without']);
         }
 
+        $route = Route::getRouteInfo($rid);
+        if ($route['local_place_id'] != $user['local_place_id'] && !$is_admin)
+        {
+            header('Location: /site/error');
+        }
+
         if (isset($_POST['receive']))
         {
-            $route = Route::getRouteInfo($rid);
-
             if ($route['package_id'] != $pid)
             {
                 // Если посылка не соответствует маршруту

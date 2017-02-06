@@ -26,6 +26,7 @@ $td_id = 0;
         $is_notfinish = 0;
         $this_row = 0;
         $package_route_id = 0;
+        $local_place_id = 0;
 
         for ($i = $route_count - 1; $i >= 0; $i--)
         {
@@ -35,10 +36,12 @@ $td_id = 0;
                 if ($package_route[$i]['is_send'] == 1)
                 {
                     $package_route_id = $package_route[$i+1]['id'];
+                    $local_place_id = $package_route[$i+1]['local_place_id'];
                 }
                 else
                 {
                     $package_route_id = $package_route[$i]['id'];
+                    $local_place_id = $package_route[$i]['local_place_id'];
                 }
                 break;
             }
@@ -190,7 +193,11 @@ $td_id = 0;
 
     <br /><br />
 
-    <?php if ($is_notfinish != 0): ?>
+    <?php
+    if ($is_notfinish != 0):
+        if ($user['local_place_id'] == $local_place_id || $is_admin):
+        ?>
+
         <hr />
         <h2>Желаете <?php echo ($is_notfinish == 2) ? "подтвердить получение" : "отправить" ?>?</h2>
         <div>
@@ -204,7 +211,10 @@ $td_id = 0;
             <a href="/site/index?<?= $link_to_back ?>&page=<?= $page ?>"><button class="button one_sixteenth">Нет</button></a>
         </div>
 
-    <?php endif;//if ($is_notfinish != 0): ?>
+    <?php
+        endif; //if ($user['local_place_id'] == $local_place_id || $is_admin):
+    endif;//if ($is_notfinish != 0):
+    ?>
 
 </div>
 

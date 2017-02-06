@@ -40,7 +40,6 @@
     <file url="file://$PROJECT_DIR$/template/css/main.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/template/css/pagination.css" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/template/js/inputValidate.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/template/js/jquery-1.8.3.min.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/template/js/jquery.maskedinput.min.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/admin/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/admin/user/index.php" charset="UTF-8" />
@@ -77,6 +76,5 @@
     <file url="file://$PROJECT_DIR$/views/site/error.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/index.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/site/login.php" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/views/site/selectcompany.php" charset="UTF-8" />
   </component>
 </project>

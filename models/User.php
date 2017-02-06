@@ -90,10 +90,18 @@ class User
     public static function getUser($id)
     {
         $sql = 'SELECT
-          lastname, firstname, middlename, role_id,
-          group_id, company_address_id
-          FROM user
-          WHERE id = :id';
+          user.lastname,
+          user.firstname,
+          user.middlename,
+          user.role_id,
+          user.group_id,
+          user.company_address_id,
+          company_address.local_place_id
+        FROM
+          user
+          INNER JOIN company_address ON (user.company_address_id = company_address.id)
+        WHERE
+          user.id = :id';
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
