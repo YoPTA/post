@@ -395,26 +395,87 @@ class RouteController
 
         $errors = false;
 
-        $track = null;
+        $index_search = null; // Параметры поиска
+
         $site_page = 1;
-        $page = 1;
-        $date_create = null;
-        $package_type = 0;
-        $office = OFFICE_NOW;
+        $page = 1; // Номер страницы
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
 
         $with_or_without = 0; // С доверенным лицом или без него
 
-        $receive_values = null; // Данные об отправлении
+        $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
+        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+        $index_search['track'] = null; // Трек-номер
 
+        $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['date_create_begin'] = null; // Период поиска с
+        $index_search['date_create_end'] = null; // Период поиска по
+
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['from_or_to'] = null; // От кого/Для кого
+        $index_search['to_or_from'] = null; // Для кого/От кого
+
+        $link_to_back = '';
+
+
+        if (isset($_GET['search_type']))
+        {
+            $index_search['search_type'] = htmlspecialchars($_GET['search_type']);
+        }
 
         if (isset($_GET['track']))
         {
-            $track = htmlspecialchars($_GET['track']);
+            $index_search['track'] = htmlspecialchars(trim($_GET['track']));
+        }
+
+        if (isset($_GET['package_type']))
+        {
+            $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['date_create_begin']))
+        {
+            $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
+        }
+
+        if (isset($_GET['date_create_end']))
+        {
+            $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['from_or_to']))
+        {
+            $index_search['from_or_to'] = htmlspecialchars($_GET['from_or_to']);
+        }
+
+        if (isset($_GET['to_or_from']))
+        {
+            $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
+        }
+
+        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+        }
+        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        {
+            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
+                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
+                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&to_or_from='.$index_search['to_or_from'];
+        }
+        else
+        {
+            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
         }
 
         if (isset($_GET['site_page']))
@@ -435,21 +496,6 @@ class RouteController
             $page = 1;
         }
 
-        if (isset($_GET['date_create']))
-        {
-            $date_create = htmlspecialchars($_GET['date_create']);
-        }
-
-        if (isset($_GET['package_type']))
-        {
-            $package_type = htmlspecialchars($_GET['package_type']);
-        }
-
-        if ($package_type < 0)
-        {
-            $package_type = 0;
-        }
-
         if (isset($_GET['wow']))
         {
             $with_or_without = htmlspecialchars($_GET['wow']);
@@ -458,21 +504,6 @@ class RouteController
         if ($with_or_without <= 0 || !is_numeric($with_or_without) || $with_or_without > 2)
         {
             $with_or_without = 0;
-        }
-
-        if (isset($_GET['office']))
-        {
-            $office = htmlspecialchars($_GET['office']);
-        }
-
-        if ($office < 0)
-        {
-            $office = 0;
-        }
-
-        if ($office == OFFICE_ALL)
-        {
-            $package_type = PACKAGE_ALL;
         }
 
         if (isset($_GET['pid']))

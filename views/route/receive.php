@@ -8,7 +8,7 @@ include ROOT . '/views/layouts/header.php';
 ?>
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/route/view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>">
+        <a href="/route/view?<?= $link_to_back ?>&page=<?= $site_page ?>&pid=<?= $pid ?>">
             &#8592; Вернуться назад
         </a>
     </div>
@@ -62,7 +62,7 @@ include ROOT . '/views/layouts/header.php';
                                 </td>
                                 <td class="bg_none one_eighth" valign="top">
                                     <div class="inline bg_button" title="Выбрать доверенное лицо" style="padding: 0">
-                                        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_RECEIVE ?>&wow=<?=$with_or_without ?>&search=<?= $proxy_person['lastname'] . ' '.$proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?>">
+                                        <a href="/proxy/person_index?<?= $link_to_back ?>&site_page=<?= $site_page ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_RECEIVE ?>&wow=<?=$with_or_without ?>&search=<?= $proxy_person['lastname'] . ' '.$proxy_person['firstname'] . ' ' . $proxy_person['middlename'] ?>">
                                             <img src="/template/images/edit.png" alt="Выбрать доверенное лицо" />
                                         </a>
                                     </div><span class="right_indent negative_left_indent"></span>
@@ -119,7 +119,7 @@ include ROOT . '/views/layouts/header.php';
                                 <td class="bg_none one_eighth" valign="top">
                                     <?php if ($proxy != null && $proxy_person != null): ?>
                                         <div class="inline bg_button dinamic_content" title="Выбрать доверенность" style="padding: 0">
-                                            <a href="/proxy/person_view?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_RECEIVE ?>&wow=<?= $with_or_without ?>&search=&p_pid=<?= $proxy_person_id ?>">
+                                            <a href="/proxy/person_view?<?= $link_to_back ?>&site_page=<?= $site_page ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= USER_REFERENCE_RECEIVE ?>&wow=<?= $with_or_without ?>&search=&p_pid=<?= $proxy_person_id ?>">
                                                 <img src="/template/images/edit.png" alt="Выбрать доверенность" />
                                             </a>
                                         </div>
