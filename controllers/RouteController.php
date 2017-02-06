@@ -640,7 +640,8 @@ class RouteController
 
                 Proxy::outProxy();
                 Proxy::outProxyPerson();
-                header('Location: /site/index');
+                //header('Location: /site/index');
+                header('Location: /route/view?'.$link_to_back.'&page='.$site_page.'&pid='.$pid);
             }
         }
 
