@@ -10,22 +10,40 @@ include ROOT . '/views/layouts/header.php';
 
     <h2 align="center"><?= $pagetitle ?></h2>
     <div class="font_size_twelve" align="center">
-        <a href="/proxy/person_index?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>">
+        <a href="/proxy/person_index?<?= $link_to_back ?>&site_page=<?= $site_page ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>">
             &#8592; Вернуться к доверенным лицам
         </a>
     </div>
     <br /><br />
     <form method="GET">
         <div class="inline fl">
-            <input type="hidden" name="track" value="<?= $track ?>">
+
+            <?php if ($index_search['search_type'] == SEARCH_TYPE_TRACK): ?>
+
+                <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
+                <input type="hidden" name="track" value="<?= $index_search['track'] ?>">
+
+            <?php elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS): ?>
+
+                <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
+                <input type="hidden" name="package_type" value="<?= $index_search['package_type'] ?>">
+                <input type="hidden" name="date_create_begin" value="<?= $index_search['date_create_begin'] ?>">
+                <input type="hidden" name="date_create_end" value="<?= $index_search['date_create_end'] ?>">
+                <input type="hidden" name="search_relatively" value="<?= $index_search['search_relatively'] ?>">
+                <input type="hidden" name="from_or_to" value="<?= $index_search['from_or_to'] ?>">
+                <input type="hidden" name="to_or_from" value="<?= $index_search['to_or_from'] ?>">
+
+            <?php else:  ?>
+
+                <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
+
+            <?php endif;  ?>
+
             <input type="hidden" name="site_page" value="<?= $site_page ?>">
-            <input type="hidden" name="date_create" value="<?= $date_create ?>">
-            <input type="hidden" name="package_type" value="<?= $package_type ?>">
-            <input type="hidden" name="office" value="<?= $office ?>">
             <input type="hidden" name="pid" value="<?= $pid ?>">
-            <input type="hidden" name="rid" value="<?= $rid ?>" />
-            <input type="hidden" name="user_ref" value="<?= $user_ref ?>">
+            <input type="hidden" name="rid" value="<?= $rid ?>">
             <input type="hidden" name="wow" value="<?= $wow ?>">
+            <input type="hidden" name="user_ref" value="<?= $user_ref ?>">
             <input type="hidden" name="search" value="<?= $search ?>" />
             <input type="hidden" name="p_pid" value="<?= $p_pid ?>" />
 
@@ -35,7 +53,7 @@ include ROOT . '/views/layouts/header.php';
             <input type="submit" value="Найти" class="button one_eighth" /><span class="right_indent"></span>
         </div>
         <div class="inline fr">
-            <a class="for_button" href="/proxy/proxy_add?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
+            <a class="for_button" href="/proxy/proxy_add?<?= $link_to_back ?>&site_page=<?= $site_page ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>">
                 <input type="button" class="button one_eighth" value="Добавить" />
             </a>
         </div>
@@ -76,12 +94,12 @@ include ROOT . '/views/layouts/header.php';
                 </button>
                 <?php if ($is_change_proxy): ?>
                 <div class="bg_button inline">
-                    <a href="/proxy/proxy_edit?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
+                    <a href="/proxy/proxy_edit?<?= $link_to_back ?>&site_page=<?= $site_page ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
                         <img src="/template/images/edit.png" />
                     </a>
                 </div>
                 <div class="bg_button inline">
-                    <a href="/proxy/proxy_delete?track=<?= $track ?>&site_page=<?= $site_page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
+                    <a href="/proxy/proxy_delete?<?= $link_to_back ?>&site_page=<?= $site_page ?>&pid=<?= $pid ?>&rid=<?= $rid ?>&user_ref=<?= $user_ref ?>&wow=<?= $wow ?>&search=<?= $search ?>&p_pid=<?= $p_pid ?>&search_date_issued=<?= $search_date_issued ?>&p_id=<?= $p_list['id'] ?>" title="Редактировать доверенность">
                         <img src="/template/images/delete.png" />
                     </a>
                 </div>
