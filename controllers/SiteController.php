@@ -15,7 +15,7 @@ class SiteController
 
         $errors = false;
 
-        $companies = Company::getAllCompanies(); // Организации и адреса организаций
+        $companies = Company::getAllCompanies(1); // Организации и адреса организаций
         $only_companies = null; // Только организации
         $user_company = Company::getCompany($user['company_address_id']); // Организация пользователя
         $current = 0;

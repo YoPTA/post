@@ -272,10 +272,23 @@ class Company
 
     /*
      * Получаем все организации
+     * @var $param int - Параметр поиска
+     *
+     * Возможные параметры $param:
+     * 1 - По умолчанию
+     * 2 - Только МФЦ
+     *
      * return array()
      */
-    public static function getAllCompanies()
+    public static function getAllCompanies($param = 1)
     {
+        $where = '';
+
+        if ($param == 2)
+        {
+            $where = ' AND company.is_mfc = 1 ';
+        }
+
         $sql = 'SELECT
           company_address.id,
           company_address.company_id,
@@ -305,7 +318,8 @@ class Company
           INNER JOIN company ON (company_address.company_id = company.id)
         WHERE
           company_address.flag > 0 AND
-          company.flag > 0
+          company.flag > 0 '
+          . $where .'
         ORDER BY
           company_address.company_id';
 
