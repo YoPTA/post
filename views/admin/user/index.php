@@ -17,26 +17,53 @@ include ROOT . '/views/layouts/header.php';
     <div class="three_quarter inline font_size_twelve">
 
         <form method="GET">
-            <div class="inline fl">
-                <input type="search" name="search" placeholder="ФИО/Логин" class="quarter" value="<?= $search ?>"  /><span class="right_indent"></span>
+            <div class="inline three_quarter fl">
+                <input type="search" name="fio_or_login" placeholder="ФИО/Логин" class="half" value="<?= $search['fio_or_login'] ?>"  /><span class="right_indent"></span>
                 <input type="hidden" name="page" value="<?= $page ?>"  />
-                <select class="quarter" name="office" style="margin-left: -3px;">
-                    <option value="0" selected>Офис</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                </select><span class="right_indent"></span>
                 <input type="submit" value="Найти" class="button one_eighth" style="margin-left: -3px;" />
-            </div>
-            <span class="right_indent"></span>
-            <div class="inline fr">
-                <a href="/admin/user_add">
-                    <button class="button one_eighth" >
-                        Добавить
-                    </button>
+                <span class="right_indent"></span>
+                <?php if ($admin_rights['can_create']): ?>
+                <a href="/admin/user_add?<?= $get_params ?>" style="margin-left: -3px;">
+                    <input type="button" value="Добавить" class="button one_eighth" />
                 </a>
+                <?php endif; // if ($admin_rights['can_create']): ?>
             </div>
+            <br /><br /><br />
+
+            <div class="inline three_quarter">
+                <select class="half" id="office" name="office" data-placeholder="Не выбрано" onchange="this.form.submit();">
+
+                    <?php
+                    if (count($only_companies) > 0):
+                        foreach ($only_companies as $oc):
+                            ?>
+                            <optgroup label='<?= $oc['name'] ?>'>
+                                <?php
+                                foreach ($companies as $company):
+                                    if ($company['company_id'] == $oc['company_id']):
+                                        ?>
+                                        <option value="<?= $company['id'] ?>" <?php if ($search['office'] == $company['id']) echo 'selected'; ?> >
+                                            <?php if ($company['is_transit'] == 1): ?>
+                                                [ТРАНЗИТ]
+                                            <?php endif; //if ($company['is_transit'] == 1): ?>
+                                            <?= $string_utility->getAddressToView(3, $company); ?>
+                                        </option>
+                                        <?php
+                                    endif; // if ($company['company_id'] == $oc['company_id']):
+                                endforeach; //foreach ($companies as $company):
+                                ?>
+                            </optgroup>
+                            <?php
+                        endforeach; //foreach ($only_companies as $oc):
+                    endif; //if (count($only_companies) > 0):
+                    ?>
+
+                </select>
+            </div>
+
+            <br />
         </form>
-        <br /><br />
+
 
 
 
@@ -46,55 +73,55 @@ include ROOT . '/views/layouts/header.php';
                 <td class="quarter">
                     ФИО<div class="font_size_nine">[логин]</div>
                 </td>
-                <td class="quarter">Офис</td>
+                <td class="quarter">Роль</td>
                 <td class="one_eighth">Действие</td>
             </tr>
             <?php
             $i = 0;
-            foreach($packages as $package):
+            foreach($users as $u_item):
                 $i++;
                 $index_number++;
                 ?>
                 <tr class="presentation">
 
                     <td align="center"><?= $index_number; ?></td>
-                    <td title="<?= $package['package_note'] ?>">
-                        <a href="/route/view?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&package_type=<?= $package_type ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть маршрут">
-                            <?= $package['package_number'] ?>
-                        </a>
-                    </td>
-                    <td align="center">
-                        <div class="bg_button inline">
-                            <a href="/package/objects?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>" title="Посмотреть объекты посылки">
-                                <img src="/template/images/view_content.png">
-                            </a>
-                        </div>
-                        <span class="right_indent"></span>
-                        <div class="bg_button inline" title="Посмотреть сопроводительный лист"
-                             onclick="window.open('/site/barcode_39?track=<?= $track ?>&page=<?= $page ?>&date_create=<?= $date_create ?>&office=<?= $office ?>&pid=<?= $package['package_id'] ?>', 'new', 'width=1100,height=800,top=50,left=50')">
-                            <img src="/template/images/barcode.png">
-                        </div>
+                    <td>
+                        <?= $u_item['lastname'].' '.$u_item['firstname'].' '.$u_item['middlename'] ?>
+                        <div class="font_size_nine">[<?= $u_item['login'] ?>]</div>
                     </td>
                     <td>
-                        <div title="<?= $string_utility->getAddressToView(1, $package, 'from_'); ?>"><?= $package['from_company_name'] ?></div>
+                        <?= $u_item['role_name'] ?>
                     </td>
                     <td>
-                        <div title="<?= $string_utility->getAddressToView(1, $package, 'to_'); ?>"><?= $package['to_company_name'] ?></div>
+                        <?php if ($admin_rights['can_edit']): ?>
+                            <div class="bg_button inline">
+                                <a href="/admin/user_edit?<?= $get_params ?>" title="Редактировать пользователя">
+                                    <img src="/template/images/edit.png" />
+                                </a>
+                            </div>
+                        <?php endif //if ($admin_rights['can_edit']): ?>
+
+                        <?php if ($admin_rights['can_delete']): ?>
+
+                        <?php endif //if ($admin_rights['can_delete']): ?>
                     </td>
-                    <td align="center"><?= $date_converter->dateToString($package['package_creation_datetime']) ?></td>
-                    <td><?= $package['user_lastname'].' '.$package['user_firstname'].' '.$package['user_middlename'] ?></td>
                 </tr>
             <?php endforeach; //foreach($packages as $package): ?>
 
         </table>
         <br /><br />
-        <div class="head font_size_twelve three_quarter" align="center">Показано: <?= $i ?> из <?= $total_packages ?></div>
+        <div class="head font_size_twelve three_quarter" align="center">Показано: <?= $i ?> из <?= $total ?></div>
         <br /><br />
-        <div id="pagination" class="pagination three_quarter font_size_twelve"><?= ''// $pagination->get(); ?></div>
+        <div id="pagination" class="pagination three_quarter font_size_twelve"><?= $pagination->get(); ?></div>
 
     </div>
 
 </div>
+
+<script src="/template/css/chosen/chosen.jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#office").chosen({no_results_text: "Ничего не найдено", search_contains: true});
+</script>
 
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>

@@ -7,7 +7,7 @@ class User
      ********************* Поля класса *********************
      *******************************************************/
 
-
+    const SHOW_BY_DEFAULT = 20;
 
     /***********************************************************
      ********************** Методы класса **********************
@@ -231,5 +231,210 @@ class User
             $i++;
         }
         return $users;
+    }
+
+    /*
+     * Получаем пользователей, удовлетворяющих параметрам поиска
+     * @var $search array() - параметры поиска
+     * @var $page int - номер страницы
+     * return array()
+     */
+    public static function getUsers($search, $page = 1)
+    {
+        $where = '';
+
+        $lastname = '';
+        $firstname = '';
+        $middlename = '';
+        $login = '';
+
+        $str_segments = explode(' ', $search['fio_or_login']);
+
+        if (count($str_segments) == 3)
+        {
+            $lastname = $str_segments[0];
+            $firstname = $str_segments[1];
+            $middlename = $str_segments[2];
+            $where = ' AND (user.lastname LIKE ?
+            AND user.firstname LIKE ?
+            AND user.middlename LIKE ?) ';
+        }
+        if (count($str_segments) == 2)
+        {
+            $lastname = $str_segments[0];
+            $firstname = $str_segments[1];
+            $where = ' AND (user.lastname LIKE ?
+            AND user.firstname LIKE ?) ';
+        }
+        if (count($str_segments) == 1)
+        {
+            $lastname = $search['fio_or_login'];
+            $firstname = $search['fio_or_login'];
+            $middlename = $search['fio_or_login'];
+            $login = $search['fio_or_login'];
+            $where = ' AND (user.lastname LIKE ? OR
+            user.firstname LIKE ? OR
+            user.middlename LIKE ? OR
+            user.login LIKE ?) ';
+        }
+
+        $where .= ' AND user.company_address_id = ? ';
+
+        $page = intval($page);
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+
+        $sql = 'SELECT
+          user.lastname,
+          user.firstname,
+          user.middlename,
+          user.login,
+          user.company_address_id,
+          company.key_field AS c_key_field,
+          company.is_mfc,
+          user_role.name AS role_name,
+          company_address.address_country,
+          company_address.address_zip,
+          company_address.address_region,
+          company_address.address_area,
+          company_address.address_city,
+          company_address.address_town,
+          company_address.address_street,
+          company_address.address_home,
+          company_address.address_case,
+          company_address.address_build,
+          company_address.address_apartment,
+          company_address.is_transit,
+          user.flag,
+          company_address.local_place_id,
+          local_place.name AS local_place_name
+        FROM
+          user
+          INNER JOIN company_address ON (user.company_address_id = company_address.id)
+          INNER JOIN company ON (company_address.company_id = company.id)
+          INNER JOIN user_role ON (user.role_id = user_role.id)
+          INNER JOIN local_place ON (company_address.local_place_id = local_place.id)
+        WHERE
+          user.flag > 0 '.$where
+        .' ORDER BY user.lastname LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+
+        $lastname = '%' .$lastname. '%';
+        $firstname = '%' .$firstname. '%';
+        $middlename = '%' .$middlename. '%';
+        $login = '%' .$login. '%';
+
+        if (count($str_segments) == 3)
+        {
+            $result->execute([$lastname, $firstname, $middlename, $search['office']]);
+        }
+        if (count($str_segments) == 2)
+        {
+            $result->execute([$lastname, $firstname, $search['office']]);
+        }
+        if (count($str_segments) == 1)
+        {
+            $result->execute([$lastname, $firstname, $middlename, $login, $search['office']]);
+        }
+
+        // Получение и возврат результатов
+        $users = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $users[$i] = $row;
+            $i++;
+        }
+        return $users;
+    }
+
+    /*
+     * Получаем пользователей, удовлетворяющих параметрам поиска
+     * @var $search array() - параметры поиска
+     * return array()
+     */
+    public static function getTotalUsers($search)
+    {
+        $where = '';
+
+        $lastname = '';
+        $firstname = '';
+        $middlename = '';
+        $login = '';
+
+        $str_segments = explode(' ', $search['fio_or_login']);
+
+        if (count($str_segments) == 3)
+        {
+            $lastname = $str_segments[0];
+            $firstname = $str_segments[1];
+            $middlename = $str_segments[2];
+            $where = ' AND (user.lastname LIKE ?
+            AND user.firstname LIKE ?
+            AND user.middlename LIKE ?) ';
+        }
+        if (count($str_segments) == 2)
+        {
+            $lastname = $str_segments[0];
+            $firstname = $str_segments[1];
+            $where = ' AND (user.lastname LIKE ?
+            AND user.firstname LIKE ?) ';
+        }
+        if (count($str_segments) == 1)
+        {
+            $lastname = $search['fio_or_login'];
+            $firstname = $search['fio_or_login'];
+            $middlename = $search['fio_or_login'];
+            $login = $search['fio_or_login'];
+            $where = ' AND (user.lastname LIKE ? OR
+            user.firstname LIKE ? OR
+            user.middlename LIKE ? OR
+            user.login LIKE ?) ';
+        }
+
+        $where .= ' AND user.company_address_id = ? ';
+
+        $sql = 'SELECT
+          COUNT(*) AS row_count
+        FROM
+          user
+        WHERE
+          user.flag > 0 '.$where;
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+
+        $lastname = '%' .$lastname. '%';
+        $firstname = '%' .$firstname. '%';
+        $middlename = '%' .$middlename. '%';
+        $login = '%' .$login. '%';
+
+        if (count($str_segments) == 3)
+        {
+            $result->execute([$lastname, $firstname, $middlename, $search['office']]);
+        }
+        if (count($str_segments) == 2)
+        {
+            $result->execute([$lastname, $firstname, $search['office']]);
+        }
+        if (count($str_segments) == 1)
+        {
+            $result->execute([$lastname, $firstname, $middlename, $login, $search['office']]);
+        }
+
+        // Обращаемся к записи
+        $count = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($count) {
+            return $count['row_count'];
+        }
+        return 0;
     }
 }
