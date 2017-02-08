@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Янв 31 2017 г., 15:14
+-- Время создания: Фев 08 2017 г., 11:31
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `menu_panel` (
 --
 
 INSERT INTO `menu_panel` (`id`, `name`, `title`, `description`, `url_address`, `parent_menu_panel_id`, `menu_index`, `member`, `flag`) VALUES
-(1, 'Пользователи', 'Пользователи', 'Страница предназначена для работы с пользователями системы', '/admin/user_index?search=&page=1', 0, 1, 8, 1);
+(1, 'Пользователи', 'Пользователи', 'Страница предназначена для работы с пользователями системы', '/admin/user_index?fio_or_login=&page=1&office=1', 0, 1, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -204,6 +204,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   `to_company_address_id` int(11) NOT NULL,
   `now_from_company_address_id` int(11) NOT NULL DEFAULT '0' COMMENT 'От какого адреса направляется посылка в данный момент',
   `now_to_company_address_id` int(11) NOT NULL DEFAULT '0' COMMENT 'В какой адрес направляется посылка в данный момент',
+  `package_state` int(1) NOT NULL DEFAULT '0' COMMENT 'Состояние посылки: 0 - Не определено; 1 - Получено; 2 - Отправлено',
   `user_id` int(11) NOT NULL,
   `creation_datetime` datetime NOT NULL,
   `receipt_datetime` datetime NOT NULL,
@@ -354,8 +355,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `login` varchar(64) NOT NULL,
   `password` varchar(256) NOT NULL,
   `company_address_id` int(11) NOT NULL,
-  `role_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL COMMENT 'ID группы',
+  `role_id` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL DEFAULT '0' COMMENT 'ID группы',
   `created_datetime` datetime NOT NULL COMMENT 'Дата и время создания',
   `created_user_id` int(11) NOT NULL COMMENT 'Пользователь, создавший',
   `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
@@ -391,6 +392,7 @@ CREATE TABLE IF NOT EXISTS `user_group` (
 --
 
 INSERT INTO `user_group` (`id`, `name`, `description`, `member`, `flag`) VALUES
+(0, 'Нет', 'Нет', 0, 0),
 (1, 'Пробный', 'CAN_CREATE, CAN_DELETE_ALL, CANE_EDIT_ALL', 9, 1);
 
 -- --------------------------------------------------------
