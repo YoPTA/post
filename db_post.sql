@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Фев 08 2017 г., 11:31
+-- Время создания: Фев 09 2017 г., 10:04
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -357,11 +357,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `company_address_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL DEFAULT '0',
   `group_id` int(11) NOT NULL DEFAULT '0' COMMENT 'ID группы',
-  `created_datetime` datetime NOT NULL COMMENT 'Дата и время создания',
-  `created_user_id` int(11) NOT NULL COMMENT 'Пользователь, создавший',
-  `changed_datetime` datetime NOT NULL COMMENT 'Дата и время изменения',
-  `changed_user_id` int(11) NOT NULL COMMENT 'Пользователь, изменивший',
-  `flag` int(1) NOT NULL
+  `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
+  `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
+  `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
+  `changed_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, изменивший',
+  `flag` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
