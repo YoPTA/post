@@ -87,6 +87,7 @@ class AdminuserController
 
     public function actionAdd()
     {
+        $user_id = null;
         $is_admin = false;
         $admin_rights = null;
         $admin_menu_panel = Menu_Panel::getMenuPanel();
@@ -97,7 +98,38 @@ class AdminuserController
         $charsToReplace = include (ROOT . '/components/charsToReplace.php');
         $validator = new Validate();
 
+        $date_time = new DateTime();
+
         $string_utility = new String_Utility();
+
+        $user_roles = User_Role::getRoles(); // Получаем роли, которые есть в базе
+        $user_groups = User_Group::getGroups(); // Получаем группы, которые есть в базе
+        $companies = Company::getAllCompanies(2); // Организации и адреса организаций
+        $only_companies = null; // Только организации
+        $current = 0;
+
+        if (count($companies) > 0)
+        {
+            for ($i = 0; $i < count($companies); $i++)
+            {
+                if (count($only_companies) < 1)
+                {
+                    $only_companies[] = $companies[$i];
+                }
+                foreach ($only_companies as $oc)
+                {
+                    if ($oc['company_id'] == $companies[$i]['company_id'])
+                    {
+                        $current = 1;
+                    }
+                }
+                if ($current == 0)
+                {
+                    $only_companies[] = $companies[$i];
+                }
+                $current = 0;
+            }
+        }
 
         $errors = false;
 
@@ -129,7 +161,6 @@ class AdminuserController
             $search['office'] = htmlspecialchars($_GET['office']);
         }
 
-
         $get_params = 'fio_or_login='.$search['fio_or_login'].'&page='.$page.'&office='.$search['office'];
 
 
@@ -158,6 +189,98 @@ class AdminuserController
             $user['middlename'] = htmlspecialchars(trim($validator->my_ucwords($_POST['middlename'])));
         }
 
+        if (isset($_POST['login']))
+        {
+            $user['login'] = htmlspecialchars(trim($_POST['login']));
+        }
+
+        if (isset($_POST['password']))
+        {
+            $user['password'] = htmlspecialchars(trim($_POST['password']));
+        }
+
+        if (isset($_POST['password_confirm']))
+        {
+            $user['password_confirm'] = htmlspecialchars(trim($_POST['password_confirm']));
+        }
+
+        if (isset($_POST['company_address_id']))
+        {
+            $user['company_address_id'] = htmlspecialchars($_POST['company_address_id']);
+        }
+
+        if (isset($_POST['role_id']))
+        {
+            $user['role_id'] = htmlspecialchars($_POST['role_id']);
+        }
+
+        if (isset($_POST['group_id']))
+        {
+            $user['group_id'] = htmlspecialchars($_POST['group_id']);
+        }
+
+        if (isset($_POST['add']))
+        {
+            if (!Validate::checkStr($user['lastname'], 128))
+            {
+                $errors['lastname'] = 'Фамилия не может быть такой длины';
+            }
+
+            if (!Validate::checkStr($user['firstname'], 64))
+            {
+                $errors['firstname'] = 'Имя не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($user['middlename'], 128))
+            {
+                $errors['middlename'] = 'Отчество не может быть такой длины';
+            }
+
+            if (!Validate::checkStr($user['login'], 64))
+            {
+                $errors['login'] = 'Логин не может быть такой длины';
+            }
+
+            if (User::checkUserLogin($user['login']))
+            {
+                $errors['login'] = 'Указанный логин уже существует';
+            }
+
+            if (!Validate::checkPassword($user['password']))
+            {
+                $errors['password'] = 'Пароль от 6 до 20 английских символов или цифр';
+            }
+
+            if ($user['password'] !== $user['password_confirm'])
+            {
+                $errors['password_confirm'] = 'Пароли не совпадают';
+            }
+
+            if (!Company::checkCompanyAddress($user['company_address_id']))
+            {
+                $errors['company_address_id'] = 'Попытка указать не существующий адрес';
+            }
+
+            if (!User_Role::checkUserRole($user['role_id']))
+            {
+                $errors['role_id'] = 'Попытка указать не существующую роль';
+            }
+
+            if (!User_Group::checkUserGroup($user['group_id']))
+            {
+                $errors['group_id'] = 'Попытка указать не существующую группу';
+            }
+
+            if ($errors == false)
+            {
+                $user['password'] = md5($user['password']);
+                $user['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $user['created_user_id'] = $user_id;
+
+                User::addUser($user);
+                header('Location: /admin/user_index?'.$get_params);
+            }
+        }
 
         if($admin_rights['can_create'])
         {
@@ -169,4 +292,6 @@ class AdminuserController
             header('Location: /site/error');
         }
     }
+
+
 }

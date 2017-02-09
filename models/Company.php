@@ -707,4 +707,26 @@ class Company
         }
         return false;
     }
+
+    /*
+     * Проверяем, имеется ли адрес организации в БД
+     * @var $id int - ID адреса организации
+     * return bolean
+     */
+    public static function checkCompanyAddress($id)
+    {
+        $sql = 'SELECT id FROM company_address WHERE id = :id AND flag > 0 ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        $company_address = $result->fetch();
+
+        if($company_address)
+        {
+            return true;
+        }
+        return false;
+    }
 }

@@ -84,3 +84,31 @@ function InputCountCanEmpty(item, input_type, lenght_value, id_item_correct, aco
         InputNormal(item);
     }
 }
+
+/*
+Проверяет пароль на совпадение
+Поле не может быть пустым
+
+var item1 string - id поля, с которым сравнивают
+var item2 string - id поля, которое сравнивают
+var input_type  string - размер поля (указывается в классе)
+var id_item_correct string - id, где будет отображено сообщение об ошибке
+*/
+function CompareFields(item1, item2, input_type, id_item_correct) {
+    // длина поля, с которым сравнивают
+    var item1_lenght = document.getElementById(item1).value.length;
+
+    // проверяем совпадают ли значения введеных паролей
+    if (document.getElementById(item2).value == document.getElementById(item1).value) {
+        // если совпадают, сообщаем об этом
+        document.getElementById(id_item_correct).innerHTML = 'Совпадают';
+        document.getElementById(id_item_correct).className = 'correct';
+        InputNormal(item2);
+    }
+    else if (document.getElementById(item1).value.length > 0) {
+        document.getElementById(id_item_correct).innerHTML = 'Не совпадают';
+        document.getElementById(id_item_correct).className = 'acorrect';
+        InputError(item2, input_type);
+    }
+
+}

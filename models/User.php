@@ -437,4 +437,58 @@ class User
         }
         return 0;
     }
+
+    /*
+     * Проверить существует ли такой логин
+     * @var $login string - логин
+     * return boolean
+     */
+    public static function checkUserLogin($login)
+    {
+        $sql = 'SELECT id FROM user WHERE login = :login';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':login', $login, PDO::PARAM_STR);
+        $result->execute();
+
+        $user = $result->fetch();
+
+        if($user)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*
+     * Добавляем пользователя
+     * @var $user arrray() - информация о пользователе
+     * return int OR boolean
+     */
+    public static function addUser($user)
+    {
+        $sql = 'INSERT INTO user (lastname, firstname, middlename, login, password, company_address_id,
+          role_id, group_id, created_datetime, created_user_id, flag)
+          VALUES (:lastname, :firstname, :middlename, :login, :password, :company_address_id,
+          :role_id, :group_id, :created_datetime, :created_user_id, 1)';
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':lastname', $user['lastname'], PDO::PARAM_STR);
+        $result->bindParam(':firstname', $user['firstname'], PDO::PARAM_STR);
+        $result->bindParam(':middlename', $user['middlename'], PDO::PARAM_STR);
+        $result->bindParam(':login', $user['login'], PDO::PARAM_STR);
+        $result->bindParam(':password', $user['password'], PDO::PARAM_STR);
+        $result->bindParam(':company_address_id', $user['company_address_id'], PDO::PARAM_INT);
+        $result->bindParam(':role_id', $user['role_id'], PDO::PARAM_INT);
+        $result->bindParam(':group_id', $user['group_id'], PDO::PARAM_INT);
+        $result->bindParam(':created_datetime', $user['created_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':created_user_id', $user['created_user_id'], PDO::PARAM_INT);
+
+        if($result->execute())
+        {
+            return $db->lastInsertId();
+        }
+        return false;
+    }
 }

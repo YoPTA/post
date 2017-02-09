@@ -35,6 +35,50 @@ class User_Role
     }
 
     /*
+     * Получаем все роли
+     * return array()
+     */
+    public static function getRoles()
+    {
+        $sql = 'SELECT * FROM user_role';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->execute();
+
+        // Получение и возврат результатов
+        $roles = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $roles[$i] = $row;
+            $i++;
+        }
+        return $roles;
+    }
+
+    /*
+     * Проверяем запись на существование
+     * @var $id int - ID роли
+     * return boolean
+     */
+    public static function checkUserRole($id)
+    {
+        $sql = 'SELECT id FROM user_role WHERE id = :id ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        $user_role = $result->fetch();
+
+        if($user_role)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    /*
      * Проверяем является ли пользователь администратором
      * Работает со статическим приватным полем $roles.
      * return boolean

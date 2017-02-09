@@ -3,7 +3,10 @@
 return [
 
     'admin/index' => 'admin/index',
+
     'admin/user_index' => 'adminuser/index',
+    'admin/user_add' => 'adminuser/add',
+
 
     'company/company_address_index' => 'company/companyaddressindex',
     'company/company_address_add' => 'company/companyaddressadd',

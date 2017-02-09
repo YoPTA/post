@@ -37,6 +37,51 @@ class User_Group
     }
 
     /*
+     * Получаем все группы
+     * return array()
+     */
+    public static function getGroups()
+    {
+        $sql = 'SELECT * FROM user_group';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->execute();
+
+        // Получение и возврат результатов
+        $groups = null;
+        $i = 0;
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+            $groups[$i] = $row;
+            $i++;
+        }
+        return $groups;
+    }
+
+    /*
+     * Проверяем запись на существование
+     * @var $id int - ID группы
+     * return boolean
+     */
+    public static function checkUserGroup($id)
+    {
+        $sql = 'SELECT id FROM user_group WHERE id = :id ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        $user_group = $result->fetch();
+
+        if($user_group)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    /*
      * Право создания
      * return boolean
      */
