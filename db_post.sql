@@ -370,8 +370,8 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, 'Нет', '', '', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 'Романов', 'Сергей', 'Сергеевич', 'romanovss', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1),
-(2, 'Поцалов', 'Сергей', 'Алексеевич', 'pocalovsa', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 1);
+(1, 'Романов', 'Сергей', 'Сергеевич', 'romanovss', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
+(2, 'Поцалов', 'Сергей', 'Алексеевич', 'pocalovsa', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -393,7 +393,7 @@ CREATE TABLE IF NOT EXISTS `user_group` (
 
 INSERT INTO `user_group` (`id`, `name`, `description`, `member`, `flag`) VALUES
 (0, 'Нет', 'Нет', 0, 0),
-(1, 'Пробный', 'CAN_CREATE, CAN_DELETE_ALL, CANE_EDIT_ALL', 9, 1);
+(1, 'Пробный', 'CAN_CREATE, CAN_DELETE_ALL, CANE_EDIT_ALL', 15, 1);
 
 -- --------------------------------------------------------
 
