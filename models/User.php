@@ -93,9 +93,11 @@ class User
           user.lastname,
           user.firstname,
           user.middlename,
+          user.login,
           user.role_id,
           user.group_id,
           user.company_address_id,
+          user.flag,
           company_address.local_place_id
         FROM
           user
@@ -289,6 +291,7 @@ class User
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
 
         $sql = 'SELECT
+          user.id,
           user.lastname,
           user.firstname,
           user.middlename,
@@ -490,5 +493,63 @@ class User
             return $db->lastInsertId();
         }
         return false;
+    }
+
+    /*
+     * Изменяем данные пользователя
+     * @var $id int - ID пользователя
+     * @var $user array() - информация о пользователе
+     * @var $param int - параметр, указывающий, какие данные пользователя подлежат изменению
+     *
+     * Возможные вариант $param:
+     * 1 - Информацию о пользователе
+     * 2 - Пароль пользователя
+     */
+    public static function updateUser($id, $user, $param = 1)
+    {
+        $sql = '';
+        if ($param == 1)
+        {
+            $sql = 'UPDATE user
+            SET lastname = :lastname, firstname = :firstname, middlename = :middlename,
+              login = :login, company_address_id = :company_address_id, role_id = :role_id,
+              group_id = :group_id, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+            WHERE id = :id AND flag = 1';
+        }
+        elseif ($param == 2)
+        {
+            $sql = 'UPDATE user
+            SET  password = :password, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+            WHERE id = :id AND flag = 1';
+        }
+        else
+        {
+            return false;
+        }
+
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if ($param == 1)
+        {
+            $result->bindParam(':lastname', $user['lastname'], PDO::PARAM_STR);
+            $result->bindParam(':firstname', $user['firstname'], PDO::PARAM_STR);
+            $result->bindParam(':middlename', $user['middlename'], PDO::PARAM_STR);
+            $result->bindParam(':login', $user['login'], PDO::PARAM_STR);
+            $result->bindParam(':company_address_id', $user['company_address_id'], PDO::PARAM_INT);
+            $result->bindParam(':role_id', $user['role_id'], PDO::PARAM_INT);
+            $result->bindParam(':group_id', $user['group_id'], PDO::PARAM_INT);
+        }
+        elseif ($param == 2)
+        {
+            $result->bindParam(':password', $user['password'], PDO::PARAM_STR);
+        }
+
+        $result->bindParam(':changed_datetime', $user['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $user['changed_user_id'], PDO::PARAM_INT);
+
+        return $result->execute();
     }
 }

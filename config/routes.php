@@ -6,6 +6,7 @@ return [
 
     'admin/user_index' => 'adminuser/index',
     'admin/user_add' => 'adminuser/add',
+    'admin/user_edit' => 'adminuser/edit',
 
 
     'company/company_address_index' => 'company/companyaddressindex',
