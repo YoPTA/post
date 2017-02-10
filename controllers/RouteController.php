@@ -285,9 +285,12 @@ class RouteController
             $with_or_without = htmlspecialchars($_POST['with_or_without']);
         }
         $route = Route::getRouteInfo($rid);
-        if ($route['local_place_id'] != $user['local_place_id'] && !$is_admin)
+        if ($route['local_place_id'] != $user['local_place_id'])
         {
-            header('Location: /site/error');
+            if (!$is_admin)
+            {
+                header('Location: /site/error');
+            }
         }
 
         if (isset($_POST['send']))
@@ -557,9 +560,12 @@ class RouteController
         }
 
         $route = Route::getRouteInfo($rid);
-        if ($route['local_place_id'] != $user['local_place_id'] && !$is_admin)
+        if ($route['local_place_id'] != $user['local_place_id'])
         {
-            header('Location: /site/error');
+            if (!$is_admin)
+            {
+                header('Location: /site/error');
+            }
         }
 
         if (isset($_POST['receive']))
