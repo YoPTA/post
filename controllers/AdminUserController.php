@@ -494,4 +494,110 @@ class AdminuserController
             header('Location: /site/error');
         }
     }
+
+    public function actionPassword()
+    {
+        $user_id = null;
+        $is_admin = false;
+        $admin_rights = null;
+        $admin_menu_panel = Menu_Panel::getMenuPanel();
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        // Подключаем класс со склонениями имен
+        require_once ROOT.'/components/NameCaseLib/NCLNameCaseRu.php';
+        $name_case = new NCLNameCaseRu();
+
+        $validator = new Validate();
+
+        $date_time = new DateTime();
+
+        $errors = false;
+
+        $user = null; // Информация о пользователе
+        $search = null; // Параметры поиска
+        $uid = null; // Id пользователя
+        $search['fio_or_login'] = null; // ФИО или Логин
+        $search['office'] = 1; // Офис
+
+        $page = 1; // Номер страницы
+        $get_params = '';
+
+        if (isset($_GET['fio_or_login']))
+        {
+            $search['fio_or_login'] = htmlspecialchars(trim($_GET['fio_or_login']));
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['office']))
+        {
+            $search['office'] = htmlspecialchars($_GET['office']);
+        }
+
+        $get_params = 'fio_or_login='.$search['fio_or_login'].'&page='.$page.'&office='.$search['office'];
+
+        if (isset($_GET['uid']))
+        {
+            $uid = htmlspecialchars($_GET['uid']);
+        }
+
+        $user = User::getUser($uid);
+
+        if (isset($_POST['password']))
+        {
+            $user['password'] = htmlspecialchars(trim($_POST['password']));
+        }
+
+        if (isset($_POST['password_confirm']))
+        {
+            $user['password_confirm'] = htmlspecialchars(trim($_POST['password_confirm']));
+        }
+
+        if ($user['flag'] == 2 && $uid != $user_id)
+        {
+            $errors['flag'] = 'Вы не сможете редактировать информацию данного пользователя';
+        }
+
+        if (isset($_POST['edit']))
+        {
+            if (!Validate::checkPassword($user['password']))
+            {
+                $errors['password'] = 'Пароль от 6 до 20 английских символов или цифр';
+            }
+
+            if ($user['password'] !== $user['password_confirm'])
+            {
+                $errors['password_confirm'] = 'Пароли не совпадают';
+            }
+
+            if ($errors == false)
+            {
+                $user['password'] = md5($user['password']);
+                $user['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $user['changed_user_id'] = $user_id;
+                User::updateUser($uid, $user, 2);
+                header('Location: /admin/user_index?'.$get_params);
+            }
+        }
+
+
+        if($admin_rights['can_change_user'] && $admin_rights['can_edit'])
+        {
+            require_once ROOT . '/views/admin/user/password.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
 }

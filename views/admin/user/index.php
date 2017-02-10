@@ -100,6 +100,11 @@ include ROOT . '/views/layouts/header.php';
                                         <img src="/template/images/edit.png" />
                                     </a>
                                 </div>
+                                <div class="bg_button inline">
+                                    <a href="/admin/user_password?<?= $get_params ?>&uid=<?= $u_item['id'] ?>" title="Изменить пароль пользователя">
+                                        <img src="/template/images/lock.png" />
+                                    </a>
+                                </div>
                             <?php endif //if ($admin_rights['can_edit']): ?>
 
                             <?php if ($admin_rights['can_delete']): ?>
