@@ -420,7 +420,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 
 INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_change_company`, `is_receive`, `is_send`, `is_notification`, `is_admin`, `flag`) VALUES
 (0, 'Нет', 0, 0, 0, 0, 0, 0, 0, 0),
-(1, 'Специалист', 1, 1, 1, 0, 1, 1, 0, 0),
+(1, 'Специалист', 1, 1, 1, 1, 1, 1, 0, 0),
 (2, 'Админ', 1, 1, 1, 1, 1, 1, 1, 0),
 (3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0, 0, 0);
 
