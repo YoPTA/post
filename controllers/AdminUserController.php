@@ -425,7 +425,7 @@ class AdminuserController
             $user['group_id'] = htmlspecialchars($_POST['group_id']);
         }
 
-        if ($user['flag'] == 2)
+        if ($user['flag'] == 2 && $uid != $user_id)
         {
             $errors['flag'] = 'Вы не сможете редактировать информацию данного пользователя';
         }

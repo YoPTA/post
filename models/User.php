@@ -508,19 +508,25 @@ class User
     public static function updateUser($id, $user, $param = 1)
     {
         $sql = '';
+        $where = '';
+
+        if ($user['changed_user_id'] != $id)
+        {
+            $where .= ' AND flag = 1 ';
+        }
         if ($param == 1)
         {
             $sql = 'UPDATE user
             SET lastname = :lastname, firstname = :firstname, middlename = :middlename,
               login = :login, company_address_id = :company_address_id, role_id = :role_id,
               group_id = :group_id, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
-            WHERE id = :id AND flag = 1';
+            WHERE id = :id '.$where;
         }
         elseif ($param == 2)
         {
             $sql = 'UPDATE user
             SET  password = :password, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
-            WHERE id = :id AND flag = 1';
+            WHERE id = :id '. $where;
         }
         else
         {
