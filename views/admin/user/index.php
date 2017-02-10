@@ -93,17 +93,19 @@ include ROOT . '/views/layouts/header.php';
                         <?= $u_item['role_name'] ?>
                     </td>
                     <td>
-                        <?php if ($admin_rights['can_edit']): ?>
-                            <div class="bg_button inline">
-                                <a href="/admin/user_edit?<?= $get_params ?>" title="Редактировать пользователя">
-                                    <img src="/template/images/edit.png" />
-                                </a>
-                            </div>
-                        <?php endif //if ($admin_rights['can_edit']): ?>
+                        <?php if ($admin_rights['can_change_user']): ?>
+                            <?php if ($admin_rights['can_edit']): ?>
+                                <div class="bg_button inline">
+                                    <a href="/admin/user_edit?<?= $get_params ?>&uid=<?= $u_item['id'] ?>" title="Редактировать пользователя">
+                                        <img src="/template/images/edit.png" />
+                                    </a>
+                                </div>
+                            <?php endif //if ($admin_rights['can_edit']): ?>
 
-                        <?php if ($admin_rights['can_delete']): ?>
+                            <?php if ($admin_rights['can_delete']): ?>
 
-                        <?php endif //if ($admin_rights['can_delete']): ?>
+                            <?php endif //if ($admin_rights['can_delete']): ?>
+                        <?php endif; // if ($admin_rights['can_change_user']): ?>
                     </td>
                 </tr>
             <?php endforeach; //foreach($packages as $package): ?>

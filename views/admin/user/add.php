@@ -79,7 +79,8 @@ include ROOT . '/views/layouts/header.php';
                    onblur="CompareFields('password', 'password_confirm', 'quarter', 'password_confirm_correct')"
                    onkeyup="CompareFields('password', 'password_confirm', 'quarter', 'password_confirm_correct')"
                 />
-        </div><br /><br />
+        </div>
+    </div><br /><br />
 
     <label for="company_address_id">Адрес организации*</label><br />
     <select class="half" id="company_address_id" name="company_address_id" data-placeholder="Не выбрано">
