@@ -20,7 +20,7 @@ class RouteController
 
         $index_search = null; // Параметры поиска
 
-        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
         $page = 1; // Номер страницы
         $index_search['track'] = null; // Трек-номер
 
@@ -28,7 +28,7 @@ class RouteController
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
-        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
         $index_search['from_or_to'] = null; // От кого/Для кого
         $index_search['to_or_from'] = null; // Для кого/От кого
 
@@ -97,7 +97,7 @@ class RouteController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
         }
 
         $pid = null; // Id посылки
@@ -142,7 +142,7 @@ class RouteController
         $send_values = null; // Данные об отправлении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
         $page = 1; // Номер страницы
         $index_search['track'] = null; // Трек-номер
 
@@ -150,7 +150,7 @@ class RouteController
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
-        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
         $index_search['from_or_to'] = null; // От кого/Для кого
         $index_search['to_or_from'] = null; // Для кого/От кого
 
@@ -210,7 +210,7 @@ class RouteController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
         }
 
         if (isset($_GET['site_page']))
@@ -416,14 +416,14 @@ class RouteController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
-        $index_search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
         $index_search['from_or_to'] = null; // От кого/Для кого
         $index_search['to_or_from'] = null; // Для кого/От кого
 
@@ -483,7 +483,7 @@ class RouteController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_NONE;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
         }
 
         if (isset($_GET['site_page']))

@@ -13,7 +13,6 @@ include ROOT . '/views/layouts/header.php';
                 <div class="inline">
                     <label for="search_type">Способ поиска посылки</label><br />
                     <select class="quarter" id="search_type" name="search_type" onchange="this.form.submit();">
-                        <option value="<?= SEARCH_TYPE_NONE ?>" <?php if ($search['search_type'] == SEARCH_TYPE_NONE) echo 'selected'; ?> >Не выбрано</option>
                         <option value="<?= SEARCH_TYPE_TRACK ?>" <?php if ($search['search_type'] == SEARCH_TYPE_TRACK) echo 'selected'; ?> >По трек-номеру</option>
                         <option value="<?= SEARCH_TYPE_ADDRESS ?>" <?php if ($search['search_type'] == SEARCH_TYPE_ADDRESS) echo 'selected'; ?> >По адресу</option>
                     </select><span class="right_indent"></span>
@@ -55,7 +54,6 @@ include ROOT . '/views/layouts/header.php';
                 <div class="inline">
                     <label for="search_relatively">Поиск посылки относительно</label><br />
                     <select class="quarter" id="search_relatively" name="search_relatively" onchange="this.form.submit();">
-                        <option value="<?= SEARCH_RELATIVELY_NONE ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_NONE) echo 'selected'; ?> >Не выбрано</option>
                         <option value="<?= SEARCH_RELATIVELY_FROM_OR_TO ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO) echo 'selected'; ?> >Отправителя/Получателя</option>
                         <option value="<?= SEARCH_RELATIVELY_CURRENT ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT) echo 'selected'; ?> >Текущего местоположения</option>
                     </select><span class="right_indent"></span>
@@ -63,10 +61,10 @@ include ROOT . '/views/layouts/header.php';
                     <br />
                     <br />
 
-                <?php if ($search['search_relatively'] != SEARCH_RELATIVELY_NONE): ?>
 
 
-                    <?php if ($is_admin): ?>
+
+                <?php if ($is_admin): ?>
                     <div class="inline">
                         <label for="from_or_to">
                             <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
@@ -154,8 +152,6 @@ include ROOT . '/views/layouts/header.php';
 
                         </select>
                     </div>
-
-                <?php endif; //if ($search['search_relatively'] != SEARCH_RELATIVELY_NONE): ?>
 
         <?php endif; //if ($search_type == SEARCH_TYPE_ADDRESS): ?>
 

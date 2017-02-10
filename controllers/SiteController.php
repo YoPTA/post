@@ -47,7 +47,7 @@ class SiteController
 
         $search = null; // Параметры поиска
 
-        $search['search_type'] = SEARCH_TYPE_NONE; // Параметр поиска
+        $search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
         $page = 1; // Номер страницы
         $search['track'] = null; // Трек-номер
 
@@ -59,7 +59,7 @@ class SiteController
         $search['d_end'] = null; // Дата По для поиска в БД
 
 
-        $search['search_relatively'] = SEARCH_RELATIVELY_NONE; // Относительное местоположение
+        $search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
         $search['from_or_to'] = null; // От кого/Для кого
         $search['to_or_from'] = null; // Для кого/От кого
 
@@ -135,7 +135,7 @@ class SiteController
         }
         else
         {
-            $link_get_param .= 'search_type='.SEARCH_TYPE_NONE.'&page=1';
+            $link_get_param .= 'search_type='.SEARCH_TYPE_TRACK.'&page=1';
         }
 
         $packages = Package::getPackages($search, $page);
