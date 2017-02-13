@@ -63,7 +63,19 @@ class Package
                 return false;
             }
 
-            $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY ) ';
+            if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY )
+                AND package.flag = 2 ';
+            }
+            elseif ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
+            {
+                $where .= ' package.flag = 1 ';
+            }
+            else
+            {
+                return false;
+            }
 
             if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO)
             {
@@ -117,6 +129,7 @@ class Package
           package.number AS package_number,
           package.note AS package_note,
           package.id AS package_id,
+          package.package_state,
           package.creation_datetime AS package_creation_datetime
         FROM
           package
@@ -137,16 +150,33 @@ class Package
         }
         elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
-            if ($search['package_type'] == PACKAGE_OUTPUT)
+            if ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
             {
-                $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
+                if ($search['package_type'] == PACKAGE_OUTPUT)
+                {
+                    $result->execute([$search['from_or_to'], $search['to_or_from']]);
+                }
+                if ($search['package_type'] == PACKAGE_INPUT)
+                {
+                    $result->execute([$search['to_or_from'], $search['from_or_to']]);
+                }
             }
-            if ($search['package_type'] == PACKAGE_INPUT)
+            elseif ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
-                $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
+                if ($search['package_type'] == PACKAGE_OUTPUT)
+                {
+                    $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
+                }
+                if ($search['package_type'] == PACKAGE_INPUT)
+                {
+                    $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
+                }
+            }
+            else
+            {
+                return false;
             }
         }
-
         // Получение и возврат результатов
         $packages = null;
         $i = 0;
@@ -227,7 +257,19 @@ class Package
                 return 0;
             }
 
-            $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY ) ';
+            if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY )
+                AND package.flag = 2 ';
+            }
+            elseif ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
+            {
+                $where .= ' package.flag = 1 ';
+            }
+            else
+            {
+                return false;
+            }
 
             if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO)
             {
@@ -258,13 +300,31 @@ class Package
         }
         elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
-            if ($search['package_type'] == PACKAGE_OUTPUT)
+            if ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
             {
-                $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
+                if ($search['package_type'] == PACKAGE_OUTPUT)
+                {
+                    $result->execute([$search['from_or_to'], $search['to_or_from']]);
+                }
+                if ($search['package_type'] == PACKAGE_INPUT)
+                {
+                    $result->execute([$search['to_or_from'], $search['from_or_to']]);
+                }
             }
-            if ($search['package_type'] == PACKAGE_INPUT)
+            elseif ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
-                $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
+                if ($search['package_type'] == PACKAGE_OUTPUT)
+                {
+                    $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
+                }
+                if ($search['package_type'] == PACKAGE_INPUT)
+                {
+                    $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
+                }
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -454,14 +514,14 @@ class Package
     }
 
     /*
-     * Обновить дату получения посылки
+     * Устанавливаем посылку в режим - доставлено
      * @var $id int - id посылки
      * @var $receipt_datetime string - Дата и время получения
      */
-    public static function updateReceiptDatetime($id, $receipt_datetime)
+    public static function setDelivered($id, $receipt_datetime)
     {
         $sql = 'UPDATE package
-          SET receipt_datetime = :receipt_datetime
+          SET receipt_datetime = :receipt_datetime, flag = 2
           WHERE id = :id';
         $db = Database::getConnection();
         $result = $db->prepare($sql);

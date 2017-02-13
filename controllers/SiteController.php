@@ -52,6 +52,8 @@ class SiteController
         $search['track'] = null; // Трек-номер
 
         $search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+
+        $search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние посылки
         $search['date_create_begin'] = $date_time->format('01.m.Y'); // Период поиска с
         $search['date_create_end'] = $date_time->format('t.m.Y'); // Период поиска по
 
@@ -86,6 +88,11 @@ class SiteController
         if (isset($_GET['package_type']))
         {
             $search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['active_flag']))
+        {
+            $search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
         if (isset($_GET['search_relatively']))
@@ -129,9 +136,9 @@ class SiteController
         elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
             $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&package_type='. $search['package_type']
-                .'&date_create_begin='. $search['date_create_begin'] .'&date_create_end='. $search['date_create_end']
-                .'&search_relatively='. $search['search_relatively'] .'&from_or_to='. $search['from_or_to']
-                .'&to_or_from='.$search['to_or_from'];
+                .'&active_flag='. $search['active_flag'] .'&date_create_begin='. $search['date_create_begin']
+                .'&date_create_end='. $search['date_create_end'] .'&search_relatively='. $search['search_relatively']
+                .'&from_or_to='. $search['from_or_to'] .'&to_or_from='.$search['to_or_from'];
         }
         else
         {

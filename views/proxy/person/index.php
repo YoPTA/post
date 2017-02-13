@@ -26,6 +26,7 @@ include ROOT . '/views/layouts/header.php';
 
                 <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
                 <input type="hidden" name="package_type" value="<?= $index_search['package_type'] ?>">
+                <input type="hidden" name="active_flag" value="<?= $index_search['active_flag'] ?>">
                 <input type="hidden" name="date_create_begin" value="<?= $index_search['date_create_begin'] ?>">
                 <input type="hidden" name="date_create_end" value="<?= $index_search['date_create_end'] ?>">
                 <input type="hidden" name="search_relatively" value="<?= $index_search['search_relatively'] ?>">

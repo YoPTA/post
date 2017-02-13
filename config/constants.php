@@ -67,3 +67,7 @@ define('SEARCH_TYPE_ADDRESS', 2); // По адресу
 define('SEARCH_RELATIVELY_NONE', 0); // Не выбрано
 define('SEARCH_RELATIVELY_FROM_OR_TO', 1); // Отправителя/Получателя
 define('SEARCH_RELATIVELY_CURRENT', 2); // Текущего местоположения
+
+// Флаг активности
+define('ACTIVE_FLAG_ACTIVE', 1); // Активные
+define('ACTIVE_FLAG_ARCHIVE', 2); // В архиве

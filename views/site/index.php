@@ -37,26 +37,48 @@ include ROOT . '/views/layouts/header.php';
                     <select class="quarter" id="" name="package_type" onchange="this.form.submit();">
                         <option value="<?= PACKAGE_INPUT ?>" <?php if ($search['package_type'] == PACKAGE_INPUT) echo 'selected'; ?> >Входящие</option>
                         <option value="<?= PACKAGE_OUTPUT ?>" <?php if ($search['package_type'] == PACKAGE_OUTPUT) echo 'selected'; ?> >Исходящие</option>
-                    </select><span class="right_indent"></span>
-                </div>
+                    </select>
+                </div><span class="right_indent"></span>
 
                 <div class="inline">
-                    <label for="date_create_begin">Период создания посылки с</label><br />
-                    <input type="text" id="date_create_begin" name="date_create_begin" value="<?= $search['date_create_begin'] ?>" class="tcal quarter" placeholder="с" /><span class="right_indent"></span>
-                </div>
+                    <label for="active_flag">Состояние посылки</label><br />
+                    <select class="quarter" id="" name="active_flag" onchange="this.form.submit();">
+                        <option value="<?= ACTIVE_FLAG_ACTIVE ?>" <?php if ($search['active_flag'] == PACKAGE_INPUT) echo 'selected'; ?> >Активные</option>
+                        <option value="<?= ACTIVE_FLAG_ARCHIVE ?>" <?php if ($search['active_flag'] == PACKAGE_OUTPUT) echo 'selected'; ?> >В архиве</option>
+                    </select>
+                </div><span class="right_indent"></span>
 
-                <div class="inline">
-                    <label for="date_create_end">Период создания посылки по</label><br />
-                    <input type="text" id="date_create_end" name="date_create_end" value="<?= $search['date_create_end'] ?>" class="tcal quarter" placeholder="по" />
-                </div>
 
-                <br /><br />
-                <div class="inline">
-                    <label for="search_relatively">Поиск посылки относительно</label><br />
-                    <select class="quarter" id="search_relatively" name="search_relatively" onchange="this.form.submit();">
-                        <option value="<?= SEARCH_RELATIVELY_FROM_OR_TO ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO) echo 'selected'; ?> >Отправителя/Получателя</option>
-                        <option value="<?= SEARCH_RELATIVELY_CURRENT ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT) echo 'selected'; ?> >Текущего местоположения</option>
-                    </select><span class="right_indent"></span>
+                    <br />
+                    <br />
+                <div class="inline full_width">
+                    <div class="inline">
+                        <label for="search_relatively">Поиск посылки относительно</label><br />
+                        <select class="quarter" id="search_relatively" name="search_relatively" onchange="this.form.submit();">
+                            <option value="<?= SEARCH_RELATIVELY_FROM_OR_TO ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO) echo 'selected'; ?> >Отправителя/Получателя</option>
+                            <option value="<?= SEARCH_RELATIVELY_CURRENT ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT) echo 'selected'; ?> >Текущего местоположения</option>
+                        </select>
+                    </div>
+
+                    <span class="right_indent"></span>
+
+                    <?php if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
+                    <div class="inline quarter"></div>
+
+                    <span class="right_indent"></span>
+
+                    <div class="inline">
+                        <label for="date_create_begin">Период создания посылки с</label><br />
+                        <input type="text" id="date_create_begin" name="date_create_begin" value="<?= $search['date_create_begin'] ?>" class="tcal quarter" placeholder="с" />
+                    </div>
+
+                    <span class="right_indent"></span>
+
+                    <div class="inline">
+                        <label for="date_create_end">Период создания посылки по</label><br />
+                        <input type="text" id="date_create_end" name="date_create_end" value="<?= $search['date_create_end'] ?>" class="tcal quarter" placeholder="по" />
+                    </div>
+                    <?php endif; // if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
                 </div>
                     <br />
                     <br />

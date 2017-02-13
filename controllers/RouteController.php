@@ -25,6 +25,7 @@ class RouteController
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние посылки
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
@@ -59,6 +60,11 @@ class RouteController
             $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
         }
 
+        if (isset($_GET['active_flag']))
+        {
+            $index_search['active_flag'] = htmlspecialchars($_GET['active_flag']);
+        }
+
         if (isset($_GET['search_relatively']))
         {
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
@@ -91,9 +97,15 @@ class RouteController
         elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
-                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
-                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&active_flag=' .$index_search['active_flag'];
+            if ($index_search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $link_to_back .= '&date_create_begin='. $index_search['date_create_begin']
+                    .'&date_create_end='. $index_search['date_create_end'];
+            }
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
                 .'&to_or_from='.$index_search['to_or_from'];
+
         }
         else
         {
@@ -147,6 +159,7 @@ class RouteController
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние активности
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
@@ -170,6 +183,11 @@ class RouteController
         if (isset($_GET['package_type']))
         {
             $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['active_flag']))
+        {
+            $index_search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
         if (isset($_GET['search_relatively']))
@@ -204,8 +222,13 @@ class RouteController
         elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
-                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
-                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&active_flag=' .$index_search['active_flag'];
+            if ($index_search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $link_to_back .= '&date_create_begin='. $index_search['date_create_begin']
+                    .'&date_create_end='. $index_search['date_create_end'];
+            }
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
                 .'&to_or_from='.$index_search['to_or_from'];
         }
         else
@@ -372,8 +395,7 @@ class RouteController
                 Route::send($rid, $send_values);
                 Proxy::outProxy();
                 Proxy::outProxyPerson();
-                //header('Location: /site/index');
-                header('Location: /route/view?'.$link_to_back.'&page='.$site_page.'&pid='.$pid);
+                header('Location: /site/index?'.$link_to_back.'&page='.$site_page);
             }
         }
 
@@ -420,6 +442,7 @@ class RouteController
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
+        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние активности
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
@@ -443,6 +466,11 @@ class RouteController
         if (isset($_GET['package_type']))
         {
             $index_search['package_type'] = htmlspecialchars($_GET['package_type']);
+        }
+
+        if (isset($_GET['active_flag']))
+        {
+            $index_search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
         if (isset($_GET['search_relatively']))
@@ -477,8 +505,13 @@ class RouteController
         elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
-                .'&date_create_begin='. $index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end']
-                .'&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+                .'&active_flag=' .$index_search['active_flag'];
+            if ($index_search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $link_to_back .= '&date_create_begin='. $index_search['date_create_begin']
+                    .'&date_create_end='. $index_search['date_create_end'];
+            }
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
                 .'&to_or_from='.$index_search['to_or_from'];
         }
         else
@@ -642,7 +675,7 @@ class RouteController
 
                 if ($route['company_address_id'] == $package_info['to_company_address_id'])
                 {
-                    Package::updateReceiptDatetime($pid, $receive_values['datetime_receive']);
+                    Package::setDelivered($pid, $receive_values['datetime_receive']);
                 }
 
 
@@ -657,8 +690,7 @@ class RouteController
 
                 Proxy::outProxy();
                 Proxy::outProxyPerson();
-                //header('Location: /site/index');
-                header('Location: /route/view?'.$link_to_back.'&page='.$site_page.'&pid='.$pid);
+                header('Location: /site/index?'.$link_to_back.'&page='.$site_page);
             }
         }
 
