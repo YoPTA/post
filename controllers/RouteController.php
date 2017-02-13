@@ -393,6 +393,7 @@ class RouteController
                 $send_values['send_user_id'] = $user_id;
                 $send_values['datetime_send'] = date('Y-m-d H:i:s');
                 Route::send($rid, $send_values);
+                Package::setPackageState($pid, 2);
                 Proxy::outProxy();
                 Proxy::outProxyPerson();
                 header('Location: /site/index?'.$link_to_back.'&page='.$site_page);
@@ -681,6 +682,7 @@ class RouteController
 
                 $receive_stat = Route::receive($rid, $receive_values);
                 Package::setNowAddresses($pid);
+                Package::setPackageState($pid, 1);
 
                 if ($receive_stat)
                 {

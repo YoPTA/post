@@ -193,8 +193,7 @@ include ROOT . '/views/layouts/header.php';
             <td class="one_sixteenth">Трек-<br />номер</td>
             <td class="quarter">Откуда</td>
             <td class="quarter">Куда</td>
-            <td class="one_sixteenth">Дата создания</td>
-            <td class="one_eighth">ФИО</td>
+            <td class="quarter">Состояние</td>
             <td class="one_eighth">Действие</td>
         </tr>
         <?php
@@ -222,8 +221,33 @@ include ROOT . '/views/layouts/header.php';
                     <?= $package['to_company_name'] ?>
                 </div>
             </td>
-            <td align="center"><?= $date_converter->dateToString($package['package_creation_datetime']) ?></td>
-            <td><?= $package['user_lastname'].' '.$package['user_firstname'].' '.$package['user_middlename'] ?></td>
+            <td>
+
+                <div title="
+                <?php
+                if ($package['package_state'] == 1) echo $string_utility->getAddressToView(1, $package, 'now_from_');
+                if ($package['package_state'] == 2) echo $string_utility->getAddressToView(1, $package, 'now_to_')
+                ?>
+                ">
+
+                    <?php if ($package['package_state'] == 1): ?>
+
+                        <b>Получено</b> в <?php if ($package['now_from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                        <?= $package['now_from_company_name'] ?>
+                        <?php if ($package['flag'] == 2) echo '<span class="fa fa-check-circle correct" title="Доставлено"></span>' ?>
+                    <?php elseif ($package['package_state'] == 2): ?>
+
+                        <b>Отправлено</b> в <?php if ($package['now_to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                        <?= $package['now_to_company_name'] ?>
+                    <?php elseif ($package['package_state'] == 0): ?>
+
+                        Не отправлялась
+
+                    <?php endif; // if ($package['package_state'] == 1): ?>
+
+                </div>
+
+            </td>
 
             <td align="center">
                 <div class="bg_button inline" title="Посмотреть объекты посылки"

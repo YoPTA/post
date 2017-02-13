@@ -123,21 +123,52 @@ class Package
           company_address1.address_build AS to_ca_build,
           company_address1.address_apartment AS to_ca_apartment,
           company_address1.is_transit AS to_is_transit,
-          user.lastname AS user_lastname,
-          user.firstname AS user_firstname,
-          user.middlename AS user_middlename,
           package.number AS package_number,
           package.note AS package_note,
           package.id AS package_id,
           package.package_state,
-          package.creation_datetime AS package_creation_datetime
+          package.flag,
+          package.creation_datetime AS package_creation_datetime,
+          company2.name AS now_from_company_name,
+          company2.full_name AS now_from_company_full_name,
+          company2.key_field AS now_from_company_key_field,
+          company_address2.address_country AS now_from_ca_country,
+          company_address2.is_transit AS now_from_is_transit,
+          company_address2.address_zip AS now_from_ca_zip,
+          company_address2.address_region AS now_from_ca_region,
+          company_address2.address_area AS now_from_ca_area,
+          company_address2.address_city AS now_from_ca_city,
+          company_address2.address_town AS now_from_ca_town,
+          company_address2.address_street AS now_from_ca_street,
+          company_address2.address_home AS now_from_ca_home,
+          company_address2.address_case AS now_from_ca_case,
+          company_address2.address_build AS now_from_ca_build,
+          company_address2.address_apartment AS now_from_ca_apartment,
+          company_address3.address_country AS now_to_ca_country,
+          company_address3.address_zip AS now_to_ca_zip,
+          company_address3.address_region AS now_to_ca_region,
+          company_address3.address_area AS now_to_ca_area,
+          company_address3.address_city AS now_to_ca_city,
+          company_address3.address_town AS now_to_ca_town,
+          company_address3.address_street AS now_to_ca_street,
+          company_address3.address_home AS now_to_ca_home,
+          company_address3.address_case AS now_to_ca_case,
+          company_address3.address_build AS now_to_ca_build,
+          company_address3.address_apartment AS now_to_ca_apartment,
+          company_address3.is_transit AS now_to_is_transit,
+          company3.name AS now_to_company_name,
+          company3.full_name AS now_to_company_full_name,
+          company3.key_field AS now_to_company_key_field
         FROM
           package
           INNER JOIN company_address ON (package.from_company_address_id = company_address.id)
           INNER JOIN company_address company_address1 ON (package.to_company_address_id = company_address1.id)
           INNER JOIN company ON (company_address.company_id = company.id)
           INNER JOIN company company1 ON (company_address1.company_id = company1.id)
-          INNER JOIN user ON (package.user_id = user.id) '
+          INNER JOIN company_address company_address2 ON (package.now_from_company_address_id = company_address2.id)
+          INNER JOIN company company2 ON (company_address2.company_id = company2.id)
+          INNER JOIN company_address company_address3 ON (package.now_to_company_address_id = company_address3.id)
+          INNER JOIN company company3 ON (company_address3.company_id = company3.id) '
         . $where .
         ' ORDER BY package.number LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
 
@@ -531,6 +562,27 @@ class Package
     }
 
     /*
+     * Устанавливаем состояние посылки
+     * @var $id int - id посылки
+     * @var $package_state int - состояние посылки
+     *
+     * Возможные варианты $package_state:
+     * 1 - Получено
+     * 2 - Отправлено
+     */
+    public static function setPackageState($id, $package_state)
+    {
+        $sql = 'UPDATE package
+          SET package_state = :package_state
+          WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':package_state', $package_state, PDO::PARAM_INT);
+        $result->execute();
+    }
+
+    /*
      * Обновить текущие точки от кого и кому
      * @var $id int - Id посылки
      * @var $now_points array() - текущие адреса
@@ -578,7 +630,7 @@ class Package
             }
         }
 
-        if ($now_points['now_from_company_address_id'] == 0 || $now_points['now_to_company_address_id'] == 0)
+        if ($now_points['now_from_company_address_id'] == 0)
         {
             return false;
         }
