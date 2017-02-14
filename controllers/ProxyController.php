@@ -475,6 +475,12 @@ class ProxyController
                 $proxy_person['created_datetime'] = date('Y-m-d H:i:s');
                 $proxy_person['created_user_id'] = $user_id;
                 Proxy::addProxyPerson($proxy_person);
+                $search = $proxy_person['lastname'] . ' ' .$proxy_person['firstname'];
+                if (!empty($proxy_person['middlename']))
+                {
+                    $search .= ' ' .$proxy_person['middlename'];
+                }
+
 
                 unset($proxy_person);
 

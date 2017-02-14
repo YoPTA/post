@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Фев 09 2017 г., 10:04
+-- Время создания: Фев 14 2017 г., 10:29
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -82,8 +82,8 @@ CREATE TABLE IF NOT EXISTS `company_address` (
 
 INSERT INTO `company_address` (`id`, `company_id`, `local_place_id`, `address_country`, `address_zip`, `address_region`, `address_area`, `address_city`, `address_town`, `address_street`, `address_home`, `address_case`, `address_build`, `address_apartment`, `is_transit`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
 (0, 0, 0, '0', '', '', '', '', '', '', '', '', '', '', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
-(2, 1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
+(1, 1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
+(2, 1, 1, 'Россия', '440039', 'Пензенская область', '', 'г. Пенза', '', 'ул. Шмидта', '4', '', '', '', 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -393,7 +393,7 @@ CREATE TABLE IF NOT EXISTS `user_group` (
 
 INSERT INTO `user_group` (`id`, `name`, `description`, `member`, `flag`) VALUES
 (0, 'Нет', 'Нет', 0, 0),
-(1, 'Пробный', 'CAN_CREATE, CAN_DELETE_ALL, CANE_EDIT_ALL', 15, 1);
+(1, 'Работа с пользователями', 'CAN_CREATE, CAN_DELETE_ALL, CANE_EDIT_ALL', 15, 1);
 
 -- --------------------------------------------------------
 
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
   `is_notification` int(1) NOT NULL DEFAULT '0' COMMENT 'Может ли получать уведомления',
   `is_admin` int(1) NOT NULL DEFAULT '0' COMMENT 'Обладает ли правами администратора',
   `flag` int(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `user_role`
@@ -421,8 +421,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 INSERT INTO `user_role` (`id`, `name`, `is_create`, `is_change_proxy`, `is_change_company`, `is_receive`, `is_send`, `is_notification`, `is_admin`, `flag`) VALUES
 (0, 'Нет', 0, 0, 0, 0, 0, 0, 0, 0),
 (1, 'Специалист', 1, 1, 1, 1, 1, 1, 0, 0),
-(2, 'Админ', 1, 1, 1, 1, 1, 1, 1, 0),
-(3, 'Зарегистрированный', 0, 0, 0, 0, 0, 0, 0, 0);
+(2, 'Администратор', 1, 1, 1, 1, 1, 1, 1, 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -610,7 +609,7 @@ ALTER TABLE `user_group`
 -- AUTO_INCREMENT для таблицы `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

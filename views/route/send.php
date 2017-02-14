@@ -46,7 +46,7 @@ include ROOT . '/views/layouts/header.php';
     <label>Тип передачи</label><br />
     <select class="quarter" name="with_or_without" id="with_or_without" onchange="this.form.submit();">
         <option value="0" <?php if ($with_or_without == 0) echo ' selected'; ?> >Выберите</option>
-        <option value="2" <?php if ($with_or_without == 2) echo ' selected'; ?>>С доверенным лицо</option>
+        <option value="2" <?php if ($with_or_without == 2) echo ' selected'; ?>>С доверенным лицом</option>
         <option value="1" <?php if ($with_or_without == 1) echo ' selected'; ?>>Без доверенного лица</option>
     </select>
     <?php if ($with_or_without == 2): ?>
