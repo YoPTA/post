@@ -148,5 +148,9 @@ include ROOT . '/views/layouts/header.php';
 <script type="text/javascript">
     $("#company_address_id").chosen({no_results_text: "Ничего не найдено", search_contains: true});
 </script>
-
+<?php if ($user['flag'] == 2): ?>
+    <script>
+        document.getElementById('role_id').disabled=true;
+    </script>
+<?php endif; // if ($user['flag'] == 2): ?>
 <?php include ROOT . '/views/layouts/footer.php'; ?>

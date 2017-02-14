@@ -415,7 +415,7 @@ class AdminuserController
             $user['company_address_id'] = htmlspecialchars($_POST['company_address_id']);
         }
 
-        if (isset($_POST['role_id']))
+        if (isset($_POST['role_id']) && $user['flag'] != 2)
         {
             $user['role_id'] = htmlspecialchars($_POST['role_id']);
         }
