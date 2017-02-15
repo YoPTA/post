@@ -181,7 +181,6 @@ class Notification
 
         // Получаем маршрут посылки
         $package_route = Route::getPackageRoute($package_id, 3);
-
         // Если записей меньше двух, то выходим из функции
         if (count($package_route) < 2)
         {
@@ -192,6 +191,8 @@ class Notification
         {
             if ($package_route[$i]['is_receive'] == 1 && $package_route[$i]['is_send'] == 0)
             {
+                // !!! Внимание! Сотрудник, находящийся в ТРАНЗИТЕ не получает уведомление, о том,
+                // !!! что для него есть посылка. Требование заказчика!
                 if ($package_route[$i]['is_transit'] == 1 && $counter > 0)
                 {
                     $next_route = $package_route[$i + 1];
@@ -206,7 +207,6 @@ class Notification
         {
             return false;
         }
-
 
         if ($next_route['is_mfc'] == 1)
         {
