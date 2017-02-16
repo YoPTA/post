@@ -59,14 +59,16 @@ define('USER_REFERENCE_RECEIVE', 2);
 define('USER_BARCODE', 'barcode');
 
 // Способы поиска посылки
-define('SEARCH_TYPE_NONE', 0); // Не выбран
-define('SEARCH_TYPE_TRACK', 1); // По трек номеру
-define('SEARCH_TYPE_ADDRESS', 2); // По адресу
+define('SEARCH_TYPE_COMMON', 1); // Общий
+define('SEARCH_TYPE_SPECIAL', 2); // Частный
 
 // Поиск по адресу относительно
-define('SEARCH_RELATIVELY_NONE', 0); // Не выбрано
 define('SEARCH_RELATIVELY_FROM_OR_TO', 1); // Отправителя/Получателя
 define('SEARCH_RELATIVELY_CURRENT', 2); // Текущего местоположения
+
+// Поиск по месту
+define('SEARCH_PLACE_ADDRESS', 1); //
+define('SEARCH_PLACE_LOCAL', 2);
 
 // Флаг активности
 define('ACTIVE_FLAG_ACTIVE', 1); // Активные

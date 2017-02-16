@@ -18,12 +18,12 @@ include ROOT . '/views/layouts/header.php';
     <form method="GET">
         <div class="inline fl">
 
-            <?php if ($index_search['search_type'] == SEARCH_TYPE_TRACK): ?>
+            <?php if ($index_search['search_type'] == SEARCH_TYPE_COMMON): ?>
 
                 <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
                 <input type="hidden" name="track" value="<?= $index_search['track'] ?>">
 
-            <?php elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS): ?>
+            <?php elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL): ?>
 
                 <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
                 <input type="hidden" name="package_type" value="<?= $index_search['package_type'] ?>">

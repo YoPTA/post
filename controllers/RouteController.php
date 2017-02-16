@@ -20,7 +20,7 @@ class RouteController
 
         $index_search = null; // Параметры поиска
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
         $page = 1; // Номер страницы
         $index_search['track'] = null; // Трек-номер
 
@@ -90,11 +90,11 @@ class RouteController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -109,7 +109,7 @@ class RouteController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         $pid = null; // Id посылки
@@ -154,7 +154,7 @@ class RouteController
         $send_values = null; // Данные об отправлении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
         $page = 1; // Номер страницы
         $index_search['track'] = null; // Трек-номер
 
@@ -215,11 +215,11 @@ class RouteController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -233,7 +233,7 @@ class RouteController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -439,7 +439,7 @@ class RouteController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
@@ -499,11 +499,11 @@ class RouteController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -517,7 +517,7 @@ class RouteController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))

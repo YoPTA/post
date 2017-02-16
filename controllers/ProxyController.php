@@ -29,7 +29,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -111,11 +111,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -129,7 +129,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -221,7 +221,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -284,11 +284,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -302,7 +302,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -528,7 +528,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -595,11 +595,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -613,7 +613,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -752,7 +752,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -817,11 +817,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -835,7 +835,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -1055,7 +1055,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -1121,11 +1121,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -1139,7 +1139,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -1253,7 +1253,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -1320,11 +1320,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -1338,7 +1338,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -1501,7 +1501,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -1568,11 +1568,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -1586,7 +1586,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -1750,7 +1750,7 @@ class ProxyController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
-        $index_search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
 
         $index_search['track'] = null; // Трек-номер
 
@@ -1817,11 +1817,11 @@ class ProxyController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
         }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
                 .'&active_flag=' .$index_search['active_flag'];
@@ -1835,7 +1835,7 @@ class ProxyController
         }
         else
         {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_TRACK;
+            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
