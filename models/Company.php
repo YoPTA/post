@@ -238,6 +238,28 @@ class Company
     }
 
     /*
+     * Получить локальное место по ID
+     * @var $id int - ID
+     * return int
+     */
+    public function getLocalPlaceIdFromCompanyAddressId($id)
+    {
+        $sql = 'SELECT local_place_id FROM company_address WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+
+        // Обращаемся к записи
+        $company_address = $result->fetch(PDO::FETCH_ASSOC);
+
+        if ($company_address) {
+            return $company_address['local_place_id'];
+        }
+        return 0;
+    }
+
+    /*
      * Получаем общее количество организаций
      * @var $search_param array() - искомые значения
      * return int

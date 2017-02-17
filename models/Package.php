@@ -13,8 +13,126 @@ class Package
      ********************** Методы класса **********************
      ***********************************************************/
 
+    private static function createSQLWhere
+    (
+        $package_type = PACKAGE_INPUT,
+
+        $relatively_type = SEARCH_RELATIVELY_FROM_OR_TO,
+
+        $from_place_type = SEARCH_PLACE_ADDRESS,
+        $from_company_address_id_min = 1,
+        $from_company_address_id_max = PHP_INT_MAX,
+
+        $to_place_type = SEARCH_PLACE_ADDRESS,
+        $to_company_address_id_min = 1,
+        $to_company_address_id_max = PHP_INT_MAX
+    )
+    {
+        $company = new Company();
+        $result = '';
+
+        /*
+         * package_type
+         *
+         * 1 - Входящие
+         * 2 - Исходящие
+        */
+
+        if ($package_type == PACKAGE_OUTPUT)
+        {
+            $company_address_package_type_prefix_a = 'from_';
+            $company_address_package_type_prefix_b = 'to_';
+        }else{
+            $company_address_package_type_prefix_a = 'to_';
+            $company_address_package_type_prefix_b = 'from_';
+        }
+
+        /*
+         * relatively_type
+         *
+         * 1 - Отправитель/Получатель
+         * 2 - Текущее местоположение
+        */
+
+        if ($relatively_type == SEARCH_RELATIVELY_FROM_OR_TO)
+        {
+            $company_address_relatively_type_prefix = '';
+        }else{
+            $company_address_relatively_type_prefix = 'now_';
+        }
+
+        /*
+         * ..._place_type
+         *
+         * 1 - Адрес
+         * 2 - Регион
+        */
+
+        if ($from_place_type == SEARCH_PLACE_ADDRESS)
+        {
+            $result = $result.'
+                AND
+                package.'.$company_address_relatively_type_prefix.$company_address_package_type_prefix_a.'company_address_id >= '.$from_company_address_id_min.'
+                AND
+                package.'.$company_address_relatively_type_prefix.$company_address_package_type_prefix_a.'company_address_id <= '.$from_company_address_id_max.'
+            ';
+        }
+        else
+        {
+            if ($from_company_address_id_min == $from_company_address_id_max)
+            {
+                $from_local_place_id_min = $company->getLocalPlaceIdFromCompanyAddressId($from_company_address_id_min);
+                $from_local_place_id_max = $from_local_place_id_min;
+            }
+            else
+            {
+                $from_local_place_id_min = 1;
+                $from_local_place_id_max = PHP_INT_MAX;
+            }
+
+            $result = $result.'
+                AND
+                '.$company_address_relatively_type_prefix.$company_address_package_type_prefix_a.'company_address.local_place_id >= '.$from_local_place_id_min.'
+                AND
+                '.$company_address_relatively_type_prefix.$company_address_package_type_prefix_a.'company_address.local_place_id <= '.$from_local_place_id_max.'
+            ';
+        }
+
+        if ($to_place_type == SEARCH_PLACE_ADDRESS)
+        {
+            $result = $result.'
+                AND
+                package.'.$company_address_relatively_type_prefix.$company_address_package_type_prefix_b.'company_address_id >= '.$to_company_address_id_min.'
+                AND
+                package.'.$company_address_relatively_type_prefix.$company_address_package_type_prefix_b.'company_address_id <= '.$to_company_address_id_max.'
+            ';
+        }
+        else
+        {
+            if ($to_company_address_id_min == $to_company_address_id_max)
+            {
+                $to_local_place_id_min = $company->getLocalPlaceIdFromCompanyAddressId($to_company_address_id_min);
+                $to_local_place_id_max = $to_local_place_id_min;
+            }
+            else
+            {
+                $to_local_place_id_min = 1;
+                $to_local_place_id_max = PHP_INT_MAX;
+            }
+
+            $result = $result.'
+                AND
+                '.$company_address_relatively_type_prefix.$company_address_package_type_prefix_b.'company_address.local_place_id >= '.$to_local_place_id_min.'
+                AND
+                '.$company_address_relatively_type_prefix.$company_address_package_type_prefix_b.'company_address.local_place_id <= '.$to_local_place_id_max.'
+            ';
+        }
+
+        return $result;
+    }
+
     /*
-     * Получаем все посыкли офиса
+     * Получаем все посылки по критериям поиска
      * @var $search array() - Параметры поиска
      * @var $page int - Номер страницы
      * return array()
@@ -27,65 +145,93 @@ class Package
         }
 
         $date_converter = new Date_Converter();
+        $from_caid_min = 1;
+        $from_caid_max = PHP_INT_MAX;
+        $to_caid_min = 1;
+        $to_caid_max = PHP_INT_MAX;
         $where = ' WHERE ';
         $page = intval($page);
-        if ($page < 1)
-        {
-            $page = 1;
-        }
-
+        if ($page < 1) $page = 1;
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
 
-        if ($search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $where .= ' package.number = ? ';
         }
-        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
+            $where .= ' package.number LIKE ? ';
+            $search['track'] = '%' . $search['track'] . '%';
+
+            // Если тип не Входящие/Исходящие, тогда выходим
             if ($search['package_type'] != PACKAGE_INPUT && $search['package_type'] != PACKAGE_OUTPUT)
             {
                 return false;
             }
 
-            // Проверяем даты
-            // Если даты указаны в неверном формате, тогда выходим из метода
-            $d_c_begin = $date_converter->dateSplit($search['d_begin'], 1);
-            $d_c_end = $date_converter->dateSplit($search['d_end'], 1);
-            $check_d_begin = checkdate($d_c_begin['month'], $d_c_begin['day'], $d_c_begin['year']);
-            $check_d_end = checkdate($d_c_end['month'], $d_c_end['day'], $d_c_end['year']);
-            if (!$check_d_begin || !$check_d_end)
+            // Если состояние посылки не В архиве/Активные, тогда выходим
+            if ($search['active_flag'] != ACTIVE_FLAG_ACTIVE && $search['active_flag'] != ACTIVE_FLAG_ARCHIVE)
             {
                 return false;
             }
 
+            // Если поиск посылки отностиельно не Отправителя/Получателя /Текущего местоположения, тогда выходим
             if ($search['search_relatively'] != SEARCH_RELATIVELY_FROM_OR_TO && $search['search_relatively'] != SEARCH_RELATIVELY_CURRENT)
+            {
+                return false;
+            }
+
+            if ($search['search_place_from_or_to'] != SEARCH_PLACE_LOCAL && $search['search_place_from_or_to'] != SEARCH_PLACE_ADDRESS)
+            {
+                return false;
+            }
+
+            if ($search['search_place_to_or_from'] != SEARCH_PLACE_LOCAL && $search['search_place_to_or_from'] != SEARCH_PLACE_ADDRESS)
+            {
+                return false;
+            }
+
+            // Проверяем даты
+            $d_c_begin = $date_converter->dateSplit($search['d_begin'], 1);
+            $d_c_end = $date_converter->dateSplit($search['d_end'], 1);
+            $check_d_begin = checkdate($d_c_begin['month'], $d_c_begin['day'], $d_c_begin['year']);
+            $check_d_end = checkdate($d_c_end['month'], $d_c_end['day'], $d_c_end['year']);
+
+            // Если дата с-по не является датой, тогда выходим
+            if (!$check_d_begin || !$check_d_end)
             {
                 return false;
             }
 
             if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
-                $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY )
-                AND package.flag = 2 ';
+                $where .= ' AND (package.creation_datetime >= "'. $search['d_begin']
+                    .'" AND package.creation_datetime <= "'. $search['d_end']
+                    .'" + INTERVAL 1 DAY) AND package.flag = 2 ';
             }
-            elseif ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
+            if ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
             {
-                $where .= ' package.flag = 1 ';
-            }
-            else
-            {
-                return false;
+                $where .= ' AND package.flag = 1 ';
             }
 
-            if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO)
+            $search['from_or_to'] = intval($search['from_or_to']);
+            if ($search['from_or_to'] != 0)
             {
-                $where .= ' AND (package.from_company_address_id = ? AND package.to_company_address_id = ?) ';
+                $from_caid_min = $search['from_or_to'];
+                $from_caid_max = $from_caid_min;
             }
+            $search['to_or_from'] = intval($search['to_or_from']);
+            if ($search['to_or_from'] != 0)
+            {
+                $to_caid_min = $search['to_or_from'];
+                $to_caid_max = $to_caid_min;
+            }
+            $search['search_place_from_or_to'] = intval($search['search_place_from_or_to']);
+            $search['search_place_to_or_from'] = intval($search['search_place_to_or_from']);
 
-            if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT)
-            {
-                $where .= ' AND (package.now_from_company_address_id = ? AND package.now_to_company_address_id = ?) ';
-            }
+            $where .= self::createSQLWhere($search['package_type'], $search['search_relatively'],
+                $search['search_place_from_or_to'], $from_caid_min, $from_caid_max,
+                $search['search_place_to_or_from'], $to_caid_min, $to_caid_max);
         }
         else
         {
@@ -93,121 +239,88 @@ class Package
         }
 
         $sql = 'SELECT
-          company1.name AS to_company_name,
-          company.name AS from_company_name,
-          company1.full_name AS to_company_full_name,
-          company1.key_field AS to_company_key_field,
-          company.full_name AS from_company_full_name,
-          company.key_field AS from_company_key_field,
-          company_address.address_country AS from_ca_country,
-          company_address.address_zip AS from_ca_zip,
-          company_address.address_region AS from_ca_region,
-          company_address.address_area AS from_ca_area,
-          company_address.address_city AS from_ca_city,
-          company_address.address_town AS from_ca_town,
-          company_address.address_street AS from_ca_street,
-          company_address.address_home AS from_ca_home,
-          company_address.address_case AS from_ca_case,
-          company_address.address_build AS from_ca_build,
-          company_address.address_apartment AS from_ca_apartment,
-          company_address.is_transit AS from_is_transit,
-          company_address1.address_country AS to_ca_country,
-          company_address1.address_zip AS to_ca_zip,
-          company_address1.address_region AS to_ca_region,
-          company_address1.address_area AS to_ca_area,
-          company_address1.address_city AS to_ca_city,
-          company_address1.address_town AS to_ca_town,
-          company_address1.address_street AS to_ca_street,
-          company_address1.address_home AS to_ca_home,
-          company_address1.address_case AS to_ca_case,
-          company_address1.address_build AS to_ca_build,
-          company_address1.address_apartment AS to_ca_apartment,
-          company_address1.is_transit AS to_is_transit,
+          to_company.name AS to_company_name,
+          from_company.name AS from_company_name,
+          to_company.full_name AS to_company_full_name,
+          to_company.key_field AS to_company_key_field,
+          from_company.full_name AS from_company_full_name,
+          from_company.key_field AS from_company_key_field,
+          from_company_address.address_country AS from_ca_country,
+          from_company_address.address_zip AS from_ca_zip,
+          from_company_address.address_region AS from_ca_region,
+          from_company_address.address_area AS from_ca_area,
+          from_company_address.address_city AS from_ca_city,
+          from_company_address.address_town AS from_ca_town,
+          from_company_address.address_street AS from_ca_street,
+          from_company_address.address_home AS from_ca_home,
+          from_company_address.address_case AS from_ca_case,
+          from_company_address.address_build AS from_ca_build,
+          from_company_address.address_apartment AS from_ca_apartment,
+          from_company_address.is_transit AS from_is_transit,
+          to_company_address.address_country AS to_ca_country,
+          to_company_address.address_zip AS to_ca_zip,
+          to_company_address.address_region AS to_ca_region,
+          to_company_address.address_area AS to_ca_area,
+          to_company_address.address_city AS to_ca_city,
+          to_company_address.address_town AS to_ca_town,
+          to_company_address.address_street AS to_ca_street,
+          to_company_address.address_home AS to_ca_home,
+          to_company_address.address_case AS to_ca_case,
+          to_company_address.address_build AS to_ca_build,
+          to_company_address.address_apartment AS to_ca_apartment,
+          to_company_address.is_transit AS to_is_transit,
           package.number AS package_number,
           package.note AS package_note,
           package.id AS package_id,
           package.package_state,
           package.flag,
           package.creation_datetime AS package_creation_datetime,
-          company2.name AS now_from_company_name,
-          company2.full_name AS now_from_company_full_name,
-          company2.key_field AS now_from_company_key_field,
-          company_address2.address_country AS now_from_ca_country,
-          company_address2.is_transit AS now_from_is_transit,
-          company_address2.address_zip AS now_from_ca_zip,
-          company_address2.address_region AS now_from_ca_region,
-          company_address2.address_area AS now_from_ca_area,
-          company_address2.address_city AS now_from_ca_city,
-          company_address2.address_town AS now_from_ca_town,
-          company_address2.address_street AS now_from_ca_street,
-          company_address2.address_home AS now_from_ca_home,
-          company_address2.address_case AS now_from_ca_case,
-          company_address2.address_build AS now_from_ca_build,
-          company_address2.address_apartment AS now_from_ca_apartment,
-          company_address3.address_country AS now_to_ca_country,
-          company_address3.address_zip AS now_to_ca_zip,
-          company_address3.address_region AS now_to_ca_region,
-          company_address3.address_area AS now_to_ca_area,
-          company_address3.address_city AS now_to_ca_city,
-          company_address3.address_town AS now_to_ca_town,
-          company_address3.address_street AS now_to_ca_street,
-          company_address3.address_home AS now_to_ca_home,
-          company_address3.address_case AS now_to_ca_case,
-          company_address3.address_build AS now_to_ca_build,
-          company_address3.address_apartment AS now_to_ca_apartment,
-          company_address3.is_transit AS now_to_is_transit,
-          company3.name AS now_to_company_name,
-          company3.full_name AS now_to_company_full_name,
-          company3.key_field AS now_to_company_key_field
+          now_from_company.name AS now_from_company_name,
+          now_from_company.full_name AS now_from_company_full_name,
+          now_from_company.key_field AS now_from_company_key_field,
+          now_from_company_address.address_country AS now_from_ca_country,
+          now_from_company_address.is_transit AS now_from_is_transit,
+          now_from_company_address.address_zip AS now_from_ca_zip,
+          now_from_company_address.address_region AS now_from_ca_region,
+          now_from_company_address.address_area AS now_from_ca_area,
+          now_from_company_address.address_city AS now_from_ca_city,
+          now_from_company_address.address_town AS now_from_ca_town,
+          now_from_company_address.address_street AS now_from_ca_street,
+          now_from_company_address.address_home AS now_from_ca_home,
+          now_from_company_address.address_case AS now_from_ca_case,
+          now_from_company_address.address_build AS now_from_ca_build,
+          now_from_company_address.address_apartment AS now_from_ca_apartment,
+          now_to_company_address.address_country AS now_to_ca_country,
+          now_to_company_address.address_zip AS now_to_ca_zip,
+          now_to_company_address.address_region AS now_to_ca_region,
+          now_to_company_address.address_area AS now_to_ca_area,
+          now_to_company_address.address_city AS now_to_ca_city,
+          now_to_company_address.address_town AS now_to_ca_town,
+          now_to_company_address.address_street AS now_to_ca_street,
+          now_to_company_address.address_home AS now_to_ca_home,
+          now_to_company_address.address_case AS now_to_ca_case,
+          now_to_company_address.address_build AS now_to_ca_build,
+          now_to_company_address.address_apartment AS now_to_ca_apartment,
+          now_to_company_address.is_transit AS now_to_is_transit,
+          now_to_company.name AS now_to_company_name,
+          now_to_company.full_name AS now_to_company_full_name,
+          now_to_company.key_field AS now_to_company_key_field
         FROM
           package
-          INNER JOIN company_address ON (package.from_company_address_id = company_address.id)
-          INNER JOIN company_address company_address1 ON (package.to_company_address_id = company_address1.id)
-          INNER JOIN company ON (company_address.company_id = company.id)
-          INNER JOIN company company1 ON (company_address1.company_id = company1.id)
-          INNER JOIN company_address company_address2 ON (package.now_from_company_address_id = company_address2.id)
-          INNER JOIN company company2 ON (company_address2.company_id = company2.id)
-          INNER JOIN company_address company_address3 ON (package.now_to_company_address_id = company_address3.id)
-          INNER JOIN company company3 ON (company_address3.company_id = company3.id) '
-        . $where .
-        ' ORDER BY package.number LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
+          INNER JOIN company_address from_company_address ON (package.from_company_address_id = from_company_address.id)
+          INNER JOIN company_address to_company_address ON (package.to_company_address_id = to_company_address.id)
+          INNER JOIN company from_company ON (from_company_address.company_id = from_company.id)
+          INNER JOIN company to_company ON (to_company_address.company_id = to_company.id)
+          INNER JOIN company_address now_from_company_address ON (package.now_from_company_address_id = now_from_company_address.id)
+          INNER JOIN company now_from_company ON (now_from_company_address.company_id = now_from_company.id)
+          INNER JOIN company_address now_to_company_address ON (package.now_to_company_address_id = now_to_company_address.id)
+          INNER JOIN company now_to_company ON (now_to_company_address.company_id = now_to_company.id) '
+            . $where .
+            ' ORDER BY package.number LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
-
-        if ($search['search_type'] == SEARCH_TYPE_TRACK)
-        {
-            $result->execute([$search['track']]);
-        }
-        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
-        {
-            if ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
-            {
-                if ($search['package_type'] == PACKAGE_OUTPUT)
-                {
-                    $result->execute([$search['from_or_to'], $search['to_or_from']]);
-                }
-                if ($search['package_type'] == PACKAGE_INPUT)
-                {
-                    $result->execute([$search['to_or_from'], $search['from_or_to']]);
-                }
-            }
-            elseif ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
-            {
-                if ($search['package_type'] == PACKAGE_OUTPUT)
-                {
-                    $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
-                }
-                if ($search['package_type'] == PACKAGE_INPUT)
-                {
-                    $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+        $result->execute([$search['track']]);
         // Получение и возврат результатов
         $packages = null;
         $i = 0;
@@ -259,106 +372,119 @@ class Package
      */
     public static function getTotalPackages($search)
     {
+        if (count($search) < 1)
+        {
+            return false;
+        }
+
         $date_converter = new Date_Converter();
+        $from_caid_min = 1;
+        $from_caid_max = PHP_INT_MAX;
+        $to_caid_min = 1;
+        $to_caid_max = PHP_INT_MAX;
         $where = ' WHERE ';
-        if ($search['search_type'] == SEARCH_TYPE_TRACK)
+
+        if ($search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $where .= ' package.number = ? ';
         }
-        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
+            $where .= ' package.number LIKE ? ';
+            $search['track'] = '%' . $search['track'] . '%';
+
+            // Если тип не Входящие/Исходящие, тогда выходим
             if ($search['package_type'] != PACKAGE_INPUT && $search['package_type'] != PACKAGE_OUTPUT)
-            {
-                return 0;
-            }
-
-            // Проверяем даты
-            // Если даты указаны в неверном формате, тогда выходим из метода
-            $d_c_begin = $date_converter->dateSplit($search['d_begin'], 1);
-            $d_c_end = $date_converter->dateSplit($search['d_end'], 1);
-            $check_d_begin = checkdate($d_c_begin['month'], $d_c_begin['day'], $d_c_begin['year']);
-            $check_d_end = checkdate($d_c_end['month'], $d_c_end['day'], $d_c_end['year']);
-            if (!$check_d_begin || !$check_d_end)
-            {
-                return 0;
-            }
-
-            if ($search['search_relatively'] != SEARCH_RELATIVELY_FROM_OR_TO && $search['search_relatively'] != SEARCH_RELATIVELY_CURRENT)
-            {
-                return 0;
-            }
-
-            if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
-            {
-                $where .= ' (package.creation_datetime >= ? AND package.creation_datetime <= ? + INTERVAL 1 DAY )
-                AND package.flag = 2 ';
-            }
-            elseif ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
-            {
-                $where .= ' package.flag = 1 ';
-            }
-            else
             {
                 return false;
             }
 
-            if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO)
+            // Если состояние посылки не В архиве/Активные, тогда выходим
+            if ($search['active_flag'] != ACTIVE_FLAG_ACTIVE && $search['active_flag'] != ACTIVE_FLAG_ARCHIVE)
             {
-                $where .= ' AND (package.from_company_address_id = ? AND package.to_company_address_id = ?) ';
+                return false;
             }
 
-            if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT)
+            // Если поиск посылки отностиельно не Отправителя/Получателя /Текущего местоположения, тогда выходим
+            if ($search['search_relatively'] != SEARCH_RELATIVELY_FROM_OR_TO && $search['search_relatively'] != SEARCH_RELATIVELY_CURRENT)
             {
-                $where .= ' AND (package.now_from_company_address_id = ? AND package.now_to_company_address_id = ?) ';
+                return false;
             }
+
+            if ($search['search_place_from_or_to'] != SEARCH_PLACE_LOCAL && $search['search_place_from_or_to'] != SEARCH_PLACE_ADDRESS)
+            {
+                return false;
+            }
+
+            if ($search['search_place_to_or_from'] != SEARCH_PLACE_LOCAL && $search['search_place_to_or_from'] != SEARCH_PLACE_ADDRESS)
+            {
+                return false;
+            }
+
+            // Проверяем даты
+            $d_c_begin = $date_converter->dateSplit($search['d_begin'], 1);
+            $d_c_end = $date_converter->dateSplit($search['d_end'], 1);
+            $check_d_begin = checkdate($d_c_begin['month'], $d_c_begin['day'], $d_c_begin['year']);
+            $check_d_end = checkdate($d_c_end['month'], $d_c_end['day'], $d_c_end['year']);
+
+            // Если дата с-по не является датой, тогда выходим
+            if (!$check_d_begin || !$check_d_end)
+            {
+                return false;
+            }
+
+            if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $where .= ' AND (package.creation_datetime >= "'. $search['d_begin']
+                    .'" AND package.creation_datetime <= "'. $search['d_end']
+                    .'" + INTERVAL 1 DAY) AND package.flag = 2 ';
+            }
+            if ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
+            {
+                $where .= ' AND package.flag = 1 ';
+            }
+
+            $search['from_or_to'] = intval($search['from_or_to']);
+            if ($search['from_or_to'] != 0)
+            {
+                $from_caid_min = $search['from_or_to'];
+                $from_caid_max = $from_caid_min;
+            }
+            $search['to_or_from'] = intval($search['to_or_from']);
+            if ($search['to_or_from'] != 0)
+            {
+                $to_caid_min = $search['to_or_from'];
+                $to_caid_max = $to_caid_min;
+            }
+            $search['search_place_from_or_to'] = intval($search['search_place_from_or_to']);
+            $search['search_place_to_or_from'] = intval($search['search_place_to_or_from']);
+
+            $where .= self::createSQLWhere($search['package_type'], $search['search_relatively'],
+                $search['search_place_from_or_to'], $from_caid_min, $from_caid_max,
+                $search['search_place_to_or_from'], $to_caid_min, $to_caid_max);
         }
         else
         {
-            return 0;
+            return false;
         }
 
         $sql = 'SELECT
           COUNT(*) AS row_count
         FROM
-          package '. $where;
+          package
+          INNER JOIN company_address from_company_address ON (package.from_company_address_id = from_company_address.id)
+          INNER JOIN company_address to_company_address ON (package.to_company_address_id = to_company_address.id)
+          INNER JOIN company from_company ON (from_company_address.company_id = from_company.id)
+          INNER JOIN company to_company ON (to_company_address.company_id = to_company.id)
+          INNER JOIN company_address now_from_company_address ON (package.now_from_company_address_id = now_from_company_address.id)
+          INNER JOIN company now_from_company ON (now_from_company_address.company_id = now_from_company.id)
+          INNER JOIN company_address now_to_company_address ON (package.now_to_company_address_id = now_to_company_address.id)
+          INNER JOIN company now_to_company ON (now_to_company_address.company_id = now_to_company.id) '
+        . $where;
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
-
-        if ($search['search_type'] == SEARCH_TYPE_TRACK)
-        {
-            $result->execute([$search['track']]);
-        }
-        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
-        {
-            if ($search['active_flag'] == ACTIVE_FLAG_ACTIVE)
-            {
-                if ($search['package_type'] == PACKAGE_OUTPUT)
-                {
-                    $result->execute([$search['from_or_to'], $search['to_or_from']]);
-                }
-                if ($search['package_type'] == PACKAGE_INPUT)
-                {
-                    $result->execute([$search['to_or_from'], $search['from_or_to']]);
-                }
-            }
-            elseif ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
-            {
-                if ($search['package_type'] == PACKAGE_OUTPUT)
-                {
-                    $result->execute([$search['d_begin'], $search['d_end'], $search['from_or_to'], $search['to_or_from']]);
-                }
-                if ($search['package_type'] == PACKAGE_INPUT)
-                {
-                    $result->execute([$search['d_begin'], $search['d_end'], $search['to_or_from'], $search['from_or_to']]);
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+        $result->execute([$search['track']]);
         // Обращаемся к записи
         $count = $result->fetch(PDO::FETCH_ASSOC);
 

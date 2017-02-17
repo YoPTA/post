@@ -12,6 +12,7 @@ class SiteController
 
         $date_converter = new Date_Converter();
         $date_time = new DateTime();
+        $company = new Company();
 
         $errors = false;
 
@@ -47,7 +48,7 @@ class SiteController
 
         $search = null; // Параметры поиска
 
-        $search['search_type'] = SEARCH_TYPE_TRACK; // Параметр поиска
+        $search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
         $page = 1; // Номер страницы
         $search['track'] = null; // Трек-номер
 
@@ -62,9 +63,10 @@ class SiteController
 
 
         $search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
+        $search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $search['from_or_to'] = null; // От кого/Для кого
         $search['to_or_from'] = null; // Для кого/От кого
-
 
         if (isset($_GET['search_type']))
         {
@@ -100,6 +102,11 @@ class SiteController
             $search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_place']))
+        {
+            $search['search_place'] = htmlspecialchars($_GET['search_place']);
+        }
+
         if (isset($_GET['date_create_begin']))
         {
             $search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
@@ -114,6 +121,16 @@ class SiteController
 
         $search['d_end'] = $date_converter->stringToDate($search['date_create_end']);
 
+        if (isset($_GET['search_place_from_or_to']))
+        {
+            $search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']);
+        }
+
+        if (isset($_GET['search_place_to_or_from']))
+        {
+            $search['search_place_to_or_from'] = htmlspecialchars($_GET['search_place_to_or_from']);
+        }
+
         if (isset($_GET['from_or_to']))
         {
             $search['from_or_to'] = htmlspecialchars($_GET['from_or_to']);
@@ -121,7 +138,7 @@ class SiteController
 
         if (!$is_admin)
         {
-            $search['from_or_to'] = $user['company_address_id'];;
+            $search['from_or_to'] = $user['company_address_id'];
         }
 
         if (isset($_GET['to_or_from']))
@@ -129,11 +146,11 @@ class SiteController
             $search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($search['search_type'] == SEARCH_TYPE_TRACK)
+        if ($search['search_type'] == SEARCH_TYPE_COMMON)
         {
             $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&track='.$search['track'];
         }
-        elseif ($search['search_type'] == SEARCH_TYPE_ADDRESS)
+        elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
             $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&package_type='. $search['package_type']
                 .'&active_flag='. $search['active_flag'] .'&date_create_begin='. $search['date_create_begin']
@@ -142,7 +159,7 @@ class SiteController
         }
         else
         {
-            $link_get_param .= 'search_type='.SEARCH_TYPE_TRACK.'&page=1';
+            $link_get_param .= 'search_type='.SEARCH_TYPE_COMMON.'&page=1';
         }
 
         $packages = Package::getPackages($search, $page);
@@ -359,11 +376,11 @@ class SiteController
                 Package::outPackageObjects();
                 if ($to_route_view == 1)
                 {
-                    header('Location: /route/view?search_type='. SEARCH_TYPE_TRACK .'&page=1&track='. $track.'&pid='.$package_last_id);
+                    header('Location: /route/view?search_type='. SEARCH_TYPE_COMMON .'&page=1&track='. $track.'&pid='.$package_last_id);
                 }
                 else
                 {
-                    header('Location: /site/index?search_type='. SEARCH_TYPE_TRACK .'&page=1&track='. $track);
+                    header('Location: /site/index?search_type='. SEARCH_TYPE_COMMON .'&page=1&track='. $track);
                 }
             }
         }

@@ -13,24 +13,20 @@ include ROOT . '/views/layouts/header.php';
                 <div class="inline">
                     <label for="search_type">Способ поиска посылки</label><br />
                     <select class="quarter" id="search_type" name="search_type" onchange="this.form.submit();">
-                        <option value="<?= SEARCH_TYPE_TRACK ?>" <?php if ($search['search_type'] == SEARCH_TYPE_TRACK) echo 'selected'; ?> >По трек-номеру</option>
-                        <option value="<?= SEARCH_TYPE_ADDRESS ?>" <?php if ($search['search_type'] == SEARCH_TYPE_ADDRESS) echo 'selected'; ?> >По адресу</option>
+                        <option value="<?= SEARCH_TYPE_COMMON ?>" <?php if ($search['search_type'] == SEARCH_TYPE_COMMON) echo 'selected'; ?> >По трек-номеру</option>
+                        <option value="<?= SEARCH_TYPE_SPECIAL ?>" <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL) echo 'selected'; ?> >По адресу</option>
                     </select><span class="right_indent"></span>
                 </div>
 
                 <input type="hidden" name="page" value="<?= $page ?>"  />
 
 
-                <?php if ($search['search_type'] == SEARCH_TYPE_TRACK): ?>
-
                 <div class="inline">
                     <label for="track">Трек-номер</label><br />
                     <input type="search" id="track" name="track" placeholder="Введите трек-номер" class="quarter" value="<?= $search['track'] ?>" /><span class="right_indent"></span>
                 </div>
 
-                <?php endif; // if ($search_type == SEARCH_TYPE_TRACK): ?>
-
-                <?php if ($search['search_type'] == SEARCH_TYPE_ADDRESS): ?>
+                <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL): ?>
 
                 <div class="inline">
                     <label for="package_type">Тип посылки</label><br />
@@ -62,8 +58,9 @@ include ROOT . '/views/layouts/header.php';
 
                     <span class="right_indent"></span>
 
-                    <?php if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
                     <div class="inline quarter"></div>
+
+                    <?php if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
 
                     <span class="right_indent"></span>
 
@@ -80,23 +77,58 @@ include ROOT . '/views/layouts/header.php';
                     </div>
                     <?php endif; // if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
                 </div>
-                    <br />
-                    <br />
+                <br />
+                <br />
+
+
+
+                <div class="inline full_width">
+
+                    <div class="inline quarter">
+                        <label for="search_place_from_or_to">по месту</label><br />
+                        <select class="quarter" id="search_place_from_or_to" name="search_place_from_or_to" onchange="this.form.submit();">
+                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Адреса</option>
+                            <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Региона</option>
+                        </select>
+                    </div>
 
 
 
 
-                <?php if ($is_admin): ?>
-                    <div class="inline">
-                        <label for="from_or_to">
-                            <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
-                                Для кого
-                            <?php else: //if ($search['package_type'] == PACKAGE_INPUT): ?>
-                                От кого
-                            <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
-                        </label><br />
-                        <select class="half" id="from_or_to" name="from_or_to" data-placeholder="Не выбрано" onchange="this.form.submit();">
+                    <span class="right_indent"></span>
 
+                    <div class="inline quarter"></div>
+
+                    <span class="right_indent"></span>
+
+                    <div class="inline quarter">
+                        <label for="search_place_to_or_from">по месту</label><br />
+                        <select class="quarter" id="search_place_to_or_from" name="search_place_to_or_from" onchange="this.form.submit();">
+                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Адреса</option>
+                            <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Региона</option>
+                        </select>
+                    </div>
+
+                    <span class="right_indent"></span>
+
+                    <div class="inline quarter"></div>
+                </div>
+                <br />
+                <br />
+
+
+            <div class="full_width">
+
+                <div class="inline">
+                    <label for="from_or_to">
+                        <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
+                            Для кого
+                        <?php else: //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                            От кого
+                        <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                    </label><br />
+                    <select class="half" id="from_or_to" name="from_or_to" data-placeholder="Не выбрано" onchange="this.form.submit();" disabled>
+                        <option value="0">Все</option>
                         <?php
                         if (count($only_companies) > 0):
                             foreach ($only_companies as $oc):
@@ -121,48 +153,37 @@ include ROOT . '/views/layouts/header.php';
                             endforeach; //foreach ($only_companies as $oc):
                         endif; //if (count($only_companies) > 0):
                         ?>
+                    </select>
+                </div>
 
-                        </select><span class="right_indent"></span>
-                    </div>
-                    <?php else: //if ($is_admin): ?>
-                    <div class="full_width">
-                        <?php if (count($user_company) > 0): ?>
-                            <div class="font_size_twelve">
-                                <b>Ваша организация:</b> <?= $user_company['c_full_name']; ?>.<br />
-                                <b>Адрес:</b> <?php if ($user_company['is_transit'] == 1) { echo '[ТРАНЗИТ]'; } ?> <?= $string_utility->getAddressToView(1, $user_company, '') ?>.
-                            </div>
-                            <br />
-                        <?php endif; // if (count($user_company) > 0): ?>
-                    </div>
-                    <?php endif; //if ($is_admin): ?>
+                <span class="right_indent"></span>
 
-
-                    <div class="inline">
-                        <label for="to_or_from">
-                            <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
+                <div class="inline">
+                    <label for="to_or_from">
+                        <?php if ($search['package_type'] == PACKAGE_INPUT): ?>
                             От кого
-                            <?php else: //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                        <?php else: //if ($search['package_type'] == PACKAGE_INPUT): ?>
                             Для кого
-                            <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
-                        </label><br />
-                        <select class="half" id="to_or_from" name="to_or_from" data-placeholder="Не выбрано" onchange="this.form.submit();">
-
+                        <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
+                    </label><br />
+                    <select class="half" id="to_or_from" name="to_or_from" data-placeholder="Не выбрано" onchange="this.form.submit();">
+                        <option value="0">Все</option>
                         <?php
                         if (count($only_companies) > 0):
                             foreach ($only_companies as $oc):
-                            ?>
+                                ?>
                                 <optgroup label='<?= $oc['name'] ?>'>
                                     <?php
                                     foreach ($companies as $company):
                                         if ($company['company_id'] == $oc['company_id']):
-                                        ?>
+                                            ?>
                                             <option value="<?= $company['id'] ?>" <?php if ($search['to_or_from'] == $company['id']) echo 'selected'; ?> >
                                                 <?php if ($company['is_transit'] == 1): ?>
                                                     [ТРАНЗИТ]
                                                 <?php endif; //if ($company['is_transit'] == 1): ?>
                                                 <?= $string_utility->getAddressToView(3, $company); ?>
                                             </option>
-                                        <?php
+                                            <?php
                                         endif; // if ($company['company_id'] == $oc['company_id']):
                                     endforeach; //foreach ($companies as $company):
                                     ?>
@@ -172,10 +193,12 @@ include ROOT . '/views/layouts/header.php';
                         endif; //if (count($only_companies) > 0):
                         ?>
 
-                        </select>
-                    </div>
+                    </select>
+                </div>
+            </div>
 
-        <?php endif; //if ($search_type == SEARCH_TYPE_ADDRESS): ?>
+
+        <?php endif; //if ($search_type == SEARCH_TYPE_SPECIAL): ?>
 
         </div>
 
