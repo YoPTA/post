@@ -158,9 +158,9 @@ class SiteController
                 $link_get_param .= '&date_create_begin='.$search['date_create_begin'] .'&date_create_end='. $search['date_create_end'];
             }
 
-            $link_get_param .= '&search_relatively='. $search['search_relatively'] .'&search_place_from_or_to='. $search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $search['search_place_to_or_from'] .'&from_or_to='. $search['from_or_to']
-                .'&to_or_from='.$search['to_or_from'];
+            $link_get_param .= '&search_relatively='. $search['search_relatively'] . '&search_package_state='. $search['search_package_state']
+                .'&search_place_from_or_to='. $search['search_place_from_or_to'] .'&search_place_to_or_from=' . $search['search_place_to_or_from']
+                .'&from_or_to='. $search['from_or_to'] .'&to_or_from='.$search['to_or_from'];
         }
 
 

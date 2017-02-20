@@ -29,6 +29,7 @@ include ROOT . '/views/layouts/header.php';
                 <input type="hidden" name="date_create_begin" value="<?= $index_search['date_create_begin'] ?>">
                 <input type="hidden" name="date_create_end" value="<?= $index_search['date_create_end'] ?>">
                 <input type="hidden" name="search_relatively" value="<?= $index_search['search_relatively'] ?>">
+                <input type="hidden" name="search_package_state" value="<?= $index_search['search_package_state'] ?>">
                 <input type="hidden" name="search_place_from_or_to" value="<?= $index_search['search_place_from_or_to'] ?>">
                 <input type="hidden" name="search_place_to_or_from" value="<?= $index_search['search_place_to_or_from'] ?>">
                 <input type="hidden" name="from_or_to" value="<?= $index_search['from_or_to'] ?>">

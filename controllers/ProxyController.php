@@ -38,6 +38,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -103,6 +104,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -134,9 +140,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -237,6 +243,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -283,6 +290,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -314,9 +326,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -551,6 +563,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -601,6 +614,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -632,9 +650,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -782,6 +800,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -830,6 +849,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -861,9 +885,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -1092,6 +1116,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -1141,6 +1166,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -1172,9 +1202,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -1299,6 +1329,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -1349,6 +1380,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -1380,9 +1416,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -1556,6 +1592,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -1606,6 +1643,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -1637,9 +1679,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))
@@ -1814,6 +1856,7 @@ class ProxyController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
@@ -1864,6 +1907,11 @@ class ProxyController
             $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
+        if (isset($_GET['search_package_state']))
+        {
+            $index_search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
+
         if (isset($_GET['search_place_from_or_to']))
         {
             $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
@@ -1895,9 +1943,9 @@ class ProxyController
                 $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
 
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
-                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] . '&search_package_state='. $index_search['search_package_state']
+                .'&search_place_from_or_to='. $index_search['search_place_from_or_to'] .'&search_place_to_or_from=' . $index_search['search_place_to_or_from']
+                .'&from_or_to='. $index_search['from_or_to'] .'&to_or_from='.$index_search['to_or_from'];
         }
 
         if (isset($_GET['site_page']))

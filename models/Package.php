@@ -440,6 +440,12 @@ class Package
                 return false;
             }
 
+            $search['search_package_state'] = intval($search['search_package_state']);
+            if ($search['search_package_state'] == PACKAGE_STATE_SEND || $search['search_package_state'] == PACKAGE_STATE_RECEIVE)
+            {
+                $where .= ' AND package.package_state = '. $search['search_package_state'].' ';
+            }
+
             if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
                 $where .= ' AND (package.creation_datetime >= "'. $search['d_begin']
