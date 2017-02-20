@@ -127,7 +127,8 @@ include ROOT . '/views/layouts/header.php';
                             От кого
                         <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
                     </label><br />
-                    <select class="half" id="from_or_to" name="from_or_to" data-placeholder="Не выбрано" onchange="this.form.submit();" disabled>
+                    <select class="half" id="from_or_to" name="from_or_to" data-placeholder="Не выбрано" onchange="this.form.submit();"
+                            <?php if (!$is_admin) echo 'disabled'; ?> >
                         <option value="0">Все</option>
                         <?php
                         if (count($only_companies) > 0):
