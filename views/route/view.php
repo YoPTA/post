@@ -64,39 +64,6 @@ $td_id = 0;
                 }
             }
 
-            /*if ($point_index == 0)
-            {
-                if ($is_point_separator)
-                {
-                    $row_index++;
-                }
-            }
-
-            if ($point_index == 1)
-            {
-                if ($is_point_main)
-                {
-                    $row_index = $point_index+1;
-                }
-                if ($is_point_separator)
-                {
-                    $row_index = $point_index+2;
-                }
-            }
-
-            if ($point_index > 1)
-            {
-                if ($is_point_main)
-                {
-                    $row_index = ($point_index * 2);
-                }
-                if ($is_point_separator)
-                {
-                    $row_index = ($point_index * 2) + 1;
-                }
-            }*/
-
-
             if ($point_index == ($route_count-1))
             {
                 $is_notfinish = 0;
