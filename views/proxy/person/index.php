@@ -17,25 +17,20 @@ include ROOT . '/views/layouts/header.php';
     <form method="GET">
         <div class="inline fl">
 
-            <?php if ($index_search['search_type'] == SEARCH_TYPE_COMMON): ?>
+            <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
+            <input type="hidden" name="track" value="<?= $index_search['track'] ?>">
 
-                <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
-                <input type="hidden" name="track" value="<?= $index_search['track'] ?>">
+            <?php if ($index_search['search_type'] == SEARCH_TYPE_SPECIAL): ?>
 
-            <?php elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL): ?>
-
-                <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
                 <input type="hidden" name="package_type" value="<?= $index_search['package_type'] ?>">
                 <input type="hidden" name="active_flag" value="<?= $index_search['active_flag'] ?>">
                 <input type="hidden" name="date_create_begin" value="<?= $index_search['date_create_begin'] ?>">
                 <input type="hidden" name="date_create_end" value="<?= $index_search['date_create_end'] ?>">
                 <input type="hidden" name="search_relatively" value="<?= $index_search['search_relatively'] ?>">
+                <input type="hidden" name="search_place_from_or_to" value="<?= $index_search['search_place_from_or_to'] ?>">
+                <input type="hidden" name="search_place_to_or_from" value="<?= $index_search['search_place_to_or_from'] ?>">
                 <input type="hidden" name="from_or_to" value="<?= $index_search['from_or_to'] ?>">
                 <input type="hidden" name="to_or_from" value="<?= $index_search['to_or_from'] ?>">
-
-            <?php else:  ?>
-
-                <input type="hidden" name="search_type" value="<?= $index_search['search_type'] ?>">
 
             <?php endif;  ?>
 

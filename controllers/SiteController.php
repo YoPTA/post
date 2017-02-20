@@ -102,11 +102,6 @@ class SiteController
             $search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
         }
 
-        if (isset($_GET['search_place']))
-        {
-            $search['search_place'] = htmlspecialchars($_GET['search_place']);
-        }
-
         if (isset($_GET['date_create_begin']))
         {
             $search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
@@ -146,21 +141,22 @@ class SiteController
             $search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($search['search_type'] == SEARCH_TYPE_COMMON)
+        $link_get_param = 'search_type='.$search['search_type'].'&page='.$page.'&track='.$search['track'];
+
+        if ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&track='.$search['track'];
+            $link_get_param .= '&package_type=' . $search['package_type'] .'&active_flag='. $search['active_flag'];
+
+            if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
+            {
+                $link_get_param .= '&date_create_begin='.$search['date_create_begin'] .'&date_create_end='. $search['date_create_end'];
+            }
+
+            $link_get_param .= '&search_relatively='. $search['search_relatively'] .'&search_place_from_or_to='. $search['search_place_from_or_to']
+                .'&search_place_to_or_from=' . $search['search_place_to_or_from'] .'&from_or_to='. $search['from_or_to']
+                .'&to_or_from='.$search['to_or_from'];
         }
-        elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
-        {
-            $link_get_param .= 'search_type='.$search['search_type'].'&page='.$page.'&package_type='. $search['package_type']
-                .'&active_flag='. $search['active_flag'] .'&date_create_begin='. $search['date_create_begin']
-                .'&date_create_end='. $search['date_create_end'] .'&search_relatively='. $search['search_relatively']
-                .'&from_or_to='. $search['from_or_to'] .'&to_or_from='.$search['to_or_from'];
-        }
-        else
-        {
-            $link_get_param .= 'search_type='.SEARCH_TYPE_COMMON.'&page=1';
-        }
+
 
         $packages = Package::getPackages($search, $page);
         $total_packages = Package::getTotalPackages($search);
@@ -664,6 +660,5 @@ class SiteController
 
         return true;
     }
-
 
 }

@@ -30,6 +30,8 @@ class RouteController
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
+        $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
         $index_search['to_or_from'] = null; // Для кого/От кого
 
@@ -65,11 +67,6 @@ class RouteController
             $index_search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
-        if (isset($_GET['search_relatively']))
-        {
-            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
-        }
-
         if (isset($_GET['date_create_begin']))
         {
             $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
@@ -78,6 +75,21 @@ class RouteController
         if (isset($_GET['date_create_end']))
         {
             $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['search_place_from_or_to']))
+        {
+            $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
+        }
+
+        if (isset($_GET['search_place_to_or_from']))
+        {
+            $index_search['search_place_to_or_from'] = htmlspecialchars($_GET['search_place_to_or_from']); // Поиск по месту Для кого/От кого
         }
 
         if (isset($_GET['from_or_to']))
@@ -90,26 +102,20 @@ class RouteController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
+        $link_to_back = 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+
+        if ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
-        }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
-        {
-            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
-                .'&active_flag=' .$index_search['active_flag'];
+            $link_to_back .= '&package_type=' . $index_search['package_type'] .'&active_flag='. $index_search['active_flag'];
+
             if ($index_search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
-                $link_to_back .= '&date_create_begin='. $index_search['date_create_begin']
-                    .'&date_create_end='. $index_search['date_create_end'];
+                $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
-                .'&to_or_from='.$index_search['to_or_from'];
 
-        }
-        else
-        {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
+                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
+                .'&to_or_from='.$index_search['to_or_from'];
         }
 
         $pid = null; // Id посылки
@@ -140,10 +146,7 @@ class RouteController
 
         $errors = false;
 
-        $index_search = null; // Параметры поиска
-
         $site_page = 1;
-        $page = 1;
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
@@ -154,21 +157,24 @@ class RouteController
         $send_values = null; // Данные об отправлении
         $route = null; // Информация о маршруте
 
+        $index_search = null; // Параметры поиска
+
         $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
         $page = 1; // Номер страницы
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
-        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние активности
+        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние посылки
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
+        $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
         $index_search['to_or_from'] = null; // Для кого/От кого
 
         $link_to_back = '';
-
 
         if (isset($_GET['search_type']))
         {
@@ -190,11 +196,6 @@ class RouteController
             $index_search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
-        if (isset($_GET['search_relatively']))
-        {
-            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
-        }
-
         if (isset($_GET['date_create_begin']))
         {
             $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
@@ -203,6 +204,21 @@ class RouteController
         if (isset($_GET['date_create_end']))
         {
             $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['search_place_from_or_to']))
+        {
+            $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
+        }
+
+        if (isset($_GET['search_place_to_or_from']))
+        {
+            $index_search['search_place_to_or_from'] = htmlspecialchars($_GET['search_place_to_or_from']); // Поиск по месту Для кого/От кого
         }
 
         if (isset($_GET['from_or_to']))
@@ -215,25 +231,20 @@ class RouteController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
+        $link_to_back = 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+
+        if ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
-        }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
-        {
-            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
-                .'&active_flag=' .$index_search['active_flag'];
+            $link_to_back .= '&package_type=' . $index_search['package_type'] .'&active_flag='. $index_search['active_flag'];
+
             if ($index_search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
-                $link_to_back .= '&date_create_begin='. $index_search['date_create_begin']
-                    .'&date_create_end='. $index_search['date_create_end'];
+                $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
+                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
                 .'&to_or_from='.$index_search['to_or_from'];
-        }
-        else
-        {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -426,10 +437,7 @@ class RouteController
 
         $errors = false;
 
-        $index_search = null; // Параметры поиска
-
         $site_page = 1;
-        $page = 1; // Номер страницы
         $pid = null; // Id посылки
         $rid = null; // Id маршрута
         $total_proxy_person = 0; // Общее кол-во доверенных лиц
@@ -439,15 +447,20 @@ class RouteController
         $receive_values = null; // Данные о получении
         $route = null; // Информация о маршруте
 
+        $index_search = null; // Параметры поиска
+
         $index_search['search_type'] = SEARCH_TYPE_COMMON; // Параметр поиска
+        $page = 1; // Номер страницы
         $index_search['track'] = null; // Трек-номер
 
         $index_search['package_type'] = PACKAGE_INPUT; // Тип посылки (Входящие/Исходящие)
-        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние активности
+        $index_search['active_flag'] = ACTIVE_FLAG_ACTIVE; // Состояние посылки
         $index_search['date_create_begin'] = null; // Период поиска с
         $index_search['date_create_end'] = null; // Период поиска по
 
         $index_search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $index_search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
+        $index_search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $index_search['from_or_to'] = null; // От кого/Для кого
         $index_search['to_or_from'] = null; // Для кого/От кого
 
@@ -474,11 +487,6 @@ class RouteController
             $index_search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
-        if (isset($_GET['search_relatively']))
-        {
-            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
-        }
-
         if (isset($_GET['date_create_begin']))
         {
             $index_search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
@@ -487,6 +495,21 @@ class RouteController
         if (isset($_GET['date_create_end']))
         {
             $index_search['date_create_end'] = htmlspecialchars(trim($_GET['date_create_end']));
+        }
+
+        if (isset($_GET['search_relatively']))
+        {
+            $index_search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['search_place_from_or_to']))
+        {
+            $index_search['search_place_from_or_to'] = htmlspecialchars($_GET['search_place_from_or_to']); // Поиск по месту От кого/Для кого
+        }
+
+        if (isset($_GET['search_place_to_or_from']))
+        {
+            $index_search['search_place_to_or_from'] = htmlspecialchars($_GET['search_place_to_or_from']); // Поиск по месту Для кого/От кого
         }
 
         if (isset($_GET['from_or_to']))
@@ -499,25 +522,20 @@ class RouteController
             $index_search['to_or_from'] = htmlspecialchars($_GET['to_or_from']);
         }
 
-        if ($index_search['search_type'] == SEARCH_TYPE_COMMON)
+        $link_to_back = 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
+
+        if ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $link_to_back .= 'search_type='.$index_search['search_type'].'&track='.$index_search['track'];
-        }
-        elseif ($index_search['search_type'] == SEARCH_TYPE_SPECIAL)
-        {
-            $link_to_back .= 'search_type='.$index_search['search_type'].'&package_type='. $index_search['package_type']
-                .'&active_flag=' .$index_search['active_flag'];
+            $link_to_back .= '&package_type=' . $index_search['package_type'] .'&active_flag='. $index_search['active_flag'];
+
             if ($index_search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
-                $link_to_back .= '&date_create_begin='. $index_search['date_create_begin']
-                    .'&date_create_end='. $index_search['date_create_end'];
+                $link_to_back .= '&date_create_begin='.$index_search['date_create_begin'] .'&date_create_end='. $index_search['date_create_end'];
             }
-            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&from_or_to='. $index_search['from_or_to']
+
+            $link_to_back .= '&search_relatively='. $index_search['search_relatively'] .'&search_place_from_or_to='. $index_search['search_place_from_or_to']
+                .'&search_place_to_or_from=' . $index_search['search_place_to_or_from'] .'&from_or_to='. $index_search['from_or_to']
                 .'&to_or_from='.$index_search['to_or_from'];
-        }
-        else
-        {
-            $link_to_back .= 'search_type='.SEARCH_TYPE_COMMON;
         }
 
         if (isset($_GET['site_page']))
@@ -707,8 +725,6 @@ class RouteController
             header('Location: /site/error');
         }
     }
-
-
 
     public function actionClearProxy()
     {
