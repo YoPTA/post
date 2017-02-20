@@ -63,6 +63,7 @@ class SiteController
 
 
         $search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
+        $search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
         $search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
         $search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
         $search['from_or_to'] = null; // От кого/Для кого
@@ -97,11 +98,6 @@ class SiteController
             $search['active_flag'] = htmlspecialchars($_GET['active_flag']);
         }
 
-        if (isset($_GET['search_relatively']))
-        {
-            $search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
-        }
-
         if (isset($_GET['date_create_begin']))
         {
             $search['date_create_begin'] = htmlspecialchars(trim($_GET['date_create_begin']));
@@ -115,6 +111,16 @@ class SiteController
         }
 
         $search['d_end'] = $date_converter->stringToDate($search['date_create_end']);
+
+        if (isset($_GET['search_relatively']))
+        {
+            $search['search_relatively'] = htmlspecialchars($_GET['search_relatively']);
+        }
+
+        if (isset($_GET['search_package_state']))
+        {
+            $search['search_package_state'] = htmlspecialchars($_GET['search_package_state']);
+        }
 
         if (isset($_GET['search_place_from_or_to']))
         {
@@ -360,6 +366,7 @@ class SiteController
 
                 $receive_stat = Route::receive($route_without_send, $receive_values);
                 Package::setNowAddresses($package_last_id);
+                Package::setPackageState($package_last_id, 1);
 
                 if ($receive_stat)
                 {

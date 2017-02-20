@@ -203,6 +203,12 @@ class Package
                 return false;
             }
 
+            $search['search_package_state'] = intval($search['search_package_state']);
+            if ($search['search_package_state'] == PACKAGE_STATE_SEND || $search['search_package_state'] == PACKAGE_STATE_RECEIVE)
+            {
+                $where .= ' AND package.package_state = '. $search['search_package_state'].' ';
+            }
+
             if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE)
             {
                 $where .= ' AND (package.creation_datetime >= "'. $search['d_begin']
@@ -226,6 +232,7 @@ class Package
                 $to_caid_min = $search['to_or_from'];
                 $to_caid_max = $to_caid_min;
             }
+
             $search['search_place_from_or_to'] = intval($search['search_place_from_or_to']);
             $search['search_place_to_or_from'] = intval($search['search_place_to_or_from']);
 

@@ -58,7 +58,14 @@ include ROOT . '/views/layouts/header.php';
 
                     <span class="right_indent"></span>
 
-                    <div class="inline quarter"></div>
+                    <div class="inline">
+                        <label for="search_package_state">Состояние посылки</label><br />
+                        <select class="quarter" id="search_package_state" name="search_package_state" onchange="this.form.submit();">
+                            <option value="<?= PACKAGE_STATE_ALL ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_ALL) echo 'selected'; ?> >Все</option>
+                            <option value="<?= PACKAGE_STATE_RECEIVE ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_RECEIVE) echo 'selected'; ?> >Получено</option>
+                            <option value="<?= PACKAGE_STATE_SEND ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_SEND) echo 'selected'; ?> >Отправлено</option>
+                        </select>
+                    </div>
 
                     <?php if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
 
@@ -263,9 +270,6 @@ include ROOT . '/views/layouts/header.php';
 
                         <b>Отправлено</b> в <?php if ($package['now_to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
                         <?= $package['now_to_company_name'] ?>
-                    <?php elseif ($package['package_state'] == 0): ?>
-
-                        Не отправлялась
 
                     <?php endif; // if ($package['package_state'] == 1): ?>
 

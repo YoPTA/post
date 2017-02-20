@@ -73,3 +73,8 @@ define('SEARCH_PLACE_LOCAL', 2);
 // Флаг активности
 define('ACTIVE_FLAG_ACTIVE', 1); // Активные
 define('ACTIVE_FLAG_ARCHIVE', 2); // В архиве
+
+// Состояние посылки
+define('PACKAGE_STATE_ALL', 0); // Все
+define('PACKAGE_STATE_RECEIVE', 1); // Получено
+define('PACKAGE_STATE_SEND', 2); // Отправлено
