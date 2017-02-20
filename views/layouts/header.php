@@ -2,18 +2,18 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?= DEFAULT_ENCODING_UPPERCASE ?>" />
-    <link rel="icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/template/css/chosen/chosen.css">
-    <link href="/template/css/input.css" rel="stylesheet">
-    <link href="/template/css/dimensions.css" rel="stylesheet">
-    <link href="/template/css/links.css" rel="stylesheet">
-    <link href="/template/css/main.css" rel="stylesheet">
-    <link href="/template/css/fonts.css" rel="stylesheet">
-    <link rel="stylesheet" href="/template/css/font-awesome.css">
-    <link href="/template/css/pagination.css" rel="stylesheet">
-    <link href="/template/css/tcal.css" rel="stylesheet">
-    <script src="/template/js/jquery-3.0.0.min.js"></script>
-    <script src="/template/js/tcal.js"></script>
+    <link rel="shortcut icon" href="/favicon.ico?00001" type="image/x-icon">
+    <link rel="stylesheet" href="/template/css/chosen/chosen.css?00001">
+    <link href="/template/css/input.css?00001" rel="stylesheet">
+    <link href="/template/css/dimensions.css?00001" rel="stylesheet">
+    <link href="/template/css/links.css?00001" rel="stylesheet">
+    <link href="/template/css/main.css?00001" rel="stylesheet">
+    <link href="/template/css/fonts.css?00001" rel="stylesheet">
+    <link rel="stylesheet" href="/template/css/font-awesome.css?00001">
+    <link href="/template/css/pagination.css?00001" rel="stylesheet">
+    <link href="/template/css/tcal.css?00001" rel="stylesheet">
+    <script src="/template/js/jquery-3.0.0.min.js?00001"></script>
+    <script src="/template/js/tcal.js?00001"></script>
     <title><?= $pagetitle;?></title>
 </head>
 <body>
