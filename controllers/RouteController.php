@@ -149,6 +149,7 @@ class RouteController
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
         $date_converter = new Date_Converter();
+        $date_time = new DateTime();
 
         $errors = false;
 
@@ -365,6 +366,7 @@ class RouteController
                 $errors['datetime_receive'] = 'Попытка отправить посылку, которая еще не получалась';
             }
 
+            $date_expired = '0000-00-00';
 
             if ($with_or_without == 1)
             {
@@ -394,6 +396,7 @@ class RouteController
                         if ($ppp_item['id'] == $proxy_id)
                         {
                             $is_match = true;
+                            $date_expired = $ppp_item['date_expired'];
                             break;
                         }
                     }
@@ -406,6 +409,13 @@ class RouteController
             else
             {
                 $errors['nothing'] = 'Не выбран тип передачи';
+            }
+
+            $date_now = $date_time->format('Y-m-d');
+
+            if ($date_expired < $date_now)
+            {
+                $errors['date_expired_over'] = 'Истекла доверенность';
             }
 
             // Если ошибок не оказалось
@@ -446,6 +456,7 @@ class RouteController
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
         $date_converter = new Date_Converter();
+        $date_time = new DateTime();
 
         $errors = false;
 
@@ -658,6 +669,8 @@ class RouteController
                 $errors['datetime_receive'] = 'Ошибка с датой подтверждения';
             }
 
+            $date_expired = '0000-00-00';
+
             if ($with_or_without == 1)
             {
                 $proxy_id = 0;
@@ -686,6 +699,7 @@ class RouteController
                         if ($ppp_item['id'] == $proxy_id)
                         {
                             $is_match = true;
+                            $date_expired = $ppp_item['date_expired'];
                             break;
                         }
                     }
@@ -699,6 +713,15 @@ class RouteController
             {
                 $errors['nothing'] = 'Не выбран тип передачи';
             }
+
+            $date_now = $date_time->format('Y-m-d');
+
+            if ($date_expired < $date_now)
+            {
+                $errors['date_expired_over'] = 'Истекла доверенность';
+            }
+
+
 
             // Если ошибок не оказалось
             if ($errors == false)
