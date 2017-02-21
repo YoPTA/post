@@ -511,4 +511,28 @@ class Proxy
             unset($_SESSION['proxy']);
         }
     }
+
+    /*
+     * Установить proxy_flag
+     * @var $flag int - флаг доверенности
+     */
+    public static function setProxyFlag($flag)
+    {
+        session_start();
+        $_SESSION['proxy_flag'] = $flag;
+    }
+
+    /*
+     * Проверка выбрана ли доверенность
+     * return int OR null
+     */
+    public static function checkProxyFlag()
+    {
+        session_start();
+        if(isset($_SESSION['proxy_flag']))
+        {
+            return $_SESSION['proxy_flag'];
+        }
+        return null;
+    }
 }

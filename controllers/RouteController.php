@@ -14,7 +14,7 @@ class RouteController
         require_once ROOT . '/config/role_ckeck.php';
         $string_utility = new String_Utility();
         $date_converter = new Date_Converter();
-
+        Proxy::setProxyFlag(1);
 
         $errors = false;
 
@@ -622,8 +622,55 @@ class RouteController
         $proxy = null;
         $proxy_person = null;
 
+        $route = Route::getRouteInfo($rid);
+        if ($route['local_place_id'] != $user['local_place_id'])
+        {
+            if (!$is_admin)
+            {
+                header('Location: /site/error');
+            }
+        }
+        if (isset($_POST['with_or_without']))
+        {
+            $with_or_without = htmlspecialchars($_POST['with_or_without']);
+        }
+
+
+        $check_proxy = Proxy::checkProxy();
+        $check_proxy_person = Proxy::checkProxyPerson();
+
+
+        if (Proxy::checkProxyFlag() == 1)
+        {
+            $package_route = Route::getPackageRoute($route['package_id'], 2);
+            if (count($package_route) > 1)
+            {
+                if ($with_or_without == 2)
+                {
+                    for ($i = count($package_route) - 1; $i >= 0; $i--)
+                    {
+                        if ($package_route[$i+1]['is_receive'] == 0 && $package_route[$i]['is_send'] == 1)
+                        {
+                            if ($package_route[$i+1]['id'] == $rid)
+                            {
+                                if ($check_proxy == null)
+                                {
+                                    Proxy::memorizeProxy($package_route[$i]['send_proxy_id']);
+                                }
+                                if ($check_proxy_person == null)
+                                {
+                                    Proxy::memorizeProxyPerson($package_route[$i]['send_proxy_person_id']);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         $proxy_id = Proxy::checkProxy(); // Доверенность
         $proxy_person_id = Proxy::checkProxyPerson(); // Доверреное лицо
+
         $proxy_person_proxies = Proxy::getProxyList($proxy_person_id, null);
 
         if ($proxy_id != null)
@@ -633,20 +680,6 @@ class RouteController
         if ($proxy_person_id != null)
         {
             $proxy_person = Proxy::getProxyPerson($proxy_person_id);
-        }
-
-        if (isset($_POST['with_or_without']))
-        {
-            $with_or_without = htmlspecialchars($_POST['with_or_without']);
-        }
-
-        $route = Route::getRouteInfo($rid);
-        if ($route['local_place_id'] != $user['local_place_id'])
-        {
-            if (!$is_admin)
-            {
-                header('Location: /site/error');
-            }
         }
 
         if (isset($_POST['receive']))
@@ -678,7 +711,6 @@ class RouteController
             }
             else if ($with_or_without == 2)
             {
-
                 if ($proxy_person_id == null || $proxy_person_id == 0)
                 {
                     // Если не выбрано доверенное лицо
@@ -721,8 +753,6 @@ class RouteController
                 $errors['date_expired_over'] = 'Истекла доверенность';
             }
 
-
-
             // Если ошибок не оказалось
             if ($errors == false)
             {
@@ -737,8 +767,7 @@ class RouteController
                 {
                     Package::setDelivered($pid, $receive_values['datetime_receive']);
                 }
-
-
+                
                 $receive_stat = Route::receive($rid, $receive_values);
                 Package::setNowAddresses($pid);
                 Package::setPackageState($pid, 1);
@@ -748,13 +777,11 @@ class RouteController
                     Notification::launchNotification($pid);
                 }
 
-
                 Proxy::outProxy();
                 Proxy::outProxyPerson();
                 header('Location: /site/index?'.$link_to_back.'&page='.$site_page);
             }
         }
-
 
         if ($is_receive)
         {
@@ -771,6 +798,7 @@ class RouteController
     {
         Proxy::outProxy();
         Proxy::outProxyPerson();
+        Proxy::setProxyFlag(2);
 
         return true;
     }
