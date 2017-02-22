@@ -405,17 +405,17 @@ class RouteController
                 {
                     $errors['proxy_or_proxy_person'] = 'Доверенность не принадлежит доверенному лицу. Выберите другую.';
                 }
+
+                $date_now = $date_time->format('Y-m-d');
+
+                if ($date_expired < $date_now)
+                {
+                    $errors['date_expired_over'] = 'Истекла доверенность';
+                }
             }
             else
             {
                 $errors['nothing'] = 'Не выбран тип передачи';
-            }
-
-            $date_now = $date_time->format('Y-m-d');
-
-            if ($date_expired < $date_now)
-            {
-                $errors['date_expired_over'] = 'Истекла доверенность';
             }
 
             // Если ошибок не оказалось
@@ -740,17 +740,17 @@ class RouteController
                 {
                     $errors['proxy_or_proxy_person'] = 'Доверенность не принадлежит доверенному лицу. Выберите другую.';
                 }
+
+                $date_now = $date_time->format('Y-m-d');
+
+                if ($date_expired < $date_now)
+                {
+                    $errors['date_expired_over'] = 'Истекла доверенность';
+                }
             }
             else
             {
                 $errors['nothing'] = 'Не выбран тип передачи';
-            }
-
-            $date_now = $date_time->format('Y-m-d');
-
-            if ($date_expired < $date_now)
-            {
-                $errors['date_expired_over'] = 'Истекла доверенность';
             }
 
             // Если ошибок не оказалось
