@@ -82,12 +82,11 @@ include ROOT . '/views/layouts/header.php';
         </div>
     </div><br />
 
-    <label for="workpost" title="По умолчанию будет Специалист">Должность (Необязательно)</label>
+    <label for="workpost">Должность (Необязательно)</label>
     <span class="right_indent"></span>
     <span class="acorrect" id="workpost_correct"></span><br />
     <input type="text" placeholder="Должность (Необязательно)" id="workpost" name="workpost" class="quarter <?php if (isset($errors['workpost'])) echo 'error'; ?>" value="<?= $user['workpost'] ?>"
            onblur="InputCountCanEmpty('workpost', 'quarter', 128, 'workpost_correct', 'Должнсоть не может быть такой длины', '')"
-           title="По умолчанию будет Специалист"
         /><br /><br />
 
     <label for="company_address_id">Адрес организации*</label><br />
