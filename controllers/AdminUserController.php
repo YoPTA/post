@@ -223,6 +223,7 @@ class AdminuserController
         {
             $user['group_id'] = htmlspecialchars($_POST['group_id']);
         }
+        $user['flag'] = 1;
 
         if (isset($_POST['add']))
         {
