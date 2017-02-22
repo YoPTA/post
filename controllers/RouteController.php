@@ -767,7 +767,7 @@ class RouteController
                 {
                     Package::setDelivered($pid, $receive_values['datetime_receive']);
                 }
-                
+
                 $receive_stat = Route::receive($rid, $receive_values);
                 Package::setNowAddresses($pid);
                 Package::setPackageState($pid, 1);

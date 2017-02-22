@@ -59,6 +59,13 @@ include ROOT . '/views/layouts/header.php';
            onblur="InputCount('login', 'quarter', 64, 'login_correct', 'Логин не может быть такой длины', 'Необходимо заполнить логин', '')"
         /><br /><br />
 
+    <label for="workpost">Должность (Необязательно)</label>
+    <span class="right_indent"></span>
+    <span class="acorrect" id="workpost_correct"></span><br />
+    <input type="text" placeholder="Должность (Необязательно)" id="workpost" name="workpost" class="quarter <?php if (isset($errors['workpost'])) echo 'error'; ?>" value="<?= $user['workpost'] ?>"
+           onblur="InputCountCanEmpty('workpost', 'quarter', 128, 'workpost_correct', 'Должнсоть не может быть такой длины', '')"
+        /><br /><br />
+
         <label for="company_address_id">Адрес организации*</label><br />
         <select class="half" id="company_address_id" name="company_address_id" data-placeholder="Не выбрано">
 

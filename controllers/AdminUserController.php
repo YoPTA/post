@@ -204,6 +204,11 @@ class AdminuserController
             $user['password_confirm'] = htmlspecialchars(trim($_POST['password_confirm']));
         }
 
+        if (isset($_POST['workpost']))
+        {
+            $user['workpost'] = htmlspecialchars(trim($_POST['workpost']));
+        }
+
         if (isset($_POST['company_address_id']))
         {
             $user['company_address_id'] = htmlspecialchars($_POST['company_address_id']);
@@ -244,6 +249,11 @@ class AdminuserController
             if (User::checkUserLogin($user['login']))
             {
                 $errors['login'] = 'Указанный логин уже существует';
+            }
+
+            if (!Validate::checkStrCanEmpty($user['workpost'], 128))
+            {
+                $errors['workpost'] = 'Должность не может быть такой длины';
             }
 
             if (!Validate::checkPassword($user['password']))
@@ -410,6 +420,11 @@ class AdminuserController
             $user['login'] = htmlspecialchars(trim($_POST['login']));
         }
 
+        if (isset($_POST['workpost']))
+        {
+            $user['workpost'] = htmlspecialchars(trim($_POST['workpost']));
+        }
+
         if (isset($_POST['company_address_id']))
         {
             $user['company_address_id'] = htmlspecialchars($_POST['company_address_id']);
@@ -457,6 +472,11 @@ class AdminuserController
             if (User::checkUserLogin($user['login']) && $user_info['login'] != $user['login'])
             {
                 $errors['login'] = 'Указанный логин уже существует';
+            }
+
+            if (!Validate::checkStrCanEmpty($user['workpost'], 128))
+            {
+                $errors['workpost'] = 'Должность не может быть такой длины';
             }
 
             if (!Company::checkCompanyAddress($user['company_address_id']))

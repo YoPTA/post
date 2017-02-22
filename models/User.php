@@ -97,6 +97,7 @@ class User
           user.role_id,
           user.group_id,
           user.company_address_id,
+          user.workpost,
           user.flag,
           company_address.local_place_id
         FROM
@@ -296,6 +297,7 @@ class User
           user.firstname,
           user.middlename,
           user.login,
+          user.workpost,
           user.company_address_id,
           company.key_field AS c_key_field,
           company.is_mfc,
@@ -470,10 +472,10 @@ class User
      */
     public static function addUser($user)
     {
-        $sql = 'INSERT INTO user (lastname, firstname, middlename, login, password, company_address_id,
-          role_id, group_id, created_datetime, created_user_id, flag)
-          VALUES (:lastname, :firstname, :middlename, :login, :password, :company_address_id,
-          :role_id, :group_id, :created_datetime, :created_user_id, 1)';
+        $sql = 'INSERT INTO user (lastname, firstname, middlename, login, password, workpost,
+          company_address_id, role_id, group_id, created_datetime, created_user_id, flag)
+          VALUES (:lastname, :firstname, :middlename, :login, :password, :workpost,
+          :company_address_id, :role_id, :group_id, :created_datetime, :created_user_id, 1)';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
@@ -482,6 +484,7 @@ class User
         $result->bindParam(':middlename', $user['middlename'], PDO::PARAM_STR);
         $result->bindParam(':login', $user['login'], PDO::PARAM_STR);
         $result->bindParam(':password', $user['password'], PDO::PARAM_STR);
+        $result->bindParam(':workpost', $user['workpost'], PDO::PARAM_STR);
         $result->bindParam(':company_address_id', $user['company_address_id'], PDO::PARAM_INT);
         $result->bindParam(':role_id', $user['role_id'], PDO::PARAM_INT);
         $result->bindParam(':group_id', $user['group_id'], PDO::PARAM_INT);
@@ -518,8 +521,9 @@ class User
         {
             $sql = 'UPDATE user
             SET lastname = :lastname, firstname = :firstname, middlename = :middlename,
-              login = :login, company_address_id = :company_address_id, role_id = :role_id,
-              group_id = :group_id, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+              login = :login, workpost = :workpost, company_address_id = :company_address_id,
+              role_id = :role_id, group_id = :group_id, changed_datetime = :changed_datetime,
+              changed_user_id = :changed_user_id
             WHERE id = :id '.$where;
         }
         elseif ($param == 2)
@@ -544,6 +548,7 @@ class User
             $result->bindParam(':firstname', $user['firstname'], PDO::PARAM_STR);
             $result->bindParam(':middlename', $user['middlename'], PDO::PARAM_STR);
             $result->bindParam(':login', $user['login'], PDO::PARAM_STR);
+            $result->bindParam(':workpost', $user['workpost'], PDO::PARAM_STR);
             $result->bindParam(':company_address_id', $user['company_address_id'], PDO::PARAM_INT);
             $result->bindParam(':role_id', $user['role_id'], PDO::PARAM_INT);
             $result->bindParam(':group_id', $user['group_id'], PDO::PARAM_INT);
