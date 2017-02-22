@@ -475,7 +475,7 @@ class User
         $sql = 'INSERT INTO user (lastname, firstname, middlename, login, password, workpost,
           company_address_id, role_id, group_id, created_datetime, created_user_id, flag)
           VALUES (:lastname, :firstname, :middlename, :login, :password, :workpost,
-          :company_address_id, :role_id, :group_id, :created_datetime, :created_user_id, 1)';
+          :company_address_id, :role_id, :group_id, :created_datetime, :created_user_id, :flag)';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
@@ -490,6 +490,7 @@ class User
         $result->bindParam(':group_id', $user['group_id'], PDO::PARAM_INT);
         $result->bindParam(':created_datetime', $user['created_datetime'], PDO::PARAM_STR);
         $result->bindParam(':created_user_id', $user['created_user_id'], PDO::PARAM_INT);
+        $result->bindParam(':flag', $user['flag'], PDO::PARAM_INT);
 
         if($result->execute())
         {

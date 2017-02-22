@@ -522,15 +522,9 @@ class SiteController
         $package_objects = Package::getPackageObjects($pid);
         $package_objects_count = count($package_objects);
 
-        if ($is_create)
-        {
-            require_once ROOT . '/views/site/barcode_39.php';
-            return true;
-        }
-        else
-        {
-            header('Location: /site/error');
-        }
+        require_once ROOT . '/views/site/barcode_39.php';
+        return true;
+
     }
 
     public function actionChoose()
