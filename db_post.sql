@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Фев 14 2017 г., 10:29
+-- Время создания: Фев 22 2017 г., 08:50
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -355,6 +355,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `login` varchar(64) NOT NULL,
   `password` varchar(256) NOT NULL,
   `company_address_id` int(11) NOT NULL,
+  `workpost` varchar(128) NOT NULL DEFAULT 'Специалист' COMMENT 'Должность',
   `role_id` int(11) NOT NULL DEFAULT '0',
   `group_id` int(11) NOT NULL DEFAULT '0' COMMENT 'ID группы',
   `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
@@ -368,10 +369,10 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Нет', '', '', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 'Романов', 'Сергей', 'Сергеевич', 'romanovss', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
-(2, 'Поцалов', 'Сергей', 'Алексеевич', 'pocalovsa', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
+INSERT INTO `user` (`id`, `lastname`, `firstname`, `middlename`, `login`, `password`, `company_address_id`, `workpost`, `role_id`, `group_id`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 'Нет', '', '', 'Нет', '3f7faf4ebca01338fb295fa4374d48aa', 0, '', 0, 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 'Романов', 'Сергей', 'Сергеевич', 'romanovss', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 'Супер админ', 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2),
+(2, 'Поцалов', 'Сергей', 'Алексеевич', 'pocalovsa', 'd83ddc93ad840a68d5cff02d5773a07c', 1, 'Супер админ', 2, 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
