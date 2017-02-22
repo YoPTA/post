@@ -9,8 +9,8 @@ define('USER_ROLE_CREATE', 1);
 // Роль администратора
 define('USER_ROLE_SPECIAL', 2);
 
-// Роль по умолчанию
-define('USER_ROLE_DEFAULT', 3);
+// Флаг пользователя по умолчанию из ДОКИ
+define('USER_FLAG_DOKA_DEFAULT', 3);
 
 // Откуда
 define('FROM_COMPANY', 'from');
