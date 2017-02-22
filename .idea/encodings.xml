@@ -54,6 +54,7 @@
     <file url="file://$PROJECT_DIR$/views/company/company_address/delete.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/company/company_address/edit.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/company/company_address/index.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/views/doka/login.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/doka/package.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/layouts/admin_menu_panel.php" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/views/layouts/header.php" charset="UTF-8" />

@@ -440,4 +440,183 @@ class DokaController
             header('Location: /site/error');
         }
     }
+
+    public function actionLogin()
+    {
+        $date_time = new DateTime();
+        $errors = false; // Ошибки
+
+        $doka_user = null; // Информация о пользователе из ДОКА
+        $time = 0; // Время входа
+        $hash = null; // Хэш
+
+        if (isset($_GET['lastname']))
+        {
+            $doka_user['lastname'] = iconv('windows-1251', 'utf-8', $this->base64_url_decode(htmlspecialchars($_GET['lastname']))); // Фамилия
+        }
+
+        if (isset($_GET['firstname']))
+        {
+            $doka_user['firstname'] = iconv('windows-1251', 'utf-8', $this->base64_url_decode(htmlspecialchars($_GET['firstname']))); // Имя
+        }
+
+        if (isset($_GET['middlename']))
+        {
+            $doka_user['middlename'] = iconv('windows-1251', 'utf-8', $this->base64_url_decode(htmlspecialchars($_GET['middlename']))); // Отчество
+        }
+
+        if (isset($_GET['login']))
+        {
+            $doka_user['login'] = iconv('windows-1251', 'utf-8', $this->base64_url_decode(htmlspecialchars($_GET['login']))); // Логин
+        }
+
+        if (isset($_GET['workpost']))
+        {
+            $doka_user['workpost'] = iconv('windows-1251', 'utf-8', $this->base64_url_decode(htmlspecialchars($_GET['workpost']))); // Должность
+        }
+
+        $doka_user['password'] = md5(rand(100000, 999999)); // Пароль
+        $doka_user['company_address_id'] = 1; //Адрес организации
+        $doka_user['role_id'] = 0; // Роль пользователя
+        $doka_user['group_id'] = 0; // Группа пользователя
+        $doka_user['flag'] = USER_FLAG_DOKA_DEFAULT; // Не подтвержден
+
+
+        if(isset($_GET['time']))
+        {
+            $timeNow = time();
+            if($timeNow < $_GET['time'] + 420 && $timeNow > $_GET['time'] - 420)
+            {
+                $time = $_GET['time'];
+            }
+            else
+            {
+                $errors['time'] = 'Время не уложилось в положенный интервал';
+            }
+        }
+
+        if(isset($_GET['hash']))
+        {
+            $myHash = $this->base64_url_encode($this->GetQuizLoginHash(iconv('utf-8', 'windows-1251', $doka_user['lastname']
+                . $doka_user['firstname'] . $doka_user['login']), $time));
+            if($_GET['hash'] == $myHash)
+            {
+                $hash = $_GET['hash'];
+            }
+            else
+            {
+                $errors['hash'] = 'Хэш не прошел проверку';
+            }
+        }
+
+        if (!Validate::checkStr($doka_user['lastname'], 128))
+        {
+            $errors['lastname'] = 'Фамилия не может быть такой длины';
+        }
+
+        if (!Validate::checkStr($doka_user['firstname'], 64))
+        {
+            $errors['firstname'] = 'Имя не может быть такой длины';
+        }
+
+        if (!Validate::checkStrCanEmpty($doka_user['middlename'], 128))
+        {
+            $errors['middlename'] = 'Отчество не может быть такой длины';
+        }
+
+        if (!Validate::checkStr($doka_user['login'], 64))
+        {
+            $errors['login'] = 'Логин не может быть такой длины';
+        }
+
+        if (!Validate::checkStrCanEmpty($doka_user['workpost'], 128))
+        {
+            $errors['workpost'] = 'Логин не может быть такой длины';
+        }
+
+        $haveLogin = User::checkUserLogin($doka_user['login']);
+        $user_info = null; // Информация о пользователе
+        $userByLogin = false; // Найденный пользователь по логину
+
+        if ($haveLogin == true)
+        {
+            $userByLogin = User::searchLogin($doka_user['login']);
+            if ($userByLogin == false)
+            {
+                $errors['user_by_login'] = 'Не удалось получить пользователя по логину';
+            }
+            else{
+                $user_info = User::getUser($userByLogin); // Получаем информацию о пользователе
+            }
+
+            if ($user_info == false)
+            {
+                $errors['user_info'] = 'Не удалось получить информацию о пользователе из базы данных';
+            }
+        }
+
+        if ($errors == false)
+        {
+            if ($haveLogin == true)
+            {
+                if ($user_info['flag'] != USER_FLAG_DOKA_DEFAULT && $user_info['flag'] != 0)
+                {
+                    User::auth($userByLogin);
+                    header('Location: /site/index');
+                }
+            }
+            else
+            {
+                $doka_user['created_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $doka_user['created_user_id'] = 0;
+                $last_user = User::addUser($doka_user);
+                if ($last_user == false)
+                {
+                    $errors['last_user'] = 'Не удалось добавить пользователя';
+                }
+            }
+        }
+
+        require_once ROOT . '/views/doka/login.php';
+        return true;
+    }
+
+    private function GetQuizLoginHash($value, $time)
+    {
+        $split = array();
+        $split[0] = '~';
+        $split[1] = '!';
+        $split[2] = '@';
+        $split[3] = '#';
+        $split[4] = '$';
+        $split[5] = '%';
+        $split[6] = '^';
+        $split[7] = '&';
+        $split[8] = '*';
+        $split[9] = '_';
+
+        $index = (string)$time;
+
+        while (strlen($index) != 1)
+        {
+            $sum = 0;
+            for ($i = 0; $i < strlen($index); $i++) $sum = $sum + (integer)$index[$i];
+            $index = (string)$sum;
+        }
+
+        $index = (integer)$index;
+
+        return md5($value.$split[(integer)$index].$time);
+    }
+
+    private function base64_url_encode($value)
+    {
+        return strtr(base64_encode($value), '+/=', '-_,');
+    }
+
+
+    private function base64_url_decode($value)
+    {
+        return base64_decode(strtr($value, '-_,', '+/='));
+    }
 }

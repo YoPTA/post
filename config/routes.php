@@ -21,6 +21,7 @@ return [
     'company/company_delete' => 'company/companydelete',
 
     'doka/package' => 'doka/package',
+    'doka/login' => 'doka/login',
 
     'profile/index' => 'profile/index',
 
