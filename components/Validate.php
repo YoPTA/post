@@ -145,6 +145,23 @@ class Validate
     }
 
     /*
+     * Проверяет доступен ли URL
+     * @var $url string - URL
+     * return boolean
+     */
+    public function checkUrl($url)
+    {
+        ini_set('default_socket_timeout', '10');
+        $fp = fopen($url, "r");
+        $res = fread($fp, 500);
+        fclose($fp);
+        if (strlen($res) > 0)
+            return true;
+        else
+            return false;
+    }
+
+    /*
      * Возвращает строку с переводом первый символ в верхний регистр
      * @var $string string - строка, которую нужно преобразовать
      * @var $enc string - кодировка
