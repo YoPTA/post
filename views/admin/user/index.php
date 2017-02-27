@@ -105,6 +105,13 @@ include ROOT . '/views/layouts/header.php';
                                         <img src="/template/images/lock.png" />
                                     </a>
                                 </div>
+                                <?php if ($u_item['flag'] == 3): ?>
+                                    <div class="bg_button inline">
+                                        <a href="/admin/user_flag?<?= $get_params ?>&uid=<?= $u_item['id'] ?>" title="Подтвердить пользователя">
+                                            <img src="/template/images/check.png" />
+                                        </a>
+                                    </div>
+                                <?php endif; //if ($u_item['flag'] == 3): ?>
                             <?php endif //if ($admin_rights['can_edit']): ?>
 
                             <?php if ($admin_rights['can_delete']): ?>

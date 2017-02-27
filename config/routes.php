@@ -8,6 +8,7 @@ return [
     'admin/user_add' => 'adminuser/add',
     'admin/user_edit' => 'adminuser/edit',
     'admin/user_password' => 'adminuser/password',
+    'admin/user_flag' => 'adminuser/flag',
 
 
     'company/company_address_index' => 'company/companyaddressindex',

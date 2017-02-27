@@ -564,4 +564,25 @@ class User
 
         return $result->execute();
     }
+
+    /*
+     * Подтвердить пользователя
+     * @var $id int - ID пользователя
+     * @var $user array() - информация о пользователе
+     * return boolean
+     */
+    public static function confirmUser($id, $user)
+    {
+
+        $sql = 'UPDATE user
+            SET flag = 1, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+            WHERE id = :id AND flag = 3 ';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':changed_datetime', $user['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $user['changed_user_id'], PDO::PARAM_INT);
+        return $result->execute();
+    }
 }

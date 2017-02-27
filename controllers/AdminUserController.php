@@ -621,4 +621,76 @@ class AdminuserController
             header('Location: /site/error');
         }
     }
+
+    public function actionFlag()
+    {
+        $user_id = null;
+        $is_admin = false;
+        $admin_rights = null;
+        $admin_menu_panel = Menu_Panel::getMenuPanel();
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $date_time = new DateTime();
+
+        $info = null; // Информация о пользователе
+        $info['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
+        $info['changed_user_id'] = $user_id;
+
+        $uid = null; // Id пользователя
+        $search['fio_or_login'] = null; // ФИО или Логин
+        $search['office'] = 1; // Офис
+
+        $page = 1; // Номер страницы
+        $get_params = '';
+
+        if (isset($_GET['fio_or_login']))
+        {
+            $search['fio_or_login'] = htmlspecialchars(trim($_GET['fio_or_login']));
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if ($page < 1)
+        {
+            $page = 1;
+        }
+
+        if (isset($_GET['office']))
+        {
+            $search['office'] = htmlspecialchars($_GET['office']);
+        }
+
+        $get_params = 'fio_or_login='.$search['fio_or_login'].'&page='.$page.'&office='.$search['office'];
+
+        if (isset($_GET['uid']))
+        {
+            $uid = (int)htmlspecialchars($_GET['uid']);
+        }
+
+        $confirmUser = User::confirmUser($uid, $info);
+
+        if ($confirmUser == false)
+        {
+            echo 'Не удалось подтвердить пользователя';
+        }
+        else
+        {
+            header('Location: /admin/user_index?'.$get_params);
+        }
+
+
+        if ($admin_rights['can_change_user'] && $admin_rights['can_edit'])
+        {
+            require_once ROOT . '/views/admin/user/flag.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
 }
