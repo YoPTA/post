@@ -99,10 +99,12 @@ class User
           user.company_address_id,
           user.workpost,
           user.flag,
-          company_address.local_place_id
+          company_address.local_place_id,
+          company.ip_address
         FROM
           user
           INNER JOIN company_address ON (user.company_address_id = company_address.id)
+          INNER JOIN company ON (company_address.company_id = company.id)
         WHERE
           user.id = :id';
         $db = Database::getConnection();
