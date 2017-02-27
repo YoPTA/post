@@ -167,6 +167,8 @@ include ROOT . '/views/layouts/header.php';
 
     <span class="right_indent negative_left_indent"></span>
 
+    <?php if ($automatic_flag): ?>
+
     <div class="quarter inline negative_left_indent">
         <table class="view">
             <tr>
@@ -174,6 +176,7 @@ include ROOT . '/views/layouts/header.php';
                     Заполнить форму автоматически
                 </td>
             </tr>
+            <?php if ($user['ip_address'] != null): ?>
             <tr>
                 <td class="one_eighth accent">АИС "ДОКА"</td>
                 <td class="one_eighth">
@@ -184,8 +187,10 @@ include ROOT . '/views/layouts/header.php';
                     </div>
                 </td>
             </tr>
+            <?php endif; //if ($user['ip_address'] != null): ?>
         </table>
     </div>
+    <?php endif; // if ($automatic_flag): ?>
 </div>
     <br /><br />
 <hr />

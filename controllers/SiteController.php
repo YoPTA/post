@@ -538,8 +538,18 @@ class SiteController
         require_once ROOT . '/config/role_ckeck.php';
 
         $string_utility = new String_Utility();
+        $validate = new Validate();
 
         $errors = false;
+
+        // Флаг для автоматических заполнений
+        $automatic_flag = false; // По умолчанию - нет
+
+        // Проверяем досупна ли АИС "ДОКА"
+        if ($user['ip_address'] != null)
+        {
+            $automatic_flag = true;
+        }
 
         if (!$is_admin)
         {
