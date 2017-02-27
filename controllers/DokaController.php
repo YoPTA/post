@@ -448,6 +448,7 @@ class DokaController
 
         $doka_user = null; // Информация о пользователе из ДОКА
         $time = 0; // Время входа
+        $timeLimit = 420; // Ограничение по времени
         $hash = null; // Хэш
 
         if (isset($_GET['lastname']))
@@ -485,7 +486,7 @@ class DokaController
         if(isset($_GET['time']))
         {
             $timeNow = time();
-            if($timeNow < $_GET['time'] + 420 && $timeNow > $_GET['time'] - 420)
+            if($timeNow < $_GET['time'] + $timeLimit && $timeNow > $_GET['time'] - $timeLimit)
             {
                 $time = $_GET['time'];
             }
@@ -497,7 +498,7 @@ class DokaController
 
         if(isset($_GET['hash']))
         {
-            $myHash = $this->base64_url_encode($this->GetQuizLoginHash(iconv('utf-8', 'windows-1251', $doka_user['lastname']
+            $myHash = $this->base64_url_encode($this->GetLoginHash(iconv('utf-8', 'windows-1251', $doka_user['lastname']
                 . $doka_user['firstname'] . $doka_user['login']), $time));
             if($_GET['hash'] == $myHash)
             {
@@ -581,7 +582,7 @@ class DokaController
         return true;
     }
 
-    private function GetQuizLoginHash($value, $time)
+    private function GetLoginHash($value, $time)
     {
         $split = array();
         $split[0] = '~';
