@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Фев 22 2017 г., 08:50
+-- Время создания: Фев 27 2017 г., 15:11
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `company` (
   `full_name` varchar(512) NOT NULL,
   `key_field` varchar(64) NOT NULL,
   `is_mfc` int(1) NOT NULL DEFAULT '0' COMMENT 'Является ли организация мфц',
+  `ip_address` varchar(42) NOT NULL DEFAULT '' COMMENT 'IP-адрес организации',
   `created_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время создания',
   `created_user_id` int(11) NOT NULL DEFAULT '0' COMMENT 'Пользователь, создавший',
   `changed_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Дата и время изменения',
@@ -43,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Дамп данных таблицы `company`
 --
 
-INSERT INTO `company` (`id`, `name`, `full_name`, `key_field`, `is_mfc`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
-(0, 'Нет', 'Нет', '0', 0, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
-(1, 'ГАУ "МФЦ"', 'ГАУ Пензенской области "Многофункциональный центр предоставления государственных и муниципальных услуг"', '5835080816', 1, '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
+INSERT INTO `company` (`id`, `name`, `full_name`, `key_field`, `is_mfc`, `ip_address`, `created_datetime`, `created_user_id`, `changed_datetime`, `changed_user_id`, `flag`) VALUES
+(0, 'Нет', 'Нет', '0', 0, '', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 0),
+(1, 'ГАУ "МФЦ"', 'ГАУ Пензенской области "Многофункциональный центр предоставления государственных и муниципальных услуг"', '5835080816', 1, '10.8.0.122', '0000-00-00 00:00:00', 0, '0000-00-00 00:00:00', 0, 2);
 
 -- --------------------------------------------------------
 
