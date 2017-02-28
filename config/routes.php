@@ -20,6 +20,7 @@ return [
     'company/company_add' => 'company/companyadd',
     'company/company_edit' => 'company/companyedit',
     'company/company_delete' => 'company/companydelete',
+    'company/company_ip_address' => 'company/companyipaddress',
 
     'doka/package' => 'doka/package',
     'doka/login' => 'doka/login',

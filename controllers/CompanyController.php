@@ -378,6 +378,84 @@ class CompanyController
         }
     }
 
+    public function actionCompanyIpAddress()
+    {
+        $is_change_company = false;
+        $user = null;
+        $user_id = null;
+
+        // Подключаем файл с проверками ролей пользователя
+        require_once ROOT . '/config/role_ckeck.php';
+
+        $errors = false;
+
+        $c_type = null; // Тип компании (получатель/отправитель)
+        $search_param = null; // Искомое значение
+        $page = 1; // Номер страницы
+        $cid = null; // ID организации
+
+        $date_time = new DateTime();
+
+        $company = null; // Информация об организации
+
+        if (isset($_GET['c_type']))
+        {
+            $c_type = htmlspecialchars($_GET['c_type']);
+        }
+
+        if (isset($_GET['search_value']))
+        {
+            $search_param['search_value'] = htmlspecialchars($_GET['search_value']);
+        }
+
+        if (isset($_GET['page']))
+        {
+            $page = htmlspecialchars($_GET['page']);
+        }
+
+        if (isset($_GET['cid']))
+        {
+            $cid = htmlspecialchars($_GET['cid']);
+        }
+
+        $company = Company::getCompanyInfo($cid);
+
+        if (isset($_POST['ip_address']))
+        {
+            $company['ip_address'] = htmlspecialchars(trim($_POST['ip_address']));
+        }
+
+        if (isset($_POST['edit']))
+        {
+            if (!Validate::checkStrCanEmpty($company['ip_address'], 42))
+            {
+                $errors['ip_address'] = 'Ip-адрес не может быть такой длины';
+            }
+
+            if ($errors == false)
+            {
+                $company['changed_datetime'] = $date_time->format('Y-m-d H:i:s');
+                $company['changed_user_id'] = $user_id;
+                Company::setIpAddress($cid, $company);
+                header('Location: /company/company_index?c_type='.$c_type.'&search_value='.$search_param['search_value']
+                    .'&page='.$page);
+            }
+        }
+
+
+
+
+        if ($is_change_company)
+        {
+            require_once ROOT . '/views/company/company/ip_address.php';
+            return true;
+        }
+        else
+        {
+            header('Location: /site/error');
+        }
+    }
+
     /*****************************
      * Работа с орагнизациями КОНЕЦ
      *****************************/

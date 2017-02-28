@@ -429,6 +429,25 @@ class Company
     }
 
     /*
+     * Установить значение Ip-адреса
+     * @var $id int - ID
+     * @var $company array() - информация об ip-адресе
+     */
+    public static function setIpAddress($id, $company)
+    {
+        $sql = 'UPDATE company
+          SET ip_address = :ip_address, changed_datetime = :changed_datetime, changed_user_id = :changed_user_id
+          WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->bindParam(':ip_address', $company['ip_address'], PDO::PARAM_STR);
+        $result->bindParam(':changed_datetime', $company['changed_datetime'], PDO::PARAM_STR);
+        $result->bindParam(':changed_user_id', $company['changed_user_id'], PDO::PARAM_INT);
+        $result->execute();
+    }
+
+    /*
      * Удаляем организацию
      * @var $id int - ID организации
      * @var $company array() - организация

@@ -81,6 +81,17 @@ include ROOT . '/views/layouts/header.php';
                             <img src="/template/images/delete.png">
                         </a>
                     </div>
+
+                    <?php if ($company['is_mfc'] == 1): ?>
+                        <?php if ($is_admin): ?>
+                        <div class="bg_button inline" title="Ip-адрес организации">
+                            <a href="/company/company_ip_address?c_type=<?= $c_type ?>&search_value=<?= $search_param['search_value'] ?>&page=<?= $page ?>&cid=<?= $company['id'] ?>">
+                                <img src="/template/images/ip.png">
+                            </a>
+                        </div>
+                        <?php endif; //if ($is_admin): ?>
+                    <?php endif; //if ($company['is_mfc'] == 1): ?>
+
                     <?php endif; // if ($is_change_company): ?>
 
                 </td>
