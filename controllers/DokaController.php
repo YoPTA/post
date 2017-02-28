@@ -51,11 +51,11 @@ class DokaController
         {
             $package = htmlspecialchars($_POST['package']);
 
-            $url = SOURCE_SITE.$package;
+            $url = "http://".$user['ip_address']."/site/?command=getlistdata&number=".$package;
 
             if ($this->check_domain_availible($url))
             {
-                if($xml->load(SOURCE_SITE.$package) === false)
+                if($xml->load($url) === false)
                 {
                     $errors['load_xml'] = 'Невозможно загрузить. Проверьте правильность ввода номера ведомости.';
                 }
