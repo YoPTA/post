@@ -11,10 +11,10 @@ include ROOT . '/views/layouts/header.php';
     <form method="GET">
         <div class="full_width inline" style="vertical-align: bottom;">
                 <div class="inline">
-                    <label for="search_type">Способ поиска посылки</label><br />
+                    <label for="search_type">Режим поиска</label><br />
                     <select class="quarter" id="search_type" name="search_type" onchange="this.form.submit();">
-                        <option value="<?= SEARCH_TYPE_COMMON ?>" <?php if ($search['search_type'] == SEARCH_TYPE_COMMON) echo 'selected'; ?> >По трек-номеру</option>
-                        <option value="<?= SEARCH_TYPE_SPECIAL ?>" <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL) echo 'selected'; ?> >По адресу</option>
+                        <option value="<?= SEARCH_TYPE_COMMON ?>" <?php if ($search['search_type'] == SEARCH_TYPE_COMMON) echo 'selected'; ?> >Трек-номер</option>
+                        <option value="<?= SEARCH_TYPE_SPECIAL ?>" <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL) echo 'selected'; ?> >Расширенный</option>
                     </select><span class="right_indent"></span>
                 </div>
 
@@ -29,7 +29,7 @@ include ROOT . '/views/layouts/header.php';
                 <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL): ?>
 
                 <div class="inline">
-                    <label for="package_type">Тип посылки</label><br />
+                    <label for="package_type">Тип</label><br />
                     <select class="quarter" id="" name="package_type" onchange="this.form.submit();">
                         <option value="<?= PACKAGE_INPUT ?>" <?php if ($search['package_type'] == PACKAGE_INPUT) echo 'selected'; ?> >Входящие</option>
                         <option value="<?= PACKAGE_OUTPUT ?>" <?php if ($search['package_type'] == PACKAGE_OUTPUT) echo 'selected'; ?> >Исходящие</option>
@@ -37,10 +37,10 @@ include ROOT . '/views/layouts/header.php';
                 </div><span class="right_indent"></span>
 
                 <div class="inline">
-                    <label for="active_flag">Состояние посылки</label><br />
+                    <label for="active_flag">Статус</label><br />
                     <select class="quarter" id="" name="active_flag" onchange="this.form.submit();">
                         <option value="<?= ACTIVE_FLAG_ACTIVE ?>" <?php if ($search['active_flag'] == PACKAGE_INPUT) echo 'selected'; ?> >Активные</option>
-                        <option value="<?= ACTIVE_FLAG_ARCHIVE ?>" <?php if ($search['active_flag'] == PACKAGE_OUTPUT) echo 'selected'; ?> >В архиве</option>
+                        <option value="<?= ACTIVE_FLAG_ARCHIVE ?>" <?php if ($search['active_flag'] == PACKAGE_OUTPUT) echo 'selected'; ?> >Архив</option>
                     </select>
                 </div><span class="right_indent"></span>
 
@@ -49,19 +49,19 @@ include ROOT . '/views/layouts/header.php';
                     <br />
                 <div class="inline full_width">
                     <div class="inline">
-                        <label for="search_relatively">Поиск посылки относительно</label><br />
+                        <label for="search_relatively">Местоположение</label><br />
                         <select class="quarter" id="search_relatively" name="search_relatively" onchange="this.form.submit();">
                             <option value="<?= SEARCH_RELATIVELY_FROM_OR_TO ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_FROM_OR_TO) echo 'selected'; ?> >Отправителя/Получателя</option>
-                            <option value="<?= SEARCH_RELATIVELY_CURRENT ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT) echo 'selected'; ?> >Текущего местоположения</option>
+                            <option value="<?= SEARCH_RELATIVELY_CURRENT ?>" <?php if ($search['search_relatively'] == SEARCH_RELATIVELY_CURRENT) echo 'selected'; ?> >Текущее</option>
                         </select>
                     </div>
 
                     <span class="right_indent"></span>
 
                     <div class="inline">
-                        <label for="search_package_state">Состояние посылки</label><br />
+                        <label for="search_package_state">Состояние</label><br />
                         <select class="quarter" id="search_package_state" name="search_package_state" onchange="this.form.submit();">
-                            <option value="<?= PACKAGE_STATE_ALL ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_ALL) echo 'selected'; ?> >Все</option>
+                            <option value="<?= PACKAGE_STATE_ALL ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_ALL) echo 'selected'; ?> >[Все]</option>
                             <option value="<?= PACKAGE_STATE_RECEIVE ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_RECEIVE) echo 'selected'; ?> >Получено</option>
                             <option value="<?= PACKAGE_STATE_SEND ?>" <?php if ($search['search_package_state'] == PACKAGE_STATE_SEND) echo 'selected'; ?> >Отправлено</option>
                         </select>
@@ -72,14 +72,14 @@ include ROOT . '/views/layouts/header.php';
                     <span class="right_indent"></span>
 
                     <div class="inline">
-                        <label for="date_create_begin">Период создания посылки с</label><br />
+                        <label for="date_create_begin">Период с</label><br />
                         <input type="text" id="date_create_begin" name="date_create_begin" value="<?= $search['date_create_begin'] ?>" class="tcal quarter" placeholder="с" />
                     </div>
 
                     <span class="right_indent"></span>
 
                     <div class="inline">
-                        <label for="date_create_end">Период создания посылки по</label><br />
+                        <label for="date_create_end">Период по</label><br />
                         <input type="text" id="date_create_end" name="date_create_end" value="<?= $search['date_create_end'] ?>" class="tcal quarter" placeholder="по" />
                     </div>
                     <?php endif; // if ($search['active_flag'] == ACTIVE_FLAG_ARCHIVE): ?>
@@ -92,10 +92,10 @@ include ROOT . '/views/layouts/header.php';
                 <div class="inline full_width">
 
                     <div class="inline quarter">
-                        <label for="search_place_from_or_to">по месту</label><br />
+                        <label for="search_place_from_or_to">Адрес</label><br />
                         <select class="quarter" id="search_place_from_or_to" name="search_place_from_or_to" onchange="this.form.submit();">
-                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Адреса</option>
-                            <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Региона</option>
+                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Организации</option>
+                            <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Района</option>
                         </select>
                     </div>
 
@@ -109,10 +109,10 @@ include ROOT . '/views/layouts/header.php';
                     <span class="right_indent"></span>
 
                     <div class="inline quarter">
-                        <label for="search_place_to_or_from">по месту</label><br />
+                        <label for="search_place_to_or_from">Адрес</label><br />
                         <select class="quarter" id="search_place_to_or_from" name="search_place_to_or_from" onchange="this.form.submit();">
-                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Адреса</option>
-                            <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Региона</option>
+                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Организации</option>
+                            <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Района</option>
                         </select>
                     </div>
 
@@ -136,7 +136,7 @@ include ROOT . '/views/layouts/header.php';
                     </label><br />
                     <select class="half" id="from_or_to" name="from_or_to" data-placeholder="Не выбрано" onchange="this.form.submit();"
                             <?php if (!$is_admin) echo 'disabled'; ?> >
-                        <option value="0">Все</option>
+                        <option value="0">[Все]</option>
                         <?php
                         if (count($only_companies) > 0):
                             foreach ($only_companies as $oc):
@@ -175,7 +175,7 @@ include ROOT . '/views/layouts/header.php';
                         <?php endif; //if ($search['package_type'] == PACKAGE_INPUT): ?>
                     </label><br />
                     <select class="half" id="to_or_from" name="to_or_from" data-placeholder="Не выбрано" onchange="this.form.submit();">
-                        <option value="0">Все</option>
+                        <option value="0">[Все]</option>
                         <?php
                         if (count($only_companies) > 0):
                             foreach ($only_companies as $oc):
