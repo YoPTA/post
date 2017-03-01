@@ -562,7 +562,20 @@ class DokaController
             {
                 if ($user_info['flag'] != USER_FLAG_DOKA_DEFAULT && $user_info['flag'] != 0)
                 {
+                    $dir_path = '/temp/users';
+                    $abs_root = $_SERVER['DOCUMENT_ROOT'];
+                    $temp_user_dir = null;
+                    $clean_utility = new Clean_Utility();
+
                     User::auth($userByLogin);
+                    $temp_user_dir = $abs_root.$dir_path.'/'.$userByLogin;
+                    // Удаляем директорию, если она есть
+                    $clean_utility->removeDirectory($temp_user_dir);
+
+                    if (!mkdir($abs_root.$dir_path.'/'.$userByLogin, 0777, true))
+                    {
+                        $errors['not_dir'] = 'Не удалось создать временную директорию пользователя';
+                    }
                     header('Location: /site/index');
                 }
             }

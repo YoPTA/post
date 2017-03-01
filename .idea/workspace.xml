@@ -48,11 +48,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SiteController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DokaController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controllers/DokaController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.70797545">
+              <caret line="574" column="81" selection-start-line="574" selection-start-column="81" selection-end-line="574" selection-end-column="81" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SiteController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/SiteController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7570552">
-              <caret line="439" column="70" selection-start-line="439" selection-start-column="70" selection-end-line="439" selection-end-column="70" />
+            <state vertical-scroll-proportion="-25.692308">
+              <caret line="442" column="17" selection-start-line="435" selection-start-column="16" selection-end-line="442" selection-end-column="17" />
               <folding>
                 <element signature="n#actionIndex#0;n#SiteController#0;n#!!top" expanded="false" />
                 <element signature="n#actionError#0;n#SiteController#0;n#!!top" expanded="false" />
@@ -126,9 +136,9 @@
         <option value="$PROJECT_DIR$/views/company/company/ip_address.php" />
         <option value="$PROJECT_DIR$/models/Company.php" />
         <option value="$PROJECT_DIR$/controllers/CompanyController.php" />
-        <option value="$PROJECT_DIR$/controllers/DokaController.php" />
         <option value="$PROJECT_DIR$/views/site/index.php" />
         <option value="$PROJECT_DIR$/controllers/SiteController.php" />
+        <option value="$PROJECT_DIR$/controllers/DokaController.php" />
       </list>
     </option>
   </component>
@@ -775,14 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/DokaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4613497">
-          <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/CompanyController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.75092024">
@@ -816,8 +818,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/SiteController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7570552">
-          <caret line="439" column="70" selection-start-line="439" selection-start-column="70" selection-end-line="439" selection-end-column="70" />
+        <state vertical-scroll-proportion="-25.692308">
+          <caret line="442" column="17" selection-start-line="435" selection-start-column="16" selection-end-line="442" selection-end-column="17" />
           <folding>
             <element signature="n#actionIndex#0;n#SiteController#0;n#!!top" expanded="false" />
             <element signature="n#actionError#0;n#SiteController#0;n#!!top" expanded="false" />
@@ -826,6 +828,14 @@
             <element signature="n#actionTest#0;n#SiteController#0;n#!!top" expanded="false" />
             <element signature="n#actionNotification#0;n#SiteController#0;n#!!top" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/DokaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70797545">
+          <caret line="574" column="81" selection-start-line="574" selection-start-column="81" selection-end-line="574" selection-end-column="81" />
+          <folding />
         </state>
       </provider>
     </entry>
