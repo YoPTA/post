@@ -154,13 +154,26 @@ class Package
         if ($page < 1) $page = 1;
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
 
+        $search['note'] = '%' . $search['track'] . '%';
+
         if ($search['search_type'] == SEARCH_TYPE_COMMON)
         {
-            $where .= ' package.number = ? ';
+            if (strlen($search['track']) > 0)
+            {
+                if (!preg_match("/^[0-9]{6}$/", $search['track']))
+                    $where .= ' package.note LIKE ? AND package.flag > 0 ';
+                else
+                    $where .= ' package.number = ? OR package.note LIKE ? AND package.flag > 0 ';
+            }
+            else
+            {
+                return false;
+            }
         }
         elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $where .= ' package.number LIKE ? ';
+            $where .= ' package.number LIKE ? OR package.note LIKE ? ';
+
             $search['track'] = '%' . $search['track'] . '%';
 
             // Если тип не Входящие/Исходящие, тогда выходим
@@ -323,11 +336,24 @@ class Package
           INNER JOIN company_address now_to_company_address ON (package.now_to_company_address_id = now_to_company_address.id)
           INNER JOIN company now_to_company ON (now_to_company_address.company_id = now_to_company.id) '
             . $where .
-            ' ORDER BY package.number LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
+            ' ORDER BY package.ID DESC LIMIT '. self::SHOW_BY_DEFAULT .' OFFSET ' . $offset;
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
-        $result->execute([$search['track']]);
+
+        if ($search['search_type'] == SEARCH_TYPE_COMMON)
+        {
+            if (!preg_match("/^[0-9]{6}$/", $search['track']))
+                $result->execute([$search['note']]);
+            else
+                $result->execute([$search['track'], $search['note']]);
+
+        }
+        elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
+        {
+            $result->execute([$search['track'], $search['note']]);
+        }
+
         // Получение и возврат результатов
         $packages = null;
         $i = 0;
@@ -391,13 +417,27 @@ class Package
         $to_caid_max = PHP_INT_MAX;
         $where = ' WHERE ';
 
+        $search['note'] = '%' . $search['track'] . '%';
+
         if ($search['search_type'] == SEARCH_TYPE_COMMON)
         {
-            $where .= ' package.number = ? ';
+            if (strlen($search['track']) > 0)
+            {
+                if (!preg_match("/^[0-9]{6}$/", $search['track']))
+                    $where .= ' package.note LIKE ? AND package.flag > 0 ';
+                else
+                    $where .= ' package.number = ? OR package.note LIKE ? AND package.flag > 0 ';
+            }
+            else
+            {
+                return 0;
+            }
+
         }
         elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $where .= ' package.number LIKE ? ';
+            $where .= ' package.number LIKE ? OR package.note LIKE ? ';
+
             $search['track'] = '%' . $search['track'] . '%';
 
             // Если тип не Входящие/Исходящие, тогда выходим
@@ -497,7 +537,20 @@ class Package
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
-        $result->execute([$search['track']]);
+
+        if ($search['search_type'] == SEARCH_TYPE_COMMON)
+        {
+            if (!preg_match("/^[0-9]{6}$/", $search['track']))
+                $result->execute([$search['note']]);
+            else
+                $result->execute([$search['track'], $search['note']]);
+
+        }
+        elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
+        {
+            $result->execute([$search['track'], $search['note']]);
+        }
+
         // Обращаемся к записи
         $count = $result->fetch(PDO::FETCH_ASSOC);
 
