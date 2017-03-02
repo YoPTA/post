@@ -222,8 +222,8 @@ include ROOT . '/views/layouts/header.php';
         <tr class="head" align="center">
             <td class="one_sixteenth">№ п/п</td>
             <td class="one_sixteenth">Трек-<br />номер</td>
-            <td class="quarter">Откуда</td>
-            <td class="quarter">Куда</td>
+            <td class="quarter">Название</td>
+            <td class="half">Откуда/Куда</td>
             <td class="quarter">Состояние</td>
             <td class="one_eighth">Действие</td>
         </tr>
@@ -236,21 +236,27 @@ include ROOT . '/views/layouts/header.php';
         <tr class="presentation">
 
             <td align="center"><?= $index_number; ?></td>
-            <td title="<?= $package['package_note'] ?>">
+            <td>
                 <?= $package['package_number'] ?>
+            </td>
+            <td>
+                <?= $package['package_note'] ?>
             </td>
 
             <td>
-                <div title="<?= $string_utility->getAddressToView(1, $package, 'from_'); ?>">
-                    <?php if ($package['from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
-                    <?= $package['from_company_name'] ?>
-                </div>
-            </td>
-            <td>
-                <div title="<?= $string_utility->getAddressToView(1, $package, 'to_'); ?>">
-                    <?php if ($package['to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
-                    <?= $package['to_company_name'] ?>
-                </div>
+                <b>Откуда:</b>
+                <?php if ($package['from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                <?= $package['from_company_name'] ?><br />
+                <span class="color_grey font_size_nine">
+                    <?= $string_utility->getAddressToView(1, $package, 'from_'); ?>
+                </span>
+                <hr style="border: 0px none; border-bottom: 1px solid #d0d0d0; margin: 4px;" />
+                <b>Куда:</b>
+                <?php if ($package['to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                <?= $package['to_company_name'] ?><br />
+                <span class="color_grey font_size_nine">
+                    <?= $string_utility->getAddressToView(1, $package, 'to_'); ?>
+                </span>
             </td>
             <td>
 
