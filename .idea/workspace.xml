@@ -58,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SiteController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SiteController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/SiteController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12269939">
-              <caret line="66" column="63" selection-start-line="66" selection-start-column="45" selection-end-line="66" selection-end-column="63" />
+            <state vertical-scroll-proportion="-52.307693">
+              <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
               <folding>
                 <element signature="n#actionError#0;n#SiteController#0;n#!!top" expanded="false" />
                 <element signature="n#actionCreate#0;n#SiteController#0;n#!!top" expanded="false" />
@@ -76,26 +76,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Package.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Package.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/Package.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.53846157">
-              <caret line="414" column="37" selection-start-line="414" selection-start-column="37" selection-end-line="414" selection-end-column="37" />
+            <state vertical-scroll-proportion="3.9411044">
+              <caret line="338" column="92" selection-start-line="338" selection-start-column="92" selection-end-line="338" selection-end-column="92" />
               <folding>
-                <marker date="1488435032151" expanded="true" signature="9498:14607" placeholder="SELECT to_co..package..." />
-                <marker date="1488435032151" expanded="true" signature="15563:16040" placeholder="SELECT packa..package_or_package_object..." />
-                <marker date="1488435032151" expanded="true" signature="21225:22191" placeholder="SELECT COUNT..package..." />
-                <marker date="1488435032151" expanded="true" signature="25539:25755" placeholder="INSERT INTO ..." />
-                <marker date="1488435032151" expanded="true" signature="27065:27157" placeholder="UPDATE packa..." />
-                <marker date="1488435032151" expanded="true" signature="27641:27741" placeholder="UPDATE packa..." />
-                <marker date="1488435032151" expanded="true" signature="28313:28397" placeholder="UPDATE packa..." />
-                <marker date="1488435032151" expanded="true" signature="28877:29065" placeholder="UPDATE packa..." />
-                <marker date="1488435032151" expanded="true" signature="31471:31540" placeholder="INSERT INTO ..." />
-                <marker date="1488435032151" expanded="true" signature="31826:31883" placeholder="INSERT INTO ..." />
-                <marker date="1488435032151" expanded="true" signature="32410:32520" placeholder="INSERT INTO ..." />
-                <marker date="1488435032151" expanded="true" signature="32985:33088" placeholder="SELECT packa..package..." />
-                <marker date="1488435032151" expanded="true" signature="33640:33730" placeholder="SELECT * FRO..package..." />
-                <marker date="1488435032151" expanded="true" signature="34285:38700" placeholder="SELECT packa..package..." />
+                <marker date="1488436988736" expanded="true" signature="9506:14615" placeholder="SELECT to_co..package..." />
+                <marker date="1488436988736" expanded="true" signature="15571:16048" placeholder="SELECT packa..package_or_package_object..." />
+                <marker date="1488436988736" expanded="true" signature="21241:22207" placeholder="SELECT COUNT..package..." />
+                <marker date="1488436988736" expanded="true" signature="25555:25771" placeholder="INSERT INTO ..." />
+                <marker date="1488436988736" expanded="true" signature="27081:27173" placeholder="UPDATE packa..." />
+                <marker date="1488436988736" expanded="true" signature="27657:27757" placeholder="UPDATE packa..." />
+                <marker date="1488436988736" expanded="true" signature="28329:28413" placeholder="UPDATE packa..." />
+                <marker date="1488436988736" expanded="true" signature="28893:29081" placeholder="UPDATE packa..." />
+                <marker date="1488436988736" expanded="true" signature="31487:31556" placeholder="INSERT INTO ..." />
+                <marker date="1488436988736" expanded="true" signature="31842:31899" placeholder="INSERT INTO ..." />
+                <marker date="1488436988736" expanded="true" signature="32426:32536" placeholder="INSERT INTO ..." />
+                <marker date="1488436988736" expanded="true" signature="33001:33104" placeholder="SELECT packa..package..." />
+                <marker date="1488436988736" expanded="true" signature="33656:33746" placeholder="SELECT * FRO..package..." />
+                <marker date="1488436988736" expanded="true" signature="34301:38716" placeholder="SELECT packa..package..." />
               </folding>
             </state>
           </provider>
@@ -162,9 +162,9 @@
         <option value="$PROJECT_DIR$/models/Company.php" />
         <option value="$PROJECT_DIR$/controllers/CompanyController.php" />
         <option value="$PROJECT_DIR$/controllers/DokaController.php" />
-        <option value="$PROJECT_DIR$/models/Package.php" />
         <option value="$PROJECT_DIR$/views/site/index.php" />
         <option value="$PROJECT_DIR$/controllers/SiteController.php" />
+        <option value="$PROJECT_DIR$/models/Package.php" />
       </list>
     </option>
   </component>
@@ -253,6 +253,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="temp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="post" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -793,29 +807,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/Package.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.53846157">
-          <caret line="414" column="37" selection-start-line="414" selection-start-column="37" selection-end-line="414" selection-end-column="37" />
-          <folding>
-            <marker date="1488435032151" expanded="true" signature="9498:14607" placeholder="SELECT to_co..package..." />
-            <marker date="1488435032151" expanded="true" signature="15563:16040" placeholder="SELECT packa..package_or_package_object..." />
-            <marker date="1488435032151" expanded="true" signature="21225:22191" placeholder="SELECT COUNT..package..." />
-            <marker date="1488435032151" expanded="true" signature="25539:25755" placeholder="INSERT INTO ..." />
-            <marker date="1488435032151" expanded="true" signature="27065:27157" placeholder="UPDATE packa..." />
-            <marker date="1488435032151" expanded="true" signature="27641:27741" placeholder="UPDATE packa..." />
-            <marker date="1488435032151" expanded="true" signature="28313:28397" placeholder="UPDATE packa..." />
-            <marker date="1488435032151" expanded="true" signature="28877:29065" placeholder="UPDATE packa..." />
-            <marker date="1488435032151" expanded="true" signature="31471:31540" placeholder="INSERT INTO ..." />
-            <marker date="1488435032151" expanded="true" signature="31826:31883" placeholder="INSERT INTO ..." />
-            <marker date="1488435032151" expanded="true" signature="32410:32520" placeholder="INSERT INTO ..." />
-            <marker date="1488435032151" expanded="true" signature="32985:33088" placeholder="SELECT packa..package..." />
-            <marker date="1488435032151" expanded="true" signature="33640:33730" placeholder="SELECT * FRO..package..." />
-            <marker date="1488435032151" expanded="true" signature="34285:38700" placeholder="SELECT packa..package..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/views/site/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-24.846153">
@@ -834,8 +825,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/SiteController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12269939">
-          <caret line="66" column="63" selection-start-line="66" selection-start-column="45" selection-end-line="66" selection-end-column="63" />
+        <state vertical-scroll-proportion="-52.307693">
+          <caret line="80" column="22" selection-start-line="80" selection-start-column="22" selection-end-line="80" selection-end-column="22" />
           <folding>
             <element signature="n#actionError#0;n#SiteController#0;n#!!top" expanded="false" />
             <element signature="n#actionCreate#0;n#SiteController#0;n#!!top" expanded="false" />
@@ -844,6 +835,29 @@
             <element signature="n#actionBarcode39#0;n#SiteController#0;n#!!top" expanded="false" />
             <element signature="n#actionTest#0;n#SiteController#0;n#!!top" expanded="false" />
             <element signature="n#actionNotification#0;n#SiteController#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/Package.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.9411044">
+          <caret line="338" column="92" selection-start-line="338" selection-start-column="92" selection-end-line="338" selection-end-column="92" />
+          <folding>
+            <marker date="1488436988736" expanded="true" signature="9506:14615" placeholder="SELECT to_co..package..." />
+            <marker date="1488436988736" expanded="true" signature="15571:16048" placeholder="SELECT packa..package_or_package_object..." />
+            <marker date="1488436988736" expanded="true" signature="21241:22207" placeholder="SELECT COUNT..package..." />
+            <marker date="1488436988736" expanded="true" signature="25555:25771" placeholder="INSERT INTO ..." />
+            <marker date="1488436988736" expanded="true" signature="27081:27173" placeholder="UPDATE packa..." />
+            <marker date="1488436988736" expanded="true" signature="27657:27757" placeholder="UPDATE packa..." />
+            <marker date="1488436988736" expanded="true" signature="28329:28413" placeholder="UPDATE packa..." />
+            <marker date="1488436988736" expanded="true" signature="28893:29081" placeholder="UPDATE packa..." />
+            <marker date="1488436988736" expanded="true" signature="31487:31556" placeholder="INSERT INTO ..." />
+            <marker date="1488436988736" expanded="true" signature="31842:31899" placeholder="INSERT INTO ..." />
+            <marker date="1488436988736" expanded="true" signature="32426:32536" placeholder="INSERT INTO ..." />
+            <marker date="1488436988736" expanded="true" signature="33001:33104" placeholder="SELECT packa..package..." />
+            <marker date="1488436988736" expanded="true" signature="33656:33746" placeholder="SELECT * FRO..package..." />
+            <marker date="1488436988736" expanded="true" signature="34301:38716" placeholder="SELECT packa..package..." />
           </folding>
         </state>
       </provider>

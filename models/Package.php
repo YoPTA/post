@@ -163,7 +163,7 @@ class Package
                 if (!preg_match("/^[0-9]{6}$/", $search['track']))
                     $where .= ' package.note LIKE ? AND package.flag > 0 ';
                 else
-                    $where .= ' package.number = ? OR package.note LIKE ? AND package.flag > 0 ';
+                    $where .= ' ( package.number = ? OR package.note LIKE ? ) AND package.flag > 0 ';
             }
             else
             {
@@ -172,7 +172,7 @@ class Package
         }
         elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $where .= ' package.number LIKE ? OR package.note LIKE ? ';
+            $where .= ' ( package.number LIKE ? OR package.note LIKE ? ) ';
 
             $search['track'] = '%' . $search['track'] . '%';
 
@@ -426,7 +426,7 @@ class Package
                 if (!preg_match("/^[0-9]{6}$/", $search['track']))
                     $where .= ' package.note LIKE ? AND package.flag > 0 ';
                 else
-                    $where .= ' package.number = ? OR package.note LIKE ? AND package.flag > 0 ';
+                    $where .= ' ( package.number = ? OR package.note LIKE ? ) AND package.flag > 0 ';
             }
             else
             {
@@ -436,7 +436,7 @@ class Package
         }
         elseif ($search['search_type'] == SEARCH_TYPE_SPECIAL)
         {
-            $where .= ' package.number LIKE ? OR package.note LIKE ? ';
+            $where .= ' ( package.number LIKE ? OR package.note LIKE ? ) ';
 
             $search['track'] = '%' . $search['track'] . '%';
 
