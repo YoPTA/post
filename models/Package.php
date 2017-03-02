@@ -373,6 +373,7 @@ class Package
     {
         $sql = 'SELECT
               package_object.name,
+              package.comment,
               package.number,
               package.note
             FROM
@@ -564,12 +565,13 @@ class Package
 
     /*
      * Запоминаем ведомость в сессию
-     * @var $list string - номер ведомости
+     * @var $list array() - Информация о посылке
      */
     public static function memorizePackage($list)
     {
         session_start();
-        $_SESSION['package'] = $list;
+        $_SESSION['package']['note'] = $list['note'];
+        $_SESSION['package']['comment'] = $list['comment'];
     }
 
     /*
@@ -678,12 +680,13 @@ class Package
     public static function addPackage($package)
     {
         $creation_datetime = date('Y-m-d H:i:s');
-        $sql = 'INSERT INTO package (note, from_company_address_id, to_company_address_id, user_id, creation_datetime, flag)
-          VALUES (:note, :from_company_address_id, :to_company_address_id, :user_id, :creation_datetime, 1)';
+        $sql = 'INSERT INTO package (note, comment, from_company_address_id, to_company_address_id, user_id, creation_datetime, flag)
+          VALUES (:note, :comment, :from_company_address_id, :to_company_address_id, :user_id, :creation_datetime, 1)';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
         $result->bindParam(':note', $package['note'], PDO::PARAM_STR);
+        $result->bindParam(':comment', $package['comment'], PDO::PARAM_STR);
         $result->bindParam(':from_company_address_id', $package['from_company_id'], PDO::PARAM_INT);
         $result->bindParam(':to_company_address_id', $package['to_company_id'], PDO::PARAM_INT);
         $result->bindParam(':user_id', $package['user_id'], PDO::PARAM_INT);

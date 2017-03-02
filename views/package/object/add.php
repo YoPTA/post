@@ -35,8 +35,8 @@ include ROOT . '/views/layouts/header.php';
         <label for="name">Объект посылки</label>
         <span class="right_indent"></span>
         <span class="acorrect" id="name_correct"></span><br />
-        <input type="text" placeholder="Объект посылки" id="name" name="name" class="quarter <?php if (isset($errors['name'])) echo 'error'; ?>" value="<?= $package_object['name'] ?>"
-               onblur="InputCount('name', 'quarter', 512, 'name_correct', 'Объект посылки не может быть такой длины', 'Необходимо заполнить объект посылки', '')"
+        <input type="text" placeholder="Объект посылки" id="name" name="name" class="half <?php if (isset($errors['name'])) echo 'error'; ?>" value="<?= $package_object['name'] ?>"
+               onblur="InputCount('name', 'half', 512, 'name_correct', 'Объект посылки не может быть такой длины', 'Необходимо заполнить объект посылки', '')"
             /><br /><br /><br />
 
         <input type="submit" name="add" value="Сохранить" class="button one_eighth" /><br /><br />

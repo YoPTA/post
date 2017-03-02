@@ -401,7 +401,9 @@ class DokaController
             if(!isset($errors['tag_list']))
             {
                 // Запоминаем посылку
-                Package::memorizePackage($package);
+                $package_info['note'] = $package;
+                $package_info['comment'] = '';
+                Package::memorizePackage($package_info);
             }
             Package::outPackageObjects();
             if(!isset($errors['tag_number']))

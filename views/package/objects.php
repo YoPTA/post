@@ -1,5 +1,5 @@
 <?php
-$pagetitle = 'Объекты посылки';
+$pagetitle = 'Посылка';
 $page_id = 'page_index';
 
 ?>
@@ -22,17 +22,20 @@ $page_id = 'page_index';
     <td class="font_size_zero">
         <h2 align="center"><?= $pagetitle ?></h2>
 
-        <div class="font_size_twenty">
+        <div class="font_size_twenty full_width">
 
         <?php
         if (is_array($p_objects) && $p_objects != null):
         ?>
-            <p>Посылка: <b><?= $p_objects[0]['note'] ?></b></p>
+            <p>Название: <b><?= $p_objects[0]['note'] ?></b></p>
+            <?php if ($p_objects[0]['comment'] != null): ?>
+            <p>Примечание к посылке: <b><?= $p_objects[0]['comment'] ?></b></p>
+            <?php endif;// if ($p_objects[0]['comment'] != null): ?>
             <p>Трек-номер: <b><?= $p_objects[0]['number'] ?></b></p>
             <table align="left" class="font_size_fourteen">
                 <tr>
                     <th align="center" class="one_sixteenth">№ п/п</th>
-                    <th align="center" class="quarter">Дело</th>
+                    <th align="center" class="quarter">Объект</th>
                 </tr>
                 <?php
                 $i = 0;

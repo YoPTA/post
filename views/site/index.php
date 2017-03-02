@@ -222,8 +222,8 @@ include ROOT . '/views/layouts/header.php';
         <tr class="head" align="center">
             <td style="width: 5%">№ п/п</td>
             <td style="width: 5%">Трек-<br />номер</td>
-            <td style="width: 15%">Название</td>
-            <td style="width: 45%">Откуда/Куда</td>
+            <td style="width: 20%">Название</td>
+            <td style="width: 40%">Откуда/Куда</td>
             <td style="width: 20%">Состояние</td>
             <td style="width: 10%">Действие</td>
         </tr>

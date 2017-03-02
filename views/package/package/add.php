@@ -32,12 +32,20 @@ include ROOT . '/views/layouts/header.php';
 
 
     <form method="POST">
-        <label for="number">Посылка</label>
+        <label for="note">Название*</label>
         <span class="right_indent"></span>
-        <span class="acorrect" id="number_correct"></span><br />
-        <input type="text" placeholder="Посылка" id="number" name="number" class="quarter <?php if (isset($errors['number'])) echo 'error'; ?>" value="<?= $package['number'] ?>"
-               onblur="InputCount('number', 'quarter', 128, 'number_correct', 'Посылка не может быть такой длины', 'Необходимо заполнить посылку', '')"
-            /><br /><br /><br />
+        <span class="acorrect" id="note_correct"></span><br />
+        <input type="text" placeholder="Название" id="note" name="note" class="half <?php if (isset($errors['note'])) echo 'error'; ?>" value="<?= $package['note'] ?>"
+               onblur="InputCount('note', 'half', 128, 'note_correct', 'Название не может быть такой длины', 'Необходимо заполнить название', '')"
+            /><br /><br />
+
+        <label for="comment">Комментарий</label>
+        <span class="right_indent"></span>
+        <span class="acorrect" id="comment_correct"></span><br />
+        <textarea placeholder="Комментарий" rows="7" name="comment" id="comment" class="half <?php if (isset($errors['comment'])) echo 'error'; ?>"
+                  onblur="InputCountCanEmpty('comment', 'half', 512, 'comment_correct', 'Комментарий не может быть такой длины', '')"
+            ><?= $package['comment'] ?></textarea>
+        <br /><br />
 
         <input type="submit" name="add" value="Сохранить" class="button one_eighth" /><br /><br />
 

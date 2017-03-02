@@ -33,24 +33,37 @@ class PackageController
         $errors = false;
 
 
-        $package = null;
+        $package = Package::checkPackage();
 
-        if (isset($_POST['number']))
+
+        if (isset($_POST['note']))
         {
-            $package['number'] = htmlspecialchars(trim($_POST['number']));
+            $package['note'] = htmlspecialchars(trim($_POST['note']));
+        }
+
+        if (isset($_POST['comment']))
+        {
+            $package['comment'] = htmlspecialchars(trim($_POST['comment']));
         }
 
         if (isset($_POST['add']))
         {
-            if (!Validate::checkStrCanEmpty($package['number'], 128))
+            if (!Validate::checkStr($package['note'], 128))
             {
-                $errors['number'] = 'Посылка не может быть такой длины';
+                $errors['note'] = 'Посылка не может быть такой длины';
+            }
+
+            if (!Validate::checkStrCanEmpty($package['comment'], 1024))
+            {
+                $errors['comment'] = 'Комментарий не может быть такой длины';
             }
 
             if ($errors == false)
             {
                 Package::outPackage();
-                Package::memorizePackage($package['number']);
+                $package_info['note'] = $package['note'];
+                $package_info['comment'] = $package['comment'];
+                Package::memorizePackage($package_info);
 
                 header('Location: /site/choose');
             }

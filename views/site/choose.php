@@ -107,10 +107,10 @@ include ROOT . '/views/layouts/header.php';
                 </td>
             </tr>
 
-            <?php if ($package_list != null): ?>
+            <?php if ($package_list['note'] != null): ?>
                 <tr>
                     <td colspan="2">
-                        <?= $package_list ?>
+                        <?= $package_list['note'] ?>
                     </td>
                 </tr>
             <?php endif; //if ($package_list != null && is_array($package_list)): ?>
@@ -141,7 +141,7 @@ include ROOT . '/views/layouts/header.php';
 
                 <tr>
                     <th align="center" class="one_sixteenth">№ п/п</th>
-                    <th align="center" class="quarter">Дело</th>
+                    <th align="center" class="quarter">Объект</th>
                     <th class="quarter"></th>
                 </tr>
 

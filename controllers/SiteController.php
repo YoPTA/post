@@ -304,7 +304,7 @@ class SiteController
                 $errors['to_company'] = 'Не выбран получатель';
             }
 
-            if ($package_list == null)
+            if ($package_list['note'] == null)
             {
                 $errors['package_list'] = 'Посылка не найдена';
             }
@@ -324,7 +324,8 @@ class SiteController
 
             if($errors == false)
             {
-                $package['note'] = $package_list;
+                $package['note'] = $package_list['note'];
+                $package['comment'] = $package_list['comment'];
                 $package['from_company_id'] = $from_company_id;
                 $package['to_company_id'] = $to_company_id;
                 $package['user_id'] = $user_id;
@@ -602,7 +603,7 @@ class SiteController
                 $errors['to_company'] = 'Не выбран получатель';
             }
 
-            if ($package_list == null)
+            if ($package_list['note'] == null)
             {
                 $errors['package_list'] = 'Посылка не найдена';
             }
