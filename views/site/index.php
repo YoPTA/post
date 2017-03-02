@@ -244,14 +244,14 @@ include ROOT . '/views/layouts/header.php';
             </td>
 
             <td>
-                <b>Откуда:</b>
+                Откуда:
                 <?php if ($package['from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
                 <?= $package['from_company_name'] ?><br />
                 <span class="color_grey font_size_nine">
                     <?= $string_utility->getAddressToView(1, $package, 'from_'); ?>
                 </span>
                 <hr style="border: 0px none; border-bottom: 1px solid #d0d0d0; margin: 4px;" />
-                <b>Куда:</b>
+                Куда:
                 <?php if ($package['to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
                 <?= $package['to_company_name'] ?><br />
                 <span class="color_grey font_size_nine">
@@ -269,12 +269,12 @@ include ROOT . '/views/layouts/header.php';
 
                     <?php if ($package['package_state'] == 1): ?>
 
-                        <b>Получено</b> в <?php if ($package['now_from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                        Получено в <?php if ($package['now_from_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
                         <?= $package['now_from_company_name'] ?>
                         <?php if ($package['flag'] == 2) echo '<span class="fa fa-check-circle correct" title="Доставлено"></span>' ?>
                     <?php elseif ($package['package_state'] == 2): ?>
 
-                        <b>Отправлено</b> в <?php if ($package['now_to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
+                        Отправлено в <?php if ($package['now_to_is_transit'] == 1) echo '[ТРАНЗИТ]'; ?>
                         <?= $package['now_to_company_name'] ?>
 
                     <?php endif; // if ($package['package_state'] == 1): ?>
