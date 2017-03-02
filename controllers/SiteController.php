@@ -64,8 +64,8 @@ class SiteController
 
         $search['search_relatively'] = SEARCH_RELATIVELY_FROM_OR_TO; // Относительное местоположение
         $search['search_package_state'] = PACKAGE_STATE_ALL; // Состояние посылки
-        $search['search_place_from_or_to'] = SEARCH_PLACE_ADDRESS; // Поиск по месту От кого/Для кого
-        $search['search_place_to_or_from'] = SEARCH_PLACE_ADDRESS; // Поиск по месту Для кого/От кого
+        $search['search_place_from_or_to'] = SEARCH_PLACE_LOCAL; // Поиск по месту От кого/Для кого
+        $search['search_place_to_or_from'] = SEARCH_PLACE_LOCAL; // Поиск по месту Для кого/От кого
         $search['from_or_to'] = null; // От кого/Для кого
         $search['to_or_from'] = null; // Для кого/От кого
 

@@ -13,7 +13,7 @@ include ROOT . '/views/layouts/header.php';
                 <div class="inline">
                     <label for="search_type">Режим поиска</label><br />
                     <select class="quarter" id="search_type" name="search_type" onchange="this.form.submit();">
-                        <option value="<?= SEARCH_TYPE_COMMON ?>" <?php if ($search['search_type'] == SEARCH_TYPE_COMMON) echo 'selected'; ?> >Трек-номер</option>
+                        <option value="<?= SEARCH_TYPE_COMMON ?>" <?php if ($search['search_type'] == SEARCH_TYPE_COMMON) echo 'selected'; ?> >Обычный</option>
                         <option value="<?= SEARCH_TYPE_SPECIAL ?>" <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL) echo 'selected'; ?> >Расширенный</option>
                     </select><span class="right_indent"></span>
                 </div>
@@ -22,8 +22,8 @@ include ROOT . '/views/layouts/header.php';
 
 
                 <div class="inline">
-                    <label for="track">Трек-номер</label><br />
-                    <input type="search" id="track" name="track" placeholder="Введите трек-номер" class="quarter" value="<?= $search['track'] ?>" /><span class="right_indent"></span>
+                    <label for="track">Поиск</label><br />
+                    <input type="search" id="track" name="track" placeholder="Введите трек-номер или название" class="quarter" value="<?= $search['track'] ?>" /><span class="right_indent"></span>
                 </div>
 
                 <?php if ($search['search_type'] == SEARCH_TYPE_SPECIAL): ?>
@@ -94,8 +94,8 @@ include ROOT . '/views/layouts/header.php';
                     <div class="inline quarter">
                         <label for="search_place_from_or_to">Адрес</label><br />
                         <select class="quarter" id="search_place_from_or_to" name="search_place_from_or_to" onchange="this.form.submit();">
-                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Организации</option>
                             <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Района</option>
+                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_from_or_to'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Организации</option>
                         </select>
                     </div>
 
@@ -111,8 +111,8 @@ include ROOT . '/views/layouts/header.php';
                     <div class="inline quarter">
                         <label for="search_place_to_or_from">Адрес</label><br />
                         <select class="quarter" id="search_place_to_or_from" name="search_place_to_or_from" onchange="this.form.submit();">
-                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Организации</option>
                             <option value="<?= SEARCH_PLACE_LOCAL ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_LOCAL) echo 'selected'; ?> >Района</option>
+                            <option value="<?= SEARCH_PLACE_ADDRESS ?>" <?php if ($search['search_place_to_or_from'] == SEARCH_PLACE_ADDRESS) echo 'selected'; ?> >Организации</option>
                         </select>
                     </div>
 
