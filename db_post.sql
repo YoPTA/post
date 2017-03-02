@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 10.10.10.155:3306
--- Время создания: Фев 27 2017 г., 15:11
+-- Время создания: Мар 02 2017 г., 15:44
 -- Версия сервера: 5.5.48
 -- Версия PHP: 5.4.45
 
@@ -201,6 +201,7 @@ CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL,
   `number` varchar(128) NOT NULL,
   `note` varchar(512) NOT NULL COMMENT 'Примечание(ведомость)',
+  `comment` varchar(1024) NOT NULL DEFAULT '' COMMENT 'Поле для комментария',
   `from_company_address_id` int(11) NOT NULL,
   `to_company_address_id` int(11) NOT NULL,
   `now_from_company_address_id` int(11) NOT NULL DEFAULT '0' COMMENT 'От какого адреса направляется посылка в данный момент',
