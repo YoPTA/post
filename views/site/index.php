@@ -220,12 +220,12 @@ include ROOT . '/views/layouts/header.php';
 
     <table class="view full_width">
         <tr class="head" align="center">
-            <td class="one_sixteenth">№ п/п</td>
-            <td class="one_sixteenth">Трек-<br />номер</td>
-            <td class="quarter">Название</td>
-            <td class="half">Откуда/Куда</td>
-            <td class="quarter">Состояние</td>
-            <td class="one_eighth">Действие</td>
+            <td style="width: 5%">№ п/п</td>
+            <td style="width: 5%">Трек-<br />номер</td>
+            <td style="width: 15%">Название</td>
+            <td style="width: 45%">Откуда/Куда</td>
+            <td style="width: 20%">Состояние</td>
+            <td style="width: 10%">Действие</td>
         </tr>
         <?php
         $i = 0;
