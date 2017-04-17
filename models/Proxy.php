@@ -388,10 +388,10 @@ class Proxy
     public static function addProxyPerson($proxy_person)
     {
         $sql = 'INSERT INTO proxy_person (lastname, firstname, middlename, document_type_id, document_series,
-          document_number, date_issued, date_expired, place_name, place_code, phone_number,
+          document_number, date_issued, place_name, place_code, phone_number,
           created_datetime, created_user_id, flag)
           VALUES (:lastname, :firstname, :middlename, :document_type_id, :document_series,
-          :document_number, :date_issued, :date_expired, :place_name, :place_code, :phone_number,
+          :document_number, :date_issued, :place_name, :place_code, :phone_number,
           :created_datetime, :created_user_id, 1)';
 
         $db = Database::getConnection();
@@ -404,7 +404,6 @@ class Proxy
         $result->bindParam(':document_series', $proxy_person['document_series'], PDO::PARAM_STR);
         $result->bindParam(':document_number', $proxy_person['document_number'], PDO::PARAM_STR);
         $result->bindParam(':date_issued', $proxy_person['date_issued'], PDO::PARAM_STR);
-        $result->bindParam(':date_expired', $proxy_person['date_expired'], PDO::PARAM_STR);
         $result->bindParam(':place_name', $proxy_person['place_name'], PDO::PARAM_STR);
         $result->bindParam(':place_code', $proxy_person['place_code'], PDO::PARAM_STR);
         $result->bindParam(':phone_number', $proxy_person['phone_number'], PDO::PARAM_STR);
