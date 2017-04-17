@@ -830,6 +830,11 @@ class Package
             return false;
         }
 
+        if (!isset($now_points['now_to_company_address_id']))
+        {
+            $now_points['now_to_company_address_id'] = 0;
+        }
+
         // Обновляем текущие точки
         self::updateNowAddresses($pid, $now_points);
         return true;
