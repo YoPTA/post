@@ -50,7 +50,7 @@ define('DOCUMENT_TYPE_PASSPORT', 1); // Паспорт
 define('DOCUMENT_TYPE_PROXY', 2); // Доверенность
 
 // Дата и время по умолчанию
-define('DEFAULT_DATETIME', '0000-00-00 00:00:00');
+define('DEFAULT_DATETIME', '');
 
 // Ссылки откуда пришел пользователь
 define('USER_REFERENCE_SEND', 1);
