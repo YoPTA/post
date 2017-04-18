@@ -88,7 +88,7 @@ class Notification
         WHERE
           user_id = :user_id AND
           flag > 0
-        ORDER BY created_datetime ';
+        ORDER BY created_datetime DESC ';
 
         $db = Database::getConnection();
         $result = $db->prepare($sql);
