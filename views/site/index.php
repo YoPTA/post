@@ -240,7 +240,10 @@ include ROOT . '/views/layouts/header.php';
                 <?= $package['package_number'] ?>
             </td>
             <td>
-                <?= $package['package_note'] ?>
+                <?= $package['package_note'] ?><br />
+                <span class="color_grey font_size_nine">
+                    Дата создания: <?= $date_converter->datetimeToString($package['package_creation_datetime']) ?>
+                </span>
             </td>
 
             <td>
