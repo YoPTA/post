@@ -47,6 +47,8 @@ include ROOT . '/views/layouts/header.php';
             foreach ($company_addresses as $c_address):
                 $i++;
                 $index_number++;
+
+                if ($c_address['is_transit'] == 1 && !$is_admin) continue;
                 ?>
                 <tr class="presentation">
                     <td align="center"><?= $index_number; ?></td>
