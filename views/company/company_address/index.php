@@ -44,11 +44,17 @@ include ROOT . '/views/layouts/header.php';
             </tr>
             <?php
             $i = 0;
+            $transit_count = 0;
             foreach ($company_addresses as $c_address):
                 $i++;
                 $index_number++;
 
-                if ($c_address['is_transit'] == 1 && !$is_admin) continue;
+                if ($c_address['is_transit'] == 1 && !$is_admin)
+                {
+                    $transit_count++;
+                    continue;
+                }
+
                 ?>
                 <tr class="presentation">
                     <td align="center"><?= $index_number; ?></td>
@@ -88,6 +94,6 @@ include ROOT . '/views/layouts/header.php';
         </table>
     </form>
     <br /><br />
-    <div class="head font_size_twelve full_width" align="center">Показано: <?= $i ?> из <?= $total_adresses ?></div>
+    <div class="head font_size_twelve full_width" align="center">Показано: <?= $i - $transit_count ?> из <?= $total_adresses - $transit_count ?></div>
 
 <?php include ROOT . '/views/layouts/footer.php'; ?>
