@@ -23,7 +23,7 @@ include ROOT . '/views/layouts/header.php';
                 <input type="submit" value="Найти" class="button one_eighth" style="margin-left: -3px;" />
                 <span class="right_indent"></span>
                 <?php if ($admin_rights['can_create']): ?>
-                <a href="/admin/user_add?<?= $get_params ?>" style="margin-left: -3px;">
+                <a href="/admin/user_add?<?= $get_params ?>" style="margin-left: -3px; white-space: nowrap; text-decoration: none;">
                     <input type="button" value="Добавить" class="button one_eighth" />
                 </a>
                 <?php endif; // if ($admin_rights['can_create']): ?>
