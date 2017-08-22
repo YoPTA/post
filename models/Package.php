@@ -1076,4 +1076,20 @@ class Package
         }
         return false;
     }
+
+    /**
+     * Удалить посылку
+     * @param int $id - ID посылки
+     */
+    public static function deletePackage($id)
+    {
+        $sql = 'UPDATE package
+          SET
+          flag = 0
+          WHERE id = :id';
+        $db = Database::getConnection();
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+        $result->execute();
+    }
 }

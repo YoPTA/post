@@ -56,6 +56,7 @@ return [
     'package/package_object_add' => 'package/packageobjectadd',
 
     'package/package_add' => 'package/packageadd',
+    'package/package_delete' => 'package/packagedelete',
     'package/objects' => 'package/objects',
 
     //'site/select_company' => 'site/selectcompany',

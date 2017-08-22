@@ -302,6 +302,11 @@ include ROOT . '/views/layouts/header.php';
                         <img src="/template/images/location.png">
                      </a>
                 </div>
+                <div class="bg_button inline" title="Удалить посылку">
+                    <a href="/package/package_delete?<?= $link_get_param ?>&pid=<?= $package['package_id'] ?>">
+                        <img src="/template/images/delete.png">
+                    </a>
+                </div>
             </td>
 
         </tr>
